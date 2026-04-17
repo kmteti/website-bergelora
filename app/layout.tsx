@@ -1,9 +1,11 @@
 import React from 'react'
 import './styles.css'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'web-kmteti | Next.js App',
+  description: 'web-kmteti project rebuilt with pure Next.js and Tailwind CSS.',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

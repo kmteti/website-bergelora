@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+:root {
+  --font-mono: 'Roboto Mono', Courier, monospace;
+}
