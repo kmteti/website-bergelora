@@ -33,7 +33,7 @@ function createBatikBackground(name: string, filename: string) {
       backgroundImage: `url("/batik/${filename}.svg")`,
       backgroundPosition: 'center',
       backgroundRepeat: 'repeat',
-      backgroundSize: '180px',
+      //   backgroundSize: '180px',
       opacity: value,
     }),
   }
