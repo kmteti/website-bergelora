@@ -1,8 +1,14 @@
 import Image from 'next/image'
+import type { ButtonHTMLAttributes } from 'react'
 
-const CarouselKiri = () => {
+type CarouselButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
+
+const CarouselKiri = ({ className = '', ...props }: CarouselButtonProps) => {
   return (
-    <button className="bg-linear-to-b z-20 from-secondary-300 to-primary-300 rounded-full aspect-square p-0 border-none outline-none hover:opacity-90 active:scale-95 transition-all cursor-pointer">
+    <button
+      className={`bg-linear-to-b z-20 from-secondary-300 to-primary-300 rounded-full aspect-square p-0 border-none outline-none hover:opacity-90 active:scale-95 transition-all cursor-pointer ${className}`}
+      {...props}
+    >
       <Image
         src="/carousel/carousel-kiri.svg"
         alt="Carousel Kiri"
@@ -14,9 +20,12 @@ const CarouselKiri = () => {
   )
 }
 
-const CarouselKanan = () => {
+const CarouselKanan = ({ className = '', ...props }: CarouselButtonProps) => {
   return (
-    <button className="bg-linear-to-b z-20 from-secondary-300 to-primary-300 rounded-full aspect-square p-0 border-none outline-none hover:opacity-90 active:scale-95 transition-all cursor-pointer">
+    <button
+      className={`bg-linear-to-b z-20 from-secondary-300 to-primary-300 rounded-full aspect-square p-0 border-none outline-none hover:opacity-90 active:scale-95 transition-all cursor-pointer ${className}`}
+      {...props}
+    >
       <Image
         src="/carousel/carousel-kanan.svg"
         alt="Carousel Kanan"
