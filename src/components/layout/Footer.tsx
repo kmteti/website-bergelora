@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Left: Logo & Address */}
           <div className="flex flex-col gap-6 max-w-sm">
             <Image
-              src="/logo/kmteti-white-icon.svg"
+              src="/logo/kmteti/kmteti-white-icon.svg"
               alt="KMTETI Logo"
               width={100}
               height={100}

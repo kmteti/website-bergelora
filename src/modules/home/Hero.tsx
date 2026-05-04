@@ -9,7 +9,7 @@ export default function Hero() {
       <div>
         <h1>Hai</h1>
         <p>Selamat datang di situs resmi KMTETI!</p>
-        <LabelKMTETI type="kmteti-white" isKMTETI={true}>
+        <LabelKMTETI type="kmtetionly-white" isKMTETI={true}>
           Tentang
         </LabelKMTETI>
       </div>

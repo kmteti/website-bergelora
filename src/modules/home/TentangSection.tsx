@@ -18,8 +18,7 @@ export default function TentangSection() {
 
   return (
     <section className="relative isolate flex min-h-screen items-center overflow-hidden bg-neutral-100 px-6 py-20 sm:px-10 lg:px-16">
-            <Batik className="batik-5" isWhite={true} />
-
+      <Batik className="batik-5" isWhite={true} />
 
       <Image
         src="/batik/batik-element.webp"
@@ -42,12 +41,14 @@ export default function TentangSection() {
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <div>
             <LabelKMTETI
-              type="kmteti-white"
+              type="kmtetionly-white"
               isKMTETI={true}
               className="mb-4 min-h-11 w-full max-w-md justify-center rounded-lg px-12 py-2 text-center text-white shadow-lg"
               kmtetiProps={{ width: 128, height: 32, className: 'h-8 w-auto' }}
             >
-              Tentang
+              <h2 className="text-h4 font-sans leading-tight flex flex-row items-center gap-x-2 sm:flex-wrap">
+                Tentang
+              </h2>
             </LabelKMTETI>
 
             <p className="max-w-xl text-justify text-b4 text-neutral-1000 sm:text-b3">
@@ -80,7 +81,11 @@ export default function TentangSection() {
               />
             </div>
 
-            <Button className="absolute bottom-4 right-4" onClick={() => router.push('/tentang')}>
+            <Button
+              variant={'blue'}
+              className="absolute bottom-4 right-4"
+              onClick={() => router.push('/tentang')}
+            >
               Lihat Detail
               <ExternalLink size={16} strokeWidth={2.5} />
             </Button>

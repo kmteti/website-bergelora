@@ -2,7 +2,7 @@ import Image from 'next/image'
 import type { HTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
 
-export type KmtetiLogoType = 'kmteti-black' | 'kmteti-white' | 'kmtetiftugm'
+export type KmtetiLogoType = 'kmtetionly-black' | 'kmtetionly-white' | 'kmtetiftugm'
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   type?: KmtetiLogoType
@@ -13,7 +13,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 }
 
 export function KMTETI({
-  type = 'kmteti-black',
+  type = 'kmtetionly-black',
   width = 100,
   height = 100,
   alt = 'KMTETI Logo',
