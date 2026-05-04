@@ -19,7 +19,7 @@ export function KMTETI({
   alt = 'KMTETI Logo',
   className,
 }: Props) {
-  const src = `/logo/${type}.webp`
+  const src = `/logo/kmteti/${type}.webp`
 
   return (
     <div className={cn('relative', className)}>
