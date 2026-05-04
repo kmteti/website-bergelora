@@ -1,12 +1,14 @@
 import React from 'react'
 import { Instrument_Sans, Geist } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
+import Footer from '@/components/layout/Footer'
+import MariTerhubung from '@/components/layout/MariTerhubung'
 import './styles.css'
 
 import type { Metadata, Viewport } from 'next'
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
 
 const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
@@ -35,9 +37,16 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en" className={cn(instrumentSans.variable, GeistSans.variable, "font-sans", geist.variable)}>
-      <body className="font-sans antialiased text-neutral-1000">
-        <main>{children}</main>
+    <html
+      lang="en"
+      className={cn(instrumentSans.variable, GeistSans.variable, 'font-sans', geist.variable)}
+    >
+      <body className="font-sans antialiased text-neutral-1000 flex flex-col min-h-screen">
+        <main className="flex-1 flex flex-col">
+          {children}
+        </main>
+        <MariTerhubung />
+        <Footer />
       </body>
     </html>
   )
