@@ -10,7 +10,7 @@ export default function DefaultLayout({ className = '', children, ...props }: De
   return (
     <section
       className={cn(
-        `flex relative w-full mx-auto px-6 sm:px-8 md:px-20 lg:px-24 xl:px-28 2xl:px-36 font-jakarta-regular bg-background text-foreground transition-colors duration-300`,
+        `flex relative w-full mx-auto px-6 sm:px-8 md:px-20 lg:px-24 xl:px-28 2xl:px-36 bg-transparent text-foreground transition-colors duration-300`,
         className,
       )}
       {...props}
