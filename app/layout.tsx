@@ -2,11 +2,12 @@ import React from 'react'
 import { Instrument_Sans, Geist } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import './styles.css'
+import { Navbar } from '@/components/layout/navbar/Navbar'
 
 import type { Metadata, Viewport } from 'next'
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
 
 const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
@@ -35,9 +36,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en" className={cn(instrumentSans.variable, GeistSans.variable, "font-sans", geist.variable)}>
+    <html
+      lang="en"
+      className={cn(instrumentSans.variable, GeistSans.variable, 'font-sans', geist.variable)}
+    >
       <body className="font-sans antialiased text-neutral-1000">
-        <main>{children}</main>
+        <main>
+          <Navbar />
+          {children}
+        </main>
       </body>
     </html>
   )
