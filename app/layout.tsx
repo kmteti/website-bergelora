@@ -1,7 +1,17 @@
 import React from 'react'
+import { Instrument_Sans, Geist } from 'next/font/google'
+import { GeistSans } from 'geist/font/sans'
 import './styles.css'
 
 import type { Metadata, Viewport } from 'next'
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+const instrumentSans = Instrument_Sans({
+  subsets: ['latin'],
+  variable: '--font-instrument-sans',
+})
 
 export const metadata: Metadata = {
   title: 'KMTETI | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi FT UGM',
@@ -25,8 +35,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={cn(instrumentSans.variable, GeistSans.variable, "font-sans", geist.variable)}>
+      <body className="font-sans antialiased text-neutral-1000">
         <main>{children}</main>
       </body>
     </html>
