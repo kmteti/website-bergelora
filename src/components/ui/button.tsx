@@ -4,14 +4,17 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-xl border border-transparent text-sm font-semibold whitespace-nowrap transition-all outline-none select-none focus-visible:ring-3 focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 hover:translate-y-[1px] hover:brightness-105 active:not-aria-[haspopup]:translate-y-[3px] active:not-aria-[haspopup]:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-xl border border-transparent text-sm font-semibold whitespace-nowrap transition-all outline-none select-none focus-visible:ring-3 focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 hover:translate-y-[1px] hover:brightness-105 hover:cursor-pointer active:not-aria-[haspopup]:translate-y-[3px] active:not-aria-[haspopup]:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
-    variants: { 
+    variants: {
       variant: {
-        default: 'bg-[#138bb6] text-white shadow-[0_3px_0_0_#0d627c] hover:shadow-[0_2px_0_0_#0d627c]',
+        default:
+          'bg-[#138bb6] text-white shadow-[0_3px_0_0_#0d627c] hover:shadow-[0_2px_0_0_#0d627c]',
         blue: 'bg-primary-300 text-white shadow-[0_3px_0_0_#138bb6] hover:shadow-[0_2px_0_0_#138bb6]',
-        green: 'bg-[#87b22f] text-white shadow-[0_3px_0_0_#607e15] hover:shadow-[0_2px_0_0_#607e15]',
-        yellow: 'bg-[#ffdb43] text-neutral-800 shadow-[0_3px_0_0_#efa400] hover:shadow-[0_2px_0_0_#efa400]',
+        green:
+          'bg-[#87b22f] text-white shadow-[0_3px_0_0_#607e15] hover:shadow-[0_2px_0_0_#607e15]',
+        yellow:
+          'bg-[#ffdb43] text-neutral-800 shadow-[0_3px_0_0_#efa400] hover:shadow-[0_2px_0_0_#efa400]',
         red: 'bg-[#ff3749] text-white shadow-[0_3px_0_0_#e60416] hover:shadow-[0_2px_0_0_#e60416]',
         neutral:
           'bg-[#ffffff] text-neutral-800 shadow-[0_3px_0_0_#e5e5e5] border border-neutral-200 hover:shadow-[0_2px_0_0_#e5e5e5]',
