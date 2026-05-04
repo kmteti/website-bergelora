@@ -22,7 +22,7 @@ export function Batik({ className = 'batik-75', isWhite = false, ...props }: Bat
     : undefined
 
   return (
-    <div className={cn('absolute top-0 left-0 h-full w-full', className)} {...props}>
+    <div className={cn('absolute top-0 left-0 h-full w-full z-0', className)} {...props}>
       {isWhite && (
         <div
           aria-hidden="true"
