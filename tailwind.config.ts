@@ -75,18 +75,31 @@ const config: Config = {
         heading: ['var(--font-instrument-sans)', 'sans-serif'],
       },
       fontSize: {
-        'h1': ['64px', { lineHeight: '80px', letterSpacing: '0px', fontWeight: '700' }],
-        'h2': ['48px', { lineHeight: '60px', letterSpacing: '0px', fontWeight: '700' }],
-        'h3': ['32px', { lineHeight: '40px', letterSpacing: '0px', fontWeight: '700' }],
-        'h4': ['24px', { lineHeight: '30px', letterSpacing: '0px', fontWeight: '700' }],
-        'h5': ['20px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '700' }],
-        'b1': ['20px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '400' }],
-        'b2': ['18px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '400' }],
-        'b3': ['16px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '400' }],
-        'b4': ['14px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
-        'b5': ['12px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '400' }],
-        'b6': ['10px', { lineHeight: '16px', letterSpacing: '0px', fontWeight: '400' }],
-        'b7': ['10px', { lineHeight: '14px', letterSpacing: '0px', fontWeight: '400' }],
+        /* Headings: Fluid Typography (clamp) 
+           Format: clamp(min_size, preferred_viewport_width, max_size) */
+        'h1': ['clamp(2.5rem, 5vw + 1rem, 4rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 40px to 64px
+        'h2': ['clamp(2rem, 4vw + 1rem, 3rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 32px to 48px
+        'h3': ['clamp(1.5rem, 3vw + 0.5rem, 2rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 24px to 32px
+        'h4': ['clamp(1.25rem, 2vw + 0.5rem, 1.5rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 20px to 24px
+        'h5': ['clamp(1.125rem, 1.5vw + 0.5rem, 1.25rem)', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '700' }], // 18px to 20px
+        
+        /* Body Texts: Relative units (rem) */
+        'b1': ['1.25rem', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '400' }], // 20px
+        'b2': ['1.125rem', { lineHeight: '1.55', letterSpacing: '0px', fontWeight: '400' }], // 18px
+        'b3': ['1rem', { lineHeight: '1.5', letterSpacing: '0px', fontWeight: '400' }], // 16px
+        'b4': ['0.875rem', { lineHeight: '1.57', letterSpacing: '0px', fontWeight: '400' }], // 14px
+        'b5': ['0.75rem', { lineHeight: '1.66', letterSpacing: '0px', fontWeight: '400' }], // 12px
+        'b6': ['0.625rem', { lineHeight: '1.6', letterSpacing: '0px', fontWeight: '400' }], // 10px
+        'b7': ['0.625rem', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '400' }], // 10px
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 30s linear infinite',
       },
     },
   },
