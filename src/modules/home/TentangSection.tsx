@@ -41,7 +41,7 @@ export default function TentangSection() {
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <div>
             <LabelKMTETI
-              type="kmtetionly-white"
+              type="kmteti-logotype-short-white"
               isKMTETI={true}
               className="mb-4 min-h-11 w-full max-w-md justify-center rounded-lg px-12 py-2 text-center text-white shadow-lg"
               kmtetiProps={{ width: 128, height: 32, className: 'h-8 w-auto' }}
@@ -73,7 +73,7 @@ export default function TentangSection() {
           <div className="relative mx-auto aspect-[1.25/1] w-full max-w-sm overflow-hidden rounded-lg shadow-xl shadow-neutral-900/35">
             <div className="relative h-full overflow-hidden rounded-lg">
               <Image
-                src="/images/njepat_1x.webp"
+                src="/images/landing/about/about.webp"
                 alt="Mahasiswa DTETI berkolaborasi"
                 fill
                 sizes="(min-width: 1024px) 384px, 100vw"

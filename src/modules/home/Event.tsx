@@ -92,10 +92,10 @@ export default function Event() {
       <div className="relative z-20 mx-auto w-full max-w-6xl px-0 py-8 sm:px-4 md:px-8 lg:px-10">
         <div className="relative mx-auto">
           <LabelKMTETI
-            type="kmtetionly-white"
+            type="kmteti-logotype-short-white"
             isKMTETI={true}
-            className="mb-4 min-h-11 w-full max-w-2xl justify-center rounded-lg px-10 py-2 text-center text-white shadow-lg sm:w-fit sm:px-14"
-            kmtetiProps={{ width: 120, height: 30, className: 'h-7 w-auto' }}
+            className="mb-4 min-h-11 w-full max-w-2xl justify-center rounded-lg px-10 py-2 text-left text-white shadow-lg sm:w-fit sm:px-14"
+            kmtetiProps={{ width: 100, height: 20, className: 'w-auto' }}
           >
             <h2 className="text-h5 font-sans leading-tight sm:text-h4">
               Event Nasional dan Internasional

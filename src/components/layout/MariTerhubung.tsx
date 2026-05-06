@@ -24,7 +24,7 @@ const MariTerhubung = () => {
             <h2 className="text-h4 font-sans leading-tight flex flex-row items-center gap-x-2 sm:flex-wrap">
               Mari Terhubung dengan
               <KMTETI
-                type="kmtetiftugm"
+                type="kmteti-logotype-black"
                 width={90}
                 height={25}
                 className="w-24 md:w-24 lg:w-24 h-auto shrink-0 mt-1 md:mt-2"

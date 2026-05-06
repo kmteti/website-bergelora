@@ -328,14 +328,22 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-full flex-col items-start gap-4 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:gap-6 lg:px-8">
         <div className="flex w-full items-center justify-between lg:w-1/2 lg:justify-start">
-          <Link href="/" className="flex shrink-0 items-center gap-3">
+          <Link href="/" className="flex shrink-0 items-center gap-2.5">
             <Image
-              src="/logo/kmteti/kmteti-black.svg"
-              alt="KMTETI FT UGM"
-              width={170}
-              height={56}
+              src="/logo/kmteti/kmteti-mark.svg"
+              alt="KMTETI Mark"
+              width={40}
+              height={40}
               priority
-              className="h-auto w-32.5 sm:w-37.5"
+              className="h-8 w-auto sm:h-9"
+            />
+            <Image
+              src="/logo/kmteti/kmteti-logotype-black.svg"
+              alt="KMTETI Logotype"
+              width={120}
+              height={40}
+              priority
+              className="h-5 w-auto sm:h-6"
             />
           </Link>
           <button
