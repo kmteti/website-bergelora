@@ -77,20 +77,35 @@ const config: Config = {
       fontSize: {
         /* Headings: Fluid Typography (clamp) 
            Format: clamp(min_size, preferred_viewport_width, max_size) */
-        'h1': ['clamp(2.5rem, 5vw + 1rem, 4rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 40px to 64px
-        'h2': ['clamp(2rem, 4vw + 1rem, 3rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 32px to 48px
-        'h3': ['clamp(1.5rem, 3vw + 0.5rem, 2rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 24px to 32px
-        'h4': ['clamp(1.25rem, 2vw + 0.5rem, 1.5rem)', { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' }], // 20px to 24px
-        'h5': ['clamp(1.125rem, 1.5vw + 0.5rem, 1.25rem)', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '700' }], // 18px to 20px
-        
+        h1: [
+          'clamp(2.5rem, 5vw + 1rem, 4rem)',
+          { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' },
+        ], // 40px to 64px
+        h2: [
+          'clamp(2rem, 4vw + 1rem, 3rem)',
+          { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' },
+        ], // 32px to 48px
+        h3: [
+          'clamp(1.5rem, 3vw + 0.5rem, 2rem)',
+          { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' },
+        ], // 24px to 32px
+        h4: [
+          'clamp(1.25rem, 2vw + 0.5rem, 1.5rem)',
+          { lineHeight: '1.25', letterSpacing: '0px', fontWeight: '700' },
+        ], // 20px to 24px
+        h5: [
+          'clamp(1.125rem, 1.5vw + 0.5rem, 1.25rem)',
+          { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '700' },
+        ], // 18px to 20px
+
         /* Body Texts: Relative units (rem) */
-        'b1': ['1.25rem', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '400' }], // 20px
-        'b2': ['1.125rem', { lineHeight: '1.55', letterSpacing: '0px', fontWeight: '400' }], // 18px
-        'b3': ['1rem', { lineHeight: '1.5', letterSpacing: '0px', fontWeight: '400' }], // 16px
-        'b4': ['0.875rem', { lineHeight: '1.57', letterSpacing: '0px', fontWeight: '400' }], // 14px
-        'b5': ['0.75rem', { lineHeight: '1.66', letterSpacing: '0px', fontWeight: '400' }], // 12px
-        'b6': ['0.625rem', { lineHeight: '1.6', letterSpacing: '0px', fontWeight: '400' }], // 10px
-        'b7': ['0.625rem', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '400' }], // 10px
+        b1: ['1.25rem', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '400' }], // 20px
+        b2: ['1.125rem', { lineHeight: '1.55', letterSpacing: '0px', fontWeight: '400' }], // 18px
+        b3: ['1rem', { lineHeight: '1.5', letterSpacing: '0px', fontWeight: '400' }], // 16px
+        b4: ['0.875rem', { lineHeight: '1.57', letterSpacing: '0px', fontWeight: '400' }], // 14px
+        b5: ['0.75rem', { lineHeight: '1.66', letterSpacing: '0px', fontWeight: '400' }], // 12px
+        b6: ['0.625rem', { lineHeight: '1.6', letterSpacing: '0px', fontWeight: '400' }], // 10px
+        b7: ['0.625rem', { lineHeight: '1.4', letterSpacing: '0px', fontWeight: '400' }], // 10px
       },
       keyframes: {
         marquee: {
@@ -99,7 +114,7 @@ const config: Config = {
         },
       },
       animation: {
-        marquee: 'marquee 30s linear infinite',
+        marquee: 'marquee 50s linear infinite',
       },
     },
   },

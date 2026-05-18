@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -160,6 +160,20 @@ export function Navbar() {
   const router = useRouter()
   const [activeMobileKey, setActiveMobileKey] = useState<string | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleMobileToggle = (key: string) => {
     setActiveMobileKey((current) => (current === key ? null : key))
@@ -318,14 +332,20 @@ export function Navbar() {
     </div>
   )
 
+  const getNavClasses = () => {
+    if (isMobileMenuOpen) {
+      return 'fixed inset-x-0 top-0 z-[99] h-dvh bg-white transition-all duration-300'
+    }
+    
+    return `fixed z-[99] transition-all duration-300 ${
+      isScrolled 
+        ? 'top-2 sm:top-4 inset-x-4 sm:inset-x-8 rounded-2xl shadow-md border border-neutral-200/50 bg-white/95 backdrop-blur-md' 
+        : 'top-0 inset-x-0 bg-white'
+    }`
+  }
+
   return (
-    <nav
-      className={
-        isMobileMenuOpen
-          ? 'fixed inset-x-0 top-0 z-99 h-dvh bg-white transition-all duration-300'
-          : 'fixed inset-x-0 top-0 z-99 transition-all duration-300'
-      }
-    >
+    <nav className={getNavClasses()}>
       <div className="mx-auto flex h-full flex-col items-start gap-4 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:gap-6 lg:px-8">
         <div className="flex w-full items-center justify-between lg:w-1/2 lg:justify-start">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">

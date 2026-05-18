@@ -7,7 +7,7 @@ import { Phone } from 'lucide-react'
 
 const MariTerhubung = () => {
   return (
-    <section className="relative w-full overflow-hidden py-16 md:py-24">
+    <section className="relative w-full overflow-hidden py-16 md:py-24" data-aos="fade-up">
       <Batik className="batik-5" isWhite={true} />
       <DefaultLayout>
         <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16">

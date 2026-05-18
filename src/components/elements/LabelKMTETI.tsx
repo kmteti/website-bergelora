@@ -23,7 +23,7 @@ export function LabelKMTETI({
     <div
       {...props}
       className={cn(
-        'relative z-20 w-fit bg-linear-to-br overflow-clip flex flex-row items-center gap-2 from-primary-300 to-primary-500 text-white rounded-2xl px-16 py-2',
+        'relative z-20 w-fit bg-linear-to-br overflow-clip flex flex-row items-center gap-2 from-primary-300 to-primary-500 text-white rounded-2xl px-8 py-1.5 min-w-[280px] sm:min-w-[400px]',
         className,
       )}
     >
