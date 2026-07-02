@@ -129,3 +129,28 @@
     @apply font-sans;
   }
 }
+
+/* Custom scrollbar utility for KMTETI blue */
+.kmteti-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #19afe5 transparent; /* thumb track */
+}
+
+/* Chrome, Edge, and Safari */
+.kmteti-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.kmteti-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.kmteti-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #19afe5; /* primary-300 */
+  border-radius: 9999px;
+}
+
+.kmteti-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #0d627c; /* primary-500 */
+}
