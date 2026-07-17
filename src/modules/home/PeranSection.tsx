@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { LabelKMTETI } from '@/components/elements/LabelKMTETI'
-import { Batik } from '@/components/elements/BatikBackground'
+import { LabelKMTETI } from '@/components/archive/LabelKMTETI'
+import { Batik } from '@/components/archive/BatikBackground'
 import Image from 'next/image'
 
 const divisiData = [

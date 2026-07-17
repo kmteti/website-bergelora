@@ -1,10 +1,10 @@
 import React from 'react'
-import { Batik } from '../elements/BatikBackground'
-import DefaultLayout from './DefaultLayout'
+import { Batik } from './BatikBackground'
+import DefaultLayout from '../layout/DefaultLayout'
 import { Button } from '../ui/button'
-import { KMTETI } from '../elements/KMTETI'
+import { KMTETI } from './KMTETI'
 import { Phone } from 'lucide-react'
-import { Image } from '../elements/Image'
+import { Image } from './Image'
 
 const MariTerhubung = () => {
   return (

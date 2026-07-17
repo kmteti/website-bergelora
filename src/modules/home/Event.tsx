@@ -1,8 +1,8 @@
 'use client'
 
-import { Batik } from '@/components/elements/BatikBackground'
-import { CarouselKanan, CarouselKiri } from '@/components/elements/ButtonCarousel'
-import { LabelKMTETI } from '@/components/elements/LabelKMTETI'
+import { Batik } from '@/components/archive/BatikBackground'
+import { CarouselKanan, CarouselKiri } from '@/components/archive/ButtonCarousel'
+import { LabelKMTETI } from '@/components/archive/LabelKMTETI'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 import { useMemo, useState, TouchEvent } from 'react'

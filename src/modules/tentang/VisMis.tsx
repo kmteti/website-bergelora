@@ -1,7 +1,7 @@
 import DefaultLayout from "@/components/layout/DefaultLayout"
-import { Batik } from "@/components/elements/BatikBackground"
-import { LabelKMTETI } from '@/components/elements/LabelKMTETI'
-import { Image } from '@/components/elements/Image'
+import { Batik } from "@/components/archive/BatikBackground"
+import { LabelKMTETI } from '@/components/archive/LabelKMTETI'
+import { Image } from '@/components/archive/Image'
 
 export default function VisMis() {
     return (

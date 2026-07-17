@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Batik } from "@/components/elements/BatikBackground"
+import { Batik } from "@/components/archive/BatikBackground.tsx"
 import DefaultLayout from "@/components/layout/DefaultLayout"
-import { LabelKMTETI } from "@/components/elements/LabelKMTETI"
+import { LabelKMTETI } from "@/components/archive/LabelKMTETI.tsx"
 import { ArrowUpRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"

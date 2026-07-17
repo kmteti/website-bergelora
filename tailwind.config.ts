@@ -71,8 +71,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'sans-serif'],
-        heading: ['var(--font-instrument-sans)', 'sans-serif'],
+        sans: ['var(--font-montserrat)', 'sans-serif'],
+        heading: ['var(--font-source-serif-4)', 'serif'],
       },
       fontSize: {
         /* Headings: Fluid Typography (clamp) 

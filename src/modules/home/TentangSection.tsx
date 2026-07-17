@@ -1,7 +1,7 @@
 'use client'
 
-import { Batik } from '@/components/elements/BatikBackground'
-import { LabelKMTETI } from '@/components/elements/LabelKMTETI'
+import { Batik } from '@/components/archive/BatikBackground'
+import { LabelKMTETI } from '@/components/archive/LabelKMTETI'
 import Image from 'next/image'
 
 const stats = [

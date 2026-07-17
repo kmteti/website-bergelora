@@ -2,41 +2,38 @@ import { Button as ButtonPrimitive } from '@base-ui/react/button'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
+import '@/styles/Button.css'
 
-const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-xl border border-transparent text-sm font-semibold whitespace-nowrap transition-all outline-none select-none focus-visible:ring-3 focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 hover:translate-y-[1px] hover:brightness-105 hover:cursor-pointer active:not-aria-[haspopup]:translate-y-[3px] active:not-aria-[haspopup]:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-  {
-    variants: {
-      variant: {
-        default:
-          'bg-primary-300 text-white shadow-[0_3px_0_0_#138bb6] hover:shadow-[0_2px_0_0_#138bb6]',
-        blue: 'bg-primary-300 text-white shadow-[0_3px_0_0_#138bb6] hover:shadow-[0_2px_0_0_#138bb6]',
-        green:
-          'bg-[#87b22f] text-white shadow-[0_3px_0_0_#607e15] hover:shadow-[0_2px_0_0_#607e15]',
-        yellow:
-          'bg-[#ffdb43] text-neutral-800 shadow-[0_3px_0_0_#efa400] hover:shadow-[0_2px_0_0_#efa400]',
-        red: 'bg-[#ff3749] text-white shadow-[0_3px_0_0_#e60416] hover:shadow-[0_2px_0_0_#e60416]',
-        neutral:
-          'bg-[#ffffff] text-neutral-800 shadow-[0_3px_0_0_#e5e5e5] border border-neutral-200 hover:shadow-[0_2px_0_0_#e5e5e5]',
-        outline:
-          'border-border bg-background hover:bg-muted hover:text-foreground shadow-none hover:translate-y-0 active:translate-y-0 active:shadow-none hover:brightness-100',
-        ghost:
-          'hover:bg-muted hover:text-foreground shadow-none hover:translate-y-0 active:translate-y-0 active:shadow-none hover:brightness-100',
-        link: 'text-primary underline-offset-4 hover:underline shadow-none hover:translate-y-0 active:translate-y-0 hover:brightness-100',
-      },
-      size: {
-        default: 'h-10 gap-2 px-4',
-        sm: 'h-8 gap-1.5 rounded-lg px-3 text-xs',
-        lg: 'h-12 gap-2 rounded-xl px-8 text-base',
-        icon: 'size-10',
-      },
+const buttonVariants = cva('btn', {
+  variants: {
+    variant: {
+      default:
+        'bg-primary-300 text-white [--btn-shadow-color:#138bb6]',
+      blue:
+        'bg-primary-300 text-white [--btn-shadow-color:#138bb6]',
+      green:
+        'bg-[#87b22f] text-white [--btn-shadow-color:#607e15]',
+      yellow:
+        'bg-[#ffdb43] text-neutral-800 [--btn-shadow-color:#efa400]',
+      red:
+        'bg-[#ff3749] text-white [--btn-shadow-color:#e60416]',
+      neutral:
+        'bg-white text-neutral-800 border border-neutral-200 [--btn-shadow-color:#e5e5e5]',
+      link:
+        'bg-primary-50 text-primary-500 [--btn-shadow-color:#bae6fd]',
     },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
+    size: {
+      default: 'btn--default',
+      sm: 'btn--sm',
+      lg: 'btn--lg',
+      icon: 'btn--icon',
     },
   },
-)
+  defaultVariants: {
+    variant: 'default',
+    size: 'default',
+  },
+})
 
 interface ButtonProps
   extends React.ComponentProps<typeof ButtonPrimitive>, VariantProps<typeof buttonVariants> {
@@ -61,7 +58,7 @@ function Button({
     >
       {loading && (
         <svg
-          className="mr-2 h-4 w-4 animate-spin"
+          className="btn__spinner"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

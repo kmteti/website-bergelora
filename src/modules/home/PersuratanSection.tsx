@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { LabelKMTETI } from '@/components/elements/LabelKMTETI'
+import { LabelKMTETI } from '@/components/archive/LabelKMTETI'
 import { ArrowRight, Grid, FileText } from 'lucide-react'
-import { Batik } from '@/components/elements/BatikBackground'
+import { Batik } from '@/components/archive/BatikBackground'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
