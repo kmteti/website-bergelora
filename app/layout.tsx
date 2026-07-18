@@ -1,7 +1,6 @@
 import React from 'react'
 import { montserrat, sourceSerif4 } from '@/lib/fonts'
-import Footer from '@/components/archive/Footer'
-import MariTerhubung from '@/components/archive/MariTerhubung'
+import Footer from '@/components/layout/Footer'
 import './styles.css'
 import { Navbar } from '@/components/layout/navbar/Navbar'
 
@@ -40,10 +39,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     >
       <body className="font-sans antialiased text-neutral-1000 flex flex-col min-h-screen">
         <main className="flex-1 flex flex-col">
-          <Navbar />
+          {/* <Navbar /> */}
           {children}
-          {/* <MariTerhubung />
-          <Footer /> */}
+          <Footer />
         </main>
       </body>
     </html>
