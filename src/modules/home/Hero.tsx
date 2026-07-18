@@ -61,9 +61,13 @@ export default function Hero() {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-4 mt-8">
-          <Button variant="blue" size="lg" className="w-fit rounded-xl px-8 py-6 text-lg font-bold">
+          <Button
+            variant="primary"
+            size="lg"
+            className="w-fit rounded-xl px-8 py-6 text-lg font-bold"
+            rightIcon={<ExternalLink size={24} />}
+          >
             Jelajahi Kami
-            <ExternalLink size={24} className="ml-2" />
           </Button>
         </div>
       </div>

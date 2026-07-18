@@ -154,7 +154,7 @@ export default function PersuratanSection() {
                   <a
                     href="#"
                     className={cn(
-                      buttonVariants({ variant: 'default', size: 'lg', className: 'w-fit' }),
+                      buttonVariants({ variant: 'primary', size: 'lg', className: 'w-fit' }),
                     )}
                   >
                     <Grid size={18} className="mr-2" /> Lihat Semua Persuratan

@@ -84,7 +84,7 @@ function SocialIcon({ href, icon }: { href: string; icon: string }) {
       href={href}
       target="_blank"
       className={cn(
-        buttonVariants({ variant: 'neutral', size: 'icon' }),
+        buttonVariants({ variant: 'primary', size: 'icon' }),
         'text-primary-500 rounded-xl',
       )}
     >

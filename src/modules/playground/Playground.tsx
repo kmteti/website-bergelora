@@ -1,22 +1,69 @@
 import { H3 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import Typography from '@/modules/playground/ViewTypography'
+import { Home } from 'lucide-react'
+
+const buttonRows = [
+  { label: 'Primary', variant: 'primary' as const },
+  { label: 'Secondary', variant: 'secondary' as const },
+]
+
+const buttonColumns = [
+  { label: 'Small', size: 'sm' as const },
+  { label: 'Default', size: 'default' as const },
+  { label: 'Large', size: 'lg' as const },
+]
+
+const buttonStates = [
+  { label: 'Default', props: {} },
+  { label: 'Hover', props: { 'data-hover': 'true' } },
+  { label: 'Pressed', props: { 'data-pressed': 'true' } },
+]
 
 export default function Playground() {
+  const icon = <Home />
+
   return (
-    <div className="bg-neutral-300 min-h-screen mt-20 p-10">
-      <div className="flex flex-col gap-6 mb-12 bg-white p-8 rounded-xl shadow-sm">
+    <div className="mt-20 min-h-screen bg-neutral-300 p-10">
+      <div className="mb-12 flex flex-col gap-8 rounded-xl bg-white p-8 shadow-sm">
         <H3>Button Variants</H3>
-        <div className="flex flex-wrap gap-4">
-          <Button variant="default">Default</Button>
-          <Button variant="blue">Blue</Button>
-          <Button variant="green">Green</Button>
-          <Button variant="yellow">Yellow</Button>
-          <Button variant="red">Red</Button>
-          <Button variant="neutral">Neutral</Button>
-          <Button variant="link">Link</Button>
+
+        <div className="rounded-2xl border-2 border-dashed border-purple-300 bg-neutral-50 p-8">
+          <div className="grid gap-16">
+            {buttonRows.map((row) => (
+              <div key={row.variant} className="grid gap-6">
+                <div className="text-sm font-semibold uppercase tracking-wider text-neutral-500">
+                  {row.label}
+                </div>
+
+                <div className="grid gap-12 lg:grid-cols-3">
+                  {buttonColumns.map((column) => (
+                    <div key={column.size} className="grid justify-items-center gap-5">
+                      <div className="text-xs font-medium uppercase tracking-wider text-neutral-400">
+                        {column.label}
+                      </div>
+
+                      {buttonStates.map((state) => (
+                        <Button
+                          key={state.label}
+                          variant={row.variant}
+                          size={column.size}
+                          leftIcon={icon}
+                          rightIcon={icon}
+                          {...state.props}
+                        >
+                          Button
+                        </Button>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
       <Typography />
     </div>
   )

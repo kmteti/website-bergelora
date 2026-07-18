@@ -34,7 +34,7 @@ const MariTerhubung = () => {
               Kami terbuka untuk pertanyaan, kolaborasi, dan berbagai bentuk kerja sama.
             </p>
 
-            <Button variant="blue" size="lg" className="px-6">
+            <Button variant="primary" size="lg" className="px-6">
               Hubungi Kami
               <Phone color="white" className="ml-2" />
             </Button>

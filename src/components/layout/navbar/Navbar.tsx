@@ -323,7 +323,7 @@ export function Navbar() {
       })}
 
       <Button
-        variant={'blue'}
+        variant={'primary'}
         className="mt-2 w-full text-base"
         onClick={() => router.push('/kontak')}
       >
@@ -389,7 +389,7 @@ export function Navbar() {
           </div>
 
           <div className="hidden lg:block">
-            <Button variant={'blue'} className="text-base" onClick={() => router.push('/kontak')}>
+            <Button variant={'primary'} className="text-base" onClick={() => router.push('/kontak')}>
               Hubungi Kami
             </Button>
           </div>

@@ -1,50 +1,48 @@
 import { Button as ButtonPrimitive } from '@base-ui/react/button'
 import { cva, type VariantProps } from 'class-variance-authority'
+import type { ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 import '@/styles/Button.css'
 
-const buttonVariants = cva('btn', {
-  variants: {
-    variant: {
-      default:
-        'bg-primary-300 text-white [--btn-shadow-color:#138bb6]',
-      blue:
-        'bg-primary-300 text-white [--btn-shadow-color:#138bb6]',
-      green:
-        'bg-[#87b22f] text-white [--btn-shadow-color:#607e15]',
-      yellow:
-        'bg-[#ffdb43] text-neutral-800 [--btn-shadow-color:#efa400]',
-      red:
-        'bg-[#ff3749] text-white [--btn-shadow-color:#e60416]',
-      neutral:
-        'bg-white text-neutral-800 border border-neutral-200 [--btn-shadow-color:#e5e5e5]',
-      link:
-        'bg-primary-50 text-primary-500 [--btn-shadow-color:#bae6fd]',
+const buttonVariants = cva(
+  'btn relative inline-flex cursor-pointer items-center justify-center border-0 font-medium tracking-normal whitespace-nowrap outline-none select-none disabled:pointer-events-none disabled:opacity-55 disabled:grayscale-[0.25] focus-visible:outline-3 focus-visible:outline-offset-4',
+  {
+    variants: {
+      variant: {
+        primary:
+          'btn--primary bg-primary-400 text-white hover:bg-primary-300 active:bg-primary-500 focus-visible:outline-primary-100',
+        secondary:
+          'btn--secondary bg-secondary-400 text-white hover:bg-secondary-300 active:bg-secondary-500 focus-visible:outline-secondary-100',
+      },
+      size: {
+        sm: 'h-10 rounded-[11px] px-3.5 py-0 text-sm leading-5 gap-1.5 [--btn-icon-size:14px]',
+        default: 'h-11 rounded-[12px] px-4 py-0 text-base leading-6 gap-2 [--btn-icon-size:16px]',
+        lg: 'h-[52px] rounded-[13px] px-4 py-0 text-base leading-6 gap-2.5 [--btn-icon-size:18px]',
+        icon: 'size-10 min-w-10 rounded-[11px] p-0 [--btn-icon-size:18px]',
+      },
     },
-    size: {
-      default: 'btn--default',
-      sm: 'btn--sm',
-      lg: 'btn--lg',
-      icon: 'btn--icon',
+    defaultVariants: {
+      variant: 'primary',
+      size: 'default',
     },
   },
-  defaultVariants: {
-    variant: 'default',
-    size: 'default',
-  },
-})
+)
 
 interface ButtonProps
   extends React.ComponentProps<typeof ButtonPrimitive>, VariantProps<typeof buttonVariants> {
+  leftIcon?: ReactNode
   loading?: boolean
+  rightIcon?: ReactNode
 }
 
 function Button({
   className,
-  variant = 'default',
+  variant = 'primary',
   size = 'default',
+  leftIcon,
   loading = false,
+  rightIcon,
   disabled,
   children,
   ...props
@@ -78,7 +76,17 @@ function Button({
           ></path>
         </svg>
       )}
+      {leftIcon ? (
+        <span className="btn__icon" aria-hidden="true">
+          {leftIcon}
+        </span>
+      ) : null}
       {children}
+      {rightIcon ? (
+        <span className="btn__icon" aria-hidden="true">
+          {rightIcon}
+        </span>
+      ) : null}
     </ButtonPrimitive>
   )
 }
