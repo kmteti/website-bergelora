@@ -1,402 +1,449 @@
 'use client'
 
+import { ChevronDown, Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
+import { cn } from '@/lib/utils'
 
-type NavbarSubItem = {
-  key: string
-  href: string
-  icon?: string
-}
-
-type NavbarLinkItem = {
-  key: string
+type NavLink = {
+  label: string
   href: string
 }
 
-type NavbarSection = {
-  title: string
-  items: NavbarSubItem[]
-}
-
-type NavbarDropdownItem = {
-  key: string
-  sections: NavbarSection[]
-}
-
-type NavbarItem = NavbarLinkItem | NavbarDropdownItem
-
-const NavbarItems: NavbarItem[] = [
-  {
-    key: 'Tentang',
-    href: '/tentang',
-  },
-  {
-    key: 'Divisi & BSO',
-    sections: [
-      {
-        title: 'Divisi',
-        items: [
-          {
-            key: 'Adkesma',
-            href: '/divisi/adkesma',
-            icon: 'logo/divisi/adkesma.svg',
-          },
-          {
-            key: 'Mikat',
-            href: '/divisi/mikat',
-            icon: 'logo/divisi/mikat.svg',
-          },
-          {
-            key: 'Sosmas',
-            href: '/divisi/sosmas',
-            icon: 'logo/divisi/sosmas.svg',
-          },
-          {
-            key: 'BPO',
-            href: '/divisi/bpo',
-            icon: 'logo/divisi/bpo.svg',
-          },
-          {
-            key: 'Humas',
-            href: '/divisi/humas',
-            icon: 'logo/divisi/humas.svg',
-          },
-          {
-            key: 'Workshop',
-            href: '/divisi/workshop',
-            icon: 'logo/divisi/ws.svg',
-          },
-          {
-            key: 'Electropreneur',
-            href: '/divisi/electropreneur',
-            icon: 'logo/divisi/ep.svg',
-          },
-          {
-            key: 'Infokom',
-            href: '/divisi/infokom',
-            icon: 'logo/divisi/infokom.svg',
-          },
-        ],
-      },
-      {
-        title: 'Badan Semi Otonom',
-        items: [
-          {
-            key: 'Beacon',
-            href: '/bso/beacon',
-            icon: 'logo/bso/beacon.svg',
-          },
-          {
-            key: 'Night Login',
-            href: '/bso/night-login',
-            icon: 'logo/bso/night-login.svg',
-          },
-          {
-            key: 'Magatrika',
-            href: '/bso/magatrika',
-            icon: 'logo/bso/magatrika.svg',
-          },
-          {
-            key: 'SKI Al-Hannaan',
-            href: '/bso/ski-al-hannaan',
-            icon: 'logo/bso/ski-al-hannaan.svg',
-          },
-          {
-            key: 'SKK DTETI',
-            href: '/bso/skk-dteti',
-            icon: 'logo/bso/skk-dteti.svg',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: 'Kegiatan',
-    sections: [
-      {
-        title: 'Kegiatan',
-        items: [
-          {
-            key: 'NESCO',
-            href: '/kegiatan/nesco',
-          },
-          {
-            key: 'FindIT',
-            href: '/kegiatan/findit',
-          },
-          {
-            key: 'Technocorner',
-            href: '/kegiatan/technocorner',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: 'Layanan',
-    href: '/persuratan',
-  },
-  {
-    key: 'Berita',
-    href: '/berita',
-  },
+const tentangLinks: NavLink[] = [
+  { label: 'Profil KMTETI', href: '/tentang/profil' },
+  { label: 'KMTETI News', href: '/tentang/berita' },
 ]
 
+const megaMenuData = {
+  divisi: [
+    { label: 'Adkesma', href: '/divisi/adkesma', icon: '/logo/divisi/adkesma.svg' },
+    { label: 'BPO', href: '/divisi/bpo', icon: '/logo/divisi/bpo.svg' },
+    { label: 'Electropreneur', href: '/divisi/electropreneur', icon: '/logo/divisi/ep.svg' },
+    { label: 'Humas', href: '/divisi/humas', icon: '/logo/divisi/humas.svg' },
+    { label: 'Infokom', href: '/divisi/infokom', icon: '/logo/divisi/infokom.svg' },
+    { label: 'Minat dan Bakat', href: '/divisi/minat-dan-bakat', icon: '/logo/divisi/mikat.svg' },
+    { label: 'Sosmas', href: '/divisi/sosmas', icon: '/logo/divisi/sosmas.svg' },
+    { label: 'Workshop', href: '/divisi/workshop', icon: '/logo/divisi/ws.svg' },
+  ],
+  bso: [
+    { label: 'Magatrika', href: '/bso/magatrika', icon: '/logo/bso/magatrika.svg' },
+    { label: 'Night Login', href: '/bso/night-login', icon: '/logo/bso/night-login.svg' },
+    { label: 'Bionce', href: '/bso/bionce', icon: '/logo/bso/beacon.svg' },
+    { label: 'SKI', href: '/bso/ski', icon: '/logo/bso/ski-al-hannaan.svg' },
+    { label: 'SKK', href: '/bso/skk', icon: '/logo/bso/skk-dteti.svg' },
+    { label: 'MPM', href: '/bso/mpm' },
+  ],
+  event: [
+    { label: 'FindIT', href: '/event/findit' },
+    { label: 'Nesco', href: '/event/nesco' },
+    { label: 'Technocorner', href: '/event/technocorner' },
+  ],
+}
+
+const mainLinks: NavLink[] = [{ label: 'Layanan', href: '/layanan' }]
+
+type NavbarTone = 'dark' | 'light'
+
+const DARK_BACKGROUND_LIGHTNESS_THRESHOLD = 40
+
+function getLightnessFromColor(color: string) {
+  const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/)
+
+  if (!match) return null
+
+  const alpha = match[4] === undefined ? 1 : Number(match[4])
+  if (alpha === 0) return null
+
+  const red = Number(match[1]) / 255
+  const green = Number(match[2]) / 255
+  const blue = Number(match[3]) / 255
+  const max = Math.max(red, green, blue)
+  const min = Math.min(red, green, blue)
+
+  return ((max + min) / 2) * 100
+}
+
+function getNavbarToneFromViewport(): NavbarTone {
+  const samplePoints = [
+    [window.innerWidth * 0.5, 46],
+    [window.innerWidth * 0.18, 46],
+    [window.innerWidth * 0.82, 46],
+  ] as const
+
+  for (const [x, y] of samplePoints) {
+    const elements = document.elementsFromPoint(x, y)
+
+    for (const element of elements) {
+      if (element.closest('[data-navbar-root]')) continue
+
+      const backgroundColor = window.getComputedStyle(element).backgroundColor
+      const lightness = getLightnessFromColor(backgroundColor)
+
+      if (lightness !== null) {
+        return lightness < DARK_BACKGROUND_LIGHTNESS_THRESHOLD ? 'dark' : 'light'
+      }
+
+      const explicitTone = element.closest('[data-navbar-tone]')?.getAttribute('data-navbar-tone')
+      if (explicitTone === 'dark' || explicitTone === 'light') return explicitTone
+    }
+  }
+
+  return 'light'
+}
+
 export function Navbar() {
+  const pathname = usePathname()
   const router = useRouter()
-  const [activeMobileKey, setActiveMobileKey] = useState<string | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isTentangOpen, setIsTentangOpen] = useState(false)
+  const [isDesktopTentangOpen, setIsDesktopTentangOpen] = useState(false)
+  const [navbarTone, setNavbarTone] = useState<NavbarTone>('light')
+  const desktopTentangRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
+    const updateNavbarState = () => {
+      setIsScrolled(window.scrollY > 12)
+      setNavbarTone(getNavbarToneFromViewport())
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    updateNavbarState()
+    window.addEventListener('scroll', updateNavbarState, { passive: true })
+    window.addEventListener('resize', updateNavbarState)
+
+    return () => {
+      window.removeEventListener('scroll', updateNavbarState)
+      window.removeEventListener('resize', updateNavbarState)
+    }
   }, [])
 
-  const handleMobileToggle = (key: string) => {
-    setActiveMobileKey((current) => (current === key ? null : key))
-  }
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setIsTentangOpen(false)
+    setIsDesktopTentangOpen(false)
+  }, [pathname])
 
-  const renderDesktopMenu = () => (
-    <NavigationMenu align="start" className="hidden lg:flex">
-      <NavigationMenuList className="gap-2">
-        {NavbarItems.map((item) => (
-          <NavigationMenuItem key={item.key}>
-            {'sections' in item ? (
-              <>
-                <NavigationMenuTrigger className="text-base">{item.key}</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul
-                    className={
-                      item.key === 'Kegiatan' ? 'grid w-sm gap-2 p-3' : 'grid w-md gap-2 p-3'
-                    }
-                  >
-                    {item.sections.map((section, sectionIndex) => (
-                      <li key={section.title} className="rounded-lg p-4">
-                        <div className="mb-3 text-base font-medium">{section.title}</div>
-                        <div
-                          className={
-                            item.key === 'Kegiatan'
-                              ? 'grid grid-cols-1 gap-2'
-                              : 'grid grid-cols-2 gap-2'
-                          }
-                        >
-                          {section.items.map((subItem) => (
-                            <NavigationMenuLink
-                              key={subItem.key}
-                              href={subItem.href}
-                              className="flex items-center gap-2 rounded-lg px-2 py-2 text-base font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1"
-                            >
-                              {subItem.icon ? (
-                                <Image
-                                  src={`/${subItem.icon}`}
-                                  alt={subItem.key}
-                                  width={28}
-                                  height={28}
-                                  className="size-7 shrink-0"
-                                />
-                              ) : item.key === 'Kegiatan' ? null : (
-                                <span
-                                  aria-hidden="true"
-                                  className="flex size-7 shrink-0 items-center justify-center rounded-md border border-black bg-background text-black"
-                                >
-                                  <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.8"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="size-4"
-                                  >
-                                    <path d="M4 7h16M4 12h16M4 17h10" />
-                                  </svg>
-                                </span>
-                              )}
-                              {subItem.key}
-                            </NavigationMenuLink>
-                          ))}
-                        </div>
-                        {sectionIndex < item.sections.length - 1 ? (
-                          <div className="mt-4 h-px w-full bg-gray-500" />
-                        ) : null}
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </>
-            ) : (
-              <NavigationMenuLink
-                href={item.href}
-                className={`${navigationMenuTriggerStyle()} text-base`}
-              >
-                {item.key}
-              </NavigationMenuLink>
-            )}
-          </NavigationMenuItem>
-        ))}
-      </NavigationMenuList>
-    </NavigationMenu>
-  )
-
-  const renderMobileMenu = () => (
-    <div className="flex w-full flex-col gap-2">
-      {NavbarItems.map((item) => {
-        if ('sections' in item) {
-          const isOpen = activeMobileKey === item.key
-
-          return (
-            <div key={item.key} className="w-full">
-              <button
-                type="button"
-                onClick={() => handleMobileToggle(item.key)}
-                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-base font-medium hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-              >
-                <span>{item.key}</span>
-                <span className="text-sm text-muted-foreground">{isOpen ? '-' : '+'}</span>
-              </button>
-
-              {isOpen ? (
-                <div className="mt-2 flex w-full flex-col gap-3 rounded-lg bg-muted/20 p-3">
-                  {item.sections.map((section) => (
-                    <div key={section.title} className="flex flex-col gap-2">
-                      <div className="text-sm font-medium text-foreground">{section.title}</div>
-                      <div className="flex flex-col gap-1">
-                        {section.items.map((subItem) => (
-                          <Link
-                            key={subItem.key}
-                            href={subItem.href}
-                            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-                          >
-                            {subItem.icon ? (
-                              <Image
-                                src={`/${subItem.icon}`}
-                                alt={subItem.key}
-                                width={24}
-                                height={24}
-                                className="size-6 shrink-0"
-                              />
-                            ) : null}
-                            {subItem.key}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          )
-        }
-
-        return (
-          <Link
-            key={item.key}
-            href={item.href}
-            className="w-full rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
-          >
-            {item.key}
-          </Link>
-        )
-      })}
-
-      <Button
-        variant={'primary'}
-        className="mt-2 w-full text-base"
-        onClick={() => router.push('/kontak')}
-      >
-        Hubungi Kami
-      </Button>
-    </div>
-  )
-
-  const getNavClasses = () => {
-    if (isMobileMenuOpen) {
-      return 'fixed inset-x-0 top-0 z-[99] h-dvh bg-white transition-all duration-300'
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (desktopTentangRef.current && !desktopTentangRef.current.contains(event.target as Node)) {
+        setIsDesktopTentangOpen(false)
+      }
     }
-    
-    return `fixed z-[99] transition-all duration-300 ${
-      isScrolled 
-        ? 'top-2 sm:top-4 inset-x-4 sm:inset-x-8 rounded-2xl shadow-md border border-neutral-200/50 bg-white/95 backdrop-blur-md' 
-        : 'top-0 inset-x-0 bg-white'
-    }`
-  }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+
+
+  const isTentangActive = pathname?.startsWith('/tentang')
+  const isDarkTone = navbarTone === 'dark' && !isMobileMenuOpen
+  const desktopNavTextClass = cn(
+    'text-sm font-normal leading-6 tracking-normal transition-colors focus-visible:outline-3 focus-visible:outline-offset-4',
+    isDarkTone
+      ? 'text-white hover:text-neutral-300 focus-visible:outline-white/50'
+      : 'text-neutral-950 hover:text-neutral-950 focus-visible:outline-primary-100',
+  )
 
   return (
-    <nav className={getNavClasses()}>
-      <div className="mx-auto flex h-full flex-col items-start gap-4 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:gap-6 lg:px-8">
-        <div className="flex w-full items-center justify-between lg:w-1/2 lg:justify-start">
-          <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          </Link>
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen((open) => !open)}
-            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-black lg:hidden"
-          >
-            {isMobileMenuOpen ? (
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-5"
-              >
-                <path d="M6 6l12 12M18 6l12 12" />
-              </svg>
-            ) : (
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-5"
-              >
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
-        <div className="flex w-full flex-1 flex-col items-start gap-3 overflow-y-auto pb-4 lg:w-1/2 lg:ml-0 lg:flex-row lg:items-center lg:gap-4 lg:overflow-visible lg:pb-0 lg:justify-end">
-          <div className="hidden lg:flex lg:items-center lg:justify-end lg:gap-6">
-            {renderDesktopMenu()}
+    <nav
+      data-navbar-root
+      className={cn(
+        'fixed inset-x-0 top-0 z-[99] isolate transition-all duration-300',
+        isDarkTone ? 'text-white' : 'text-neutral-950',
+        isMobileMenuOpen && 'bg-white',
+      )}
+    >
+      <div
+        aria-hidden="true"
+        className={cn(
+          'pointer-events-none absolute inset-x-0 top-0 -z-10 h-[118px] transition-opacity duration-300 backdrop-blur-[5px] [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)]',
+          isDarkTone
+            ? 'bg-gradient-to-b from-black/22 via-black/8 to-transparent'
+            : 'bg-gradient-to-b from-white/72 via-white/26 to-transparent',
+          isScrolled && (isDarkTone ? 'from-black/40 via-black/16' : 'from-white/86 via-white/40'),
+          isMobileMenuOpen ? 'opacity-0' : 'opacity-100',
+        )}
+      />
+
+      <div className="mx-auto flex h-[76px] w-full max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:h-[92px] lg:px-8">
+        <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="KMTETI FT UGM">
+          <Image
+            src={
+              isDarkTone ? '/logo/kmteti/horizontal-white.svg' : '/logo/kmteti/horizontal-color.svg'
+            }
+            alt="KMTETI FT UGM"
+            width={134}
+            height={38}
+            priority
+            className="h-[34px] w-auto drop-shadow-[0_3px_4px_rgba(0,0,0,0.22)] lg:h-[38px]"
+          />
+          <span className="sr-only">KMTETI FT UGM</span>
+        </Link>
+
+        <div className="relative hidden items-center gap-8 lg:flex" ref={desktopTentangRef}>
+          <div>
+            <button
+              type="button"
+              onClick={() => setIsDesktopTentangOpen(!isDesktopTentangOpen)}
+              className={cn(
+                'flex h-11 items-center gap-2 rounded-2xl bg-transparent px-3 py-2 text-base font-normal leading-6 transition-colors hover:text-neutral-950',
+                desktopNavTextClass,
+                isDesktopTentangOpen && (isDarkTone ? 'text-primary-100' : 'text-primary-500'),
+              )}
+            >
+              Tentang
+              <ChevronDown
+                className={cn('size-4 transition-transform', isDesktopTentangOpen && 'rotate-180')}
+              />
+            </button>
           </div>
 
-          <div className="hidden lg:block">
-            <Button variant={'primary'} className="text-base" onClick={() => router.push('/kontak')}>
+          {mainLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'inline-flex h-11 items-center rounded-2xl px-3',
+                desktopNavTextClass,
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          <Button variant="primary" size="sm" onClick={() => router.push('/kontak')}>
+            Hubungi Kami
+          </Button>
+
+          {isDesktopTentangOpen && (
+            <div className="absolute right-0 top-full z-[100] mt-4 grid w-[600px] cursor-default grid-cols-4 gap-6 rounded-[24px] border border-black/5 bg-white/95 p-6 text-neutral-950 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl">
+              {/* Information */}
+              <div className="flex flex-col">
+                <h3
+                  className="mb-4 text-xs font-regular
+r text-neutral-400"
+                >
+                  Information
+                </h3>
+                <div className="flex flex-col gap-4">
+                  <Link
+                    href="/tentang/profil"
+                    className="text-sm font-bold text-neutral-950 transition-colors hover:text-neutral-950"
+                  >
+                    Profil KMTETI
+                  </Link>
+                  <Link
+                    href="/tentang/berita"
+                    className="text-sm font-bold text-neutral-950 transition-colors hover:text-neutral-950"
+                  >
+                    Berita KMTETI
+                  </Link>
+                </div>
+              </div>
+              {/* Divisi */}
+              <div className="flex flex-col">
+                <h3 className="mb-4 text-xs font-regular text-neutral-400">
+                  Divisi
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {megaMenuData.divisi.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                    >
+                      {'icon' in item && item.icon ? (
+                        <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
+                      ) : (
+                        <div className="size-[18px] shrink-0" />
+                      )}
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              {/* BSO */}
+              <div className="flex flex-col">
+                <h3 className="mb-4 text-xs font-regular text-neutral-400">
+                  BSO
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {megaMenuData.bso.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                    >
+                      {'icon' in item && item.icon ? (
+                        <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
+                      ) : (
+                        <div className="size-[18px] shrink-0" />
+                      )}
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              {/* Event */}
+              <div className="flex flex-col">
+                <h3 className="mb-4 text-xs font-regular text-neutral-400">
+                  Event
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {megaMenuData.event.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsMobileMenuOpen((open) => !open)}
+          className={cn(
+            'inline-flex size-11 items-center justify-center rounded-lg border shadow-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-4 lg:hidden',
+            isDarkTone
+              ? 'border-white/15 bg-black/15 text-white backdrop-blur-md hover:bg-black/25 focus-visible:outline-white/50'
+              : 'border-neutral-200 bg-white/80 text-neutral-950 backdrop-blur-md hover:bg-white focus-visible:outline-primary-100',
+          )}
+          aria-label={isMobileMenuOpen ? 'Tutup menu' : 'Buka menu'}
+          aria-expanded={isMobileMenuOpen}
+        >
+          {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
+      </div>
+
+      {isMobileMenuOpen ? (
+        <div className="fixed inset-x-0 top-[75px] z-[98] max-h-[calc(100dvh-75px)] overflow-y-auto rounded-b-3xl border-t border-neutral-100 bg-white px-5 py-5 shadow-[0_20px_40px_rgba(15,23,42,0.12)] lg:hidden">
+          <div className="flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={() => setIsTentangOpen((open) => !open)}
+              className="flex h-12 w-full items-center justify-between rounded-lg px-3 text-left text-sm font-semibold text-neutral-950 hover:bg-neutral-100"
+              aria-expanded={isTentangOpen}
+            >
+              Tentang
+              <ChevronDown
+                aria-hidden="true"
+                className={cn(
+                  'size-5 transition-transform duration-200',
+                  isTentangOpen && 'rotate-180',
+                )}
+              />
+            </button>
+
+            {isTentangOpen ? (
+              <div className="mb-2 flex flex-col gap-6 px-3 py-2">
+                {/* Informasi */}
+                <div className="flex flex-col gap-3">
+                  <span className="text-xs font-normal text-neutral-400">Informasi</span>
+                  <div className="flex flex-col gap-3">
+                    {tentangLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Divisi */}
+                <div className="flex flex-col gap-3">
+                  <span className="text-xs font-normal text-neutral-400">Divisi</span>
+                  <div className="flex flex-col gap-4">
+                    {megaMenuData.divisi.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                      >
+                        {'icon' in item && item.icon ? (
+                          <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
+                        ) : (
+                          <div className="size-[18px] shrink-0" />
+                        )}
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* BSO */}
+                <div className="flex flex-col gap-3">
+                  <span className="text-xs font-normal text-neutral-400">BSO</span>
+                  <div className="flex flex-col gap-4">
+                    {megaMenuData.bso.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                      >
+                        {'icon' in item && item.icon ? (
+                          <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
+                        ) : (
+                          <div className="size-[18px] shrink-0" />
+                        )}
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Event */}
+                <div className="flex flex-col gap-3">
+                  <span className="text-xs font-normal text-neutral-400">Event</span>
+                  <div className="flex flex-col gap-3">
+                    {megaMenuData.event.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
+            {mainLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex h-12 items-center rounded-lg px-3 text-sm font-semibold text-neutral-950 hover:bg-neutral-100"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <Button
+              variant="primary"
+              size="lg"
+              className="mt-4 h-12 w-full rounded-[11px] text-base shadow-[0_8px_18px_rgba(0,111,151,0.3)]"
+              onClick={() => router.push('/kontak')}
+            >
               Hubungi Kami
             </Button>
           </div>
-
-          <div className="w-full lg:hidden">{isMobileMenuOpen ? renderMobileMenu() : null}</div>
         </div>
-      </div>
+      ) : null}
     </nav>
   )
 }

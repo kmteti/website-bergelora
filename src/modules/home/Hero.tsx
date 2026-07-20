@@ -71,7 +71,7 @@ export default function Hero() {
   }, [emblaApi])
 
   return (
-    <div className="sticky top-0 h-screen min-h-screen w-full overflow-hidden z-0">
+    <div className="sticky top-0 h-screen min-h-screen w-full overflow-hidden z-0" data-navbar-tone="dark">
       <style>{`
         @keyframes slide-progress {
           from { width: 0%; }

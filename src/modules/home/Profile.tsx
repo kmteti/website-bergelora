@@ -40,26 +40,10 @@ export default function Profile() {
             />
           </div>
 
-          {/* Floating Bubble (Blue Pill) */}
-          <div className="absolute top-[52%] left-[62%] -translate-x-1/2 -translate-y-1/2 z-20 flex items-center p-1.5 bg-[#4A90E2] rounded-full shadow-lg border-2 border-white">
-            <div className="w-8 h-8 rounded-full bg-white overflow-hidden relative shadow-inner">
-               <Image src="/images/home/about/about.webp" alt="Avatar" fill className="object-cover" />
-            </div>
-            <div className="w-8 h-8 rounded-full bg-white ml-1.5 flex items-center justify-center shadow-inner">
-               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A90E2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            </div>
-          </div>
+       
 
-          {/* Floating Cursor (Alfi Fian) */}
-          <div className="absolute top-[48%] right-[8%] z-20 flex flex-col items-start drop-shadow-lg">
-            {/* SVG Cursor Pointer */}
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform -rotate-[15deg]">
-              <path d="M6 3L21 12L12 14L8 22L6 3Z" fill="#10B981" stroke="white" strokeWidth="2.5" strokeLinejoin="round"/>
-            </svg>
-            <div className="bg-[#10B981] text-white text-xs font-semibold px-2.5 py-1 rounded-md ml-5 -mt-1 shadow-md">
-              Alfi Fian
-            </div>
-          </div>
+      
+
         </div>
       </div>
     </section>
