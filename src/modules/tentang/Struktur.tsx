@@ -11,7 +11,6 @@ import { cn } from "@/lib/cn"
 import { BoDData, BoDMember } from "./Struktur.ts"
 
 function BoDCard({ item }: { item: BoDMember }) {
-  const pos_role = item.role.split(" of ")
   const [hasError, setHasError] = useState(false)
 
   // Map temporary image paths to the hero.webp demo photo to prevent 404 errors

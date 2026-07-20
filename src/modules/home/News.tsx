@@ -40,7 +40,7 @@ export default function News() {
             KMTETI News
           </H2>
           <B2 className="text-gray-600 md:w-1/2 text-left leading-relaxed">
-            At KMTETI, a spirit of optimism and possibility energizes our mission of discovery and learning. Here you'll find a place of intellectual expansiveness, wide-ranging perspectives, and freedom to explore new lines of thinking.
+            At KMTETI, a spirit of optimism and possibility energizes our mission of discovery and learning. Here you&apos;ll find a place of intellectual expansiveness, wide-ranging perspectives, and freedom to explore new lines of thinking.
           </B2>
         </div>
 

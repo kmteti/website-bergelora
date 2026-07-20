@@ -140,7 +140,6 @@ export function Navbar() {
 
 
 
-  const isTentangActive = pathname?.startsWith('/tentang')
   const isDarkTone = navbarTone === 'dark' && !isMobileMenuOpen
   const desktopNavTextClass = cn(
     'text-sm font-normal leading-6 tracking-normal transition-colors focus-visible:outline-3 focus-visible:outline-offset-4',
