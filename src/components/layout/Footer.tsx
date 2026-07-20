@@ -5,19 +5,38 @@ import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const featureLinks = ['Tentang Kami', 'KMTETI News', 'Layanan', 'Hubungi Kami']
-const divisionLinks = [
-  'Adkesma',
-  'BPO',
-  'Electropreneur',
-  'Humas',
-  'Infokom',
-  'Mikat',
-  'Sosmas',
-  'Workshop',
+const featureLinks = [
+  { label: 'Tentang Kami', href: '/tentang/profil' },
+  { label: 'KMTETI News', href: '/tentang/berita' },
+  { label: 'Layanan', href: '/layanan' },
+  { label: 'Hubungi Kami', href: '/hubungi-kami' },
 ]
-const bsoLinks = ['Magatrika', 'Night Login', 'Bionce', 'MPM', 'SKI', 'SKK']
-const eventLinks = ['Nesco', 'Find-IT', 'Technocorner']
+
+const divisionLinks = [
+  { label: 'Adkesma', href: '/divisi/adkesma' },
+  { label: 'BPO', href: '/divisi/bpo' },
+  { label: 'Electropreneur', href: '/divisi/electropreneur' },
+  { label: 'Humas', href: '/divisi/humas' },
+  { label: 'Infokom', href: '/divisi/infokom' },
+  { label: 'Mikat', href: '/divisi/minat-dan-bakat' },
+  { label: 'Sosmas', href: '/divisi/sosmas' },
+  { label: 'Workshop', href: '/divisi/workshop' },
+]
+
+const bsoLinks = [
+  { label: 'Magatrika', href: '/bso/magatrika' },
+  { label: 'Night Login', href: '/bso/night-login' },
+  { label: 'Bionce', href: '/bso/bionce' },
+  { label: 'MPM', href: '/bso/mpm' },
+  { label: 'SKI', href: '/bso/ski' },
+  { label: 'SKK', href: '/bso/skk' },
+]
+
+const eventLinks = [
+  { label: 'Nesco', href: '/event/nesco' },
+  { label: 'Find-IT', href: '/event/findit' },
+  { label: 'Technocorner', href: '/event/technocorner' },
+]
 
 const YoutubeIcon = ({ className, ...props }: any) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={`scale-[1.15] ${className || ''}`} {...props}>
@@ -57,7 +76,7 @@ const socialLinks = [
   { label: 'LinkedIn', href: 'https://linkedin.com', icon: LinkedinIcon },
 ]
 
-function FooterColumn({ title, links }: { title: string; links: string[] }) {
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   const id = `footer-accordion-${title.toLowerCase().replace(/\s+/g, '-')}`
 
   return (
@@ -78,12 +97,12 @@ function FooterColumn({ title, links }: { title: string; links: string[] }) {
 
       <ul className="mt-4 hidden space-y-3 peer-checked:block sm:mt-0 sm:block sm:space-y-[9px]">
         {links.map((link) => (
-          <li key={link}>
+          <li key={link.label}>
             <Link
-              href="#"
+              href={link.href}
               className="block text-[13px] font-medium leading-[17px] text-[#f1f1f1]/88 transition-colors hover:text-white sm:text-xs sm:leading-[15px]"
             >
-              {link}
+              {link.label}
             </Link>
           </li>
         ))}
