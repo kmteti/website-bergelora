@@ -15,7 +15,7 @@ const buttonVariants = cva(
         secondary:
           'btn--secondary bg-secondary-400 text-white hover:bg-secondary-300 active:bg-secondary-500 focus-visible:outline-secondary-100',
         black:
-          'bg-gradient-to-b from-[#6b6b6b] to-[#4a4a4a] text-white border border-black/40 shadow-[inset_0_1px_1px_#ffffff40,0_4px_6px_-1px_#0000004d] hover:from-[#7a7a7a] hover:to-[#5a5a5a] active:from-[#4a4a4a] active:to-[#333333] focus-visible:outline-zinc-300',
+          'btn--black bg-neutral-900 text-white hover:bg-neutral-700 active:bg-neutral-1000 focus-visible:outline-neutral-300',
       },
       size: {
         sm: 'h-10 rounded-[11px] px-3.5 py-0 text-sm leading-5 gap-1.5 [--btn-icon-size:14px]',

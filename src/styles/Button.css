@@ -30,6 +30,12 @@
   --btn-bg-pressed: #60761c;
 }
 
+.btn--black {
+  --btn-bg: #4a4a4a;
+  --btn-bg-hover: #777777;
+  --btn-bg-pressed: #333333;
+}
+
 .btn:hover,
 .btn[data-hover='true'] {
   background-color: var(--btn-bg-hover, #33bfe7);
