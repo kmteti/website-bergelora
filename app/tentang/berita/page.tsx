@@ -1,9 +1,8 @@
+import News from '@/modules/news/News'
 import React from 'react'
 
 const page = () => {
-  return (
-    <div>ini page berita</div>
-  )
+  return <News />
 }
 
 export default page
