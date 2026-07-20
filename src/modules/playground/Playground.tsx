@@ -1,6 +1,7 @@
 import { H3 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import Typography from '@/modules/playground/ViewTypography'
+import LayoutGuide from '@/modules/playground/LayoutGuide'
 import { Home } from 'lucide-react'
 
 const buttonRows = [
@@ -25,6 +26,8 @@ export default function Playground() {
 
   return (
     <div className="mt-20 min-h-screen bg-neutral-300 p-10">
+      <LayoutGuide />
+
       <div className="mb-12 flex flex-col gap-8 rounded-xl bg-white p-8 shadow-sm">
         <H3>Button Variants</H3>
 
