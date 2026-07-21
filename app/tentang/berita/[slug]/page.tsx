@@ -1,9 +1,7 @@
 import React from 'react'
+import { NewsDetail } from '@/modules/news/detail/NewsDetail'
 
-const page = () => {
-  return (
-    <div>ini slug page berita</div>
-  )
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params
+  return <NewsDetail slug={resolvedParams.slug} />
 }
-
-export default page
