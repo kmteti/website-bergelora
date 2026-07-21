@@ -2,6 +2,7 @@ import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
 import { SearchBar } from '@/components/elements/SearchBar'
 import { SectionHeader } from '@/components/elements/SectionHeader'
+import DefaultLayout from '@/components/layout/DefaultLayout'
 
 import { ServiceCard, type ServiceCardProps } from './components/ServiceCard'
 
@@ -145,8 +146,8 @@ export default function Layanan() {
       />
 
       {/* 2. Konten yang overlap ke atas hero, background gradient abu ke biru muda */}
-      <PageOverlap className="min-h-[500px] bg-gradient-to-b from-[#f6f6f6] to-[#c2dfff]">
-        <div className="mx-auto w-full max-w-[1240px] px-6 pb-32 pt-14 sm:px-8 md:pt-20 md:pb-[196px] lg:px-10">
+      <PageOverlap className="min-h-[500px] bg-gradient-to-b from-[#f6f6f6] from-[94%] to-[#c2dfff]">
+        <DefaultLayout>
           {/* Search bar */}
           <div className="flex justify-center">
             <SearchBar className="max-w-[586px]" />
@@ -165,7 +166,7 @@ export default function Layanan() {
               </section>
             ))}
           </div>
-        </div>
+        </DefaultLayout>
       </PageOverlap>
     </main>
   )
