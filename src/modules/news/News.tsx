@@ -1,92 +1,103 @@
-import React from 'react'
-import Image from 'next/image'
+'use client'
+
+import React, { useState } from 'react'
 import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
 import DefaultLayout from '@/components/layout/DefaultLayout'
-import { Button } from '@/components/ui/button'
+import { SearchBar } from '@/components/elements/SearchBar'
+import { SectionHeader } from '@/components/elements/SectionHeader'
+import { Pagination } from '@/components/elements/Pagination'
+import { ALL_NEWS_DATA } from '@/modules/news/mock-data/NewsData'
+import { NewsCard } from './components/NewsCard'
+import { SpotlightCard } from './components/SpotlightCard'
+import { SpotlightCarousel } from './components/SpotlightCarousel'
 
 const News = () => {
-  // Dummy data untuk contoh tampilan
-  const newsData = [
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide1.webp',
-    },
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide2.webp',
-    },
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide3.webp',
-    },
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide1.webp',
-    },
-  ]
+  // TODO: Nanti saat integrasi dengan backend/Payload CMS,
+  // fetch data berita dengan query sort by date descending (latest).
+  // 3 data pertama masukkan ke `spotlightData`,
+  // sisanya (mulai dari data ke-4) masukkan ke `newsData` untuk grid di bawah.
+
+  // Dummy data untuk spotlight (3 berita terbaru)
+  const spotlightData = ALL_NEWS_DATA.slice(0, 3).map((item) => ({
+    ...item,
+    href: `/tentang/berita/${item.slug}`,
+  }))
+
+  // Dummy data untuk contoh tampilan (sisa berita untuk pagination)
+  const allNewsData = ALL_NEWS_DATA.slice(3).map((item) => ({
+    ...item,
+    href: `/tentang/berita/${item.slug}`,
+  }))
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const ITEMS_PER_PAGE = 12
+  const totalPages = Math.ceil(allNewsData.length / ITEMS_PER_PAGE)
+
+  // Ambil data untuk halaman saat ini
+  const paginatedNews = allNewsData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  )
 
   return (
     <main className="w-full relative min-h-screen bg-neutral-100">
       {/* 1. Header Full Width */}
-      <PageHeader 
+      <PageHeader
         title="KMTETI News"
         description="Berita dan Artikel"
         imageSrc="/images/news/news-header.webp"
       />
 
       {/* 2. Container Overlap (FULL WIDTH) */}
-      <PageOverlap className="bg-[#fafafa] min-h-[500px]">
-          <DefaultLayout>
-            
-            {/* Bagian Search Bar (Di-center seperti screenshot) */}
-            <div className="flex justify-center mb-12">
-              <div className="flex w-full max-w-2xl gap-3">
-                <div className="relative flex-1">
-                  <input 
-                    type="text" 
-                    placeholder="Cari Keyword" 
-                    className="w-full h-12 px-5 rounded-full border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                  />
-                  {/* Icon close pura-pura */}
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center text-white text-xs font-bold cursor-pointer">
-                    ×
-                  </div>
-                </div>
-                <Button className="rounded-full px-6 h-12 bg-[#5B5B5B] hover:bg-[#4a4a4a] text-white flex items-center gap-2">
-                  <span>Filter</span>
-                  {/* Icon filter pura-pura */}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                </Button>
+      <PageOverlap className="bg-gradient-to-b from-[#f6f6f6] from-[94%] to-[#c2dfff] min-h-[500px]">
+        <DefaultLayout>
+          <div className="mb-12 flex justify-center">
+            <SearchBar className="max-w-[586px]" />
+          </div>
+
+          {/* Spotlight Section - Mobile Carousel */}
+          <div className="mb-12 block lg:hidden">
+            <SpotlightCarousel data={spotlightData} />
+          </div>
+
+          {/* Spotlight Section - Desktop Grid */}
+          <div className="mb-16 hidden lg:grid grid-cols-1 gap-6 lg:h-[500px] lg:grid-cols-3">
+            <div className="h-[400px] lg:col-span-2 lg:h-full">
+              <SpotlightCard {...spotlightData[0]} isLarge />
+            </div>
+            <div className="flex h-[600px] flex-col gap-6 lg:col-span-1 lg:h-full">
+              <div className="h-full flex-1">
+                <SpotlightCard {...spotlightData[1]} />
+              </div>
+              <div className="h-full flex-1">
+                <SpotlightCard {...spotlightData[2]} />
               </div>
             </div>
+          </div>
 
-            {/* Grid Berita */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {newsData.map((news, idx) => (
-                <div key={idx} className="flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                  <div className="relative w-full aspect-[4/3]">
-                    <Image src={news.image} alt={news.title} fill className="object-cover" />
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow text-left">
-                    <span className="text-[#5c98a3] text-sm font-medium mb-3">{news.category}</span>
-                    <h3 className="text-[#2D2D2D] font-semibold text-lg leading-snug mb-6">{news.title}</h3>
-                    <span className="text-[#A0A0A0] text-sm mt-auto">{news.date}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <SectionHeader title="Berita dan Artikel" className="mb-8 md:mb-10" />
 
-          </DefaultLayout>
-        </PageOverlap>
+          {/* Grid Berita */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {paginatedNews.map((news, idx) => (
+              <NewsCard key={idx} {...news} />
+            ))}
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => {
+                setCurrentPage(page)
+                // Scroll sedikit ke atas (opsional) saat pindah halaman
+                window.scrollTo({ top: 500, behavior: 'smooth' })
+              }}
+            />
+          </div>
+        </DefaultLayout>
+      </PageOverlap>
     </main>
   )
 }
