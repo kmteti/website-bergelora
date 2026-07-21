@@ -17,24 +17,23 @@ const serviceSections: ServiceSection[] = [
     items: [
       {
         title: 'Akademik DTETI',
-        description:
-          'Berisi panduan lengkap mengenai informasi perkuliahan, kegiatan-kegiatan, dan panduan persuratan.',
-        href: '#',
+        description: 'Portal sistem informasi akademik program sarjana DTETI.',
+        href: 'https://sarjana.jteti.ugm.ac.id/',
       },
       {
-        title: 'SIMASTER UGM',
-        description: 'Portal akademik utama untuk KRS, jadwal kuliah, nilai, dan administrasi mahasiswa.',
-        href: '#',
+        title: 'Persuratan FT',
+        description: 'Sistem pengajuan dan pengelolaan surat di Fakultas Teknik UGM.',
+        href: 'https://sms.ft.ugm.ac.id/persuratan/index.php/?nextUrl=%2Fpersuratan%2Findex.php%2Fp%2Fdashboard%2Fdocument',
       },
       {
-        title: 'Perpustakaan DTETI',
-        description: 'Akses literatur, jurnal, dan referensi tugas akhir untuk mendukung perkuliahan.',
-        href: '#',
+        title: 'Kegiatan Mahasiswa FT',
+        description: 'Portal pengajuan proposal dan kegiatan mahasiswa Fakultas Teknik.',
+        href: 'https://sms.ft.ugm.ac.id/kegiatan-mahasiswa/index.php/?nextUrl=%2Fkegiatan-mahasiswa%2Findex.php%2Fp%2Fproposal',
       },
       {
-        title: 'Informasi Beasiswa',
-        description: 'Kumpulan info beasiswa internal maupun eksternal beserta panduan pendaftarannya.',
-        href: '#',
+        title: 'Data Prestasi',
+        description: 'Dashboard rekap data prestasi mahasiswa DTETI.',
+        href: 'https://datastudio.google.com/u/0/reporting/f0e83f84-41ec-4719-b116-cc1e445cd3dc/page/mfGHF',
       },
     ],
   },
@@ -42,43 +41,20 @@ const serviceSections: ServiceSection[] = [
     title: 'Arsip Divisi',
     items: [
       {
-        title: 'Adkesma',
-        description: 'Arsip program dan advokasi kesejahteraan mahasiswa DTETI.',
+        title: 'Info Lomba & Beasiswa',
+        description: 'Kumpulan informasi lomba dan beasiswa untuk mahasiswa.',
+        href: 'https://s.id/ILBAdkesmaKMTETI',
+      },
+      {
+        // TODO: URL belum tersedia di FigJam (disebut "GDrive")
+        title: 'Forwati',
+        description: 'Arsip Forwati yang dapat diakses melalui Google Drive.',
         href: '#',
       },
       {
-        title: 'BPO',
-        description: 'Dokumentasi pengawasan organisasi dan evaluasi kegiatan kepengurusan.',
-        href: '#',
-      },
-      {
-        title: 'Electropreneur',
-        description: 'Arsip kegiatan kewirausahaan dan pengembangan bisnis mahasiswa.',
-        href: '#',
-      },
-      {
-        title: 'Humas',
-        description: 'Rekam jejak relasi, publikasi, dan kerja sama eksternal KMTETI.',
-        href: '#',
-      },
-      {
-        title: 'Infokom',
-        description: 'Arsip media, desain, dan dokumentasi informasi komunikasi.',
-        href: '#',
-      },
-      {
-        title: 'Mikat',
-        description: 'Dokumentasi kegiatan minat, bakat, dan prestasi mahasiswa.',
-        href: '#',
-      },
-      {
-        title: 'Sosmas',
-        description: 'Arsip kegiatan sosial dan pengabdian kepada masyarakat.',
-        href: '#',
-      },
-      {
-        title: 'Workshop',
-        description: 'Materi dan dokumentasi pelatihan serta pengembangan keilmuan.',
+        // TODO: URL belum tersedia di FigJam
+        title: 'Kebutuhan Heregistrasi',
+        description: 'Panduan dan berkas yang dibutuhkan untuk heregistrasi.',
         href: '#',
       },
     ],
@@ -87,24 +63,19 @@ const serviceSections: ServiceSection[] = [
     title: 'Dokumen dan SOP',
     items: [
       {
-        title: 'SOP Persuratan',
-        description: 'Prosedur pembuatan, penomoran, dan pengarsipan surat resmi KMTETI.',
-        href: '#',
+        title: 'Buku Panduan Akademik',
+        description: 'Buku panduan akademik program sarjana DTETI.',
+        href: 'https://sarjana.jteti.ugm.ac.id/akademik/dokumen-akademik/',
       },
       {
-        title: 'Panduan Proposal',
-        description: 'Template dan panduan penyusunan proposal kegiatan yang baku.',
-        href: '#',
+        title: 'Dokumen Akademik dan Kemahasiswaan',
+        description: 'Kumpulan dokumen akademik dan kemahasiswaan resmi DTETI.',
+        href: 'https://sarjana.jteti.ugm.ac.id/kemahasiswaan/dokumen-akademik-dan-kemahasiswaan/',
       },
       {
-        title: 'Template LPJ',
-        description: 'Format laporan pertanggungjawaban kegiatan beserta contohnya.',
-        href: '#',
-      },
-      {
-        title: 'SOP Peminjaman Inventaris',
-        description: 'Alur dan syarat peminjaman inventaris serta ruang sekretariat.',
-        href: '#',
+        title: 'SOP',
+        description: 'Standar operasional prosedur akademik DTETI.',
+        href: 'https://sarjana.jteti.ugm.ac.id/akademik/sop/',
       },
     ],
   },
@@ -112,24 +83,24 @@ const serviceSections: ServiceSection[] = [
     title: 'Sekretaris dan Bendahara',
     items: [
       {
-        title: 'Format Surat Resmi',
-        description: 'Kumpulan template surat resmi untuk berbagai keperluan organisasi.',
-        href: '#',
+        title: 'Manual Book Kesekretariatan',
+        description: 'Panduan administrasi dan kesekretariatan organisasi.',
+        href: 'https://bit.ly/ManualBookKSK2024',
       },
       {
-        title: 'Alur Reimbursement',
-        description: 'Panduan pengajuan dan pencairan dana kegiatan secara transparan.',
-        href: '#',
+        title: 'Manual Book Kebendaharaan',
+        description: 'Panduan pengelolaan keuangan dan kebendaharaan organisasi.',
+        href: 'https://bit.ly/ManualBookKBN2024',
       },
       {
-        title: 'Laporan Keuangan',
-        description: 'Rekap dan format laporan keuangan kepengurusan KMTETI.',
-        href: '#',
+        title: 'Kumpulan Template',
+        description: 'Berbagai template dokumen dan surat siap pakai.',
+        href: 'https://drive.google.com/drive/folders/0B2Rf2cDPuLplcEZKZzgydVdBc00?resourcekey=0-OBdwkd2BD64289B7TAhslg',
       },
       {
-        title: 'Notulensi Rapat',
-        description: 'Arsip notulensi rapat pengurus dan template pencatatannya.',
-        href: '#',
+        title: 'Form Verifikasi Persuratan',
+        description: 'Formulir verifikasi persuratan organisasi.',
+        href: 'https://docs.google.com/forms/d/e/1FAIpQLSfkfg5-YzcvAYnzYjozs25cPReXmBP7gE08aaUJcRqCdLJhZQ/viewform',
       },
     ],
   },
