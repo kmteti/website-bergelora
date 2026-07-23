@@ -4,6 +4,12 @@ import { cn } from '@/lib/utils'
 import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 const featureLinks = [
   { label: 'Tentang Kami', href: '/tentang/profil' },
@@ -76,38 +82,47 @@ const socialLinks = [
   { label: 'LinkedIn', href: 'https://linkedin.com', icon: LinkedinIcon },
 ]
 
-function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
-  const id = `footer-accordion-${title.toLowerCase().replace(/\s+/g, '-')}`
-
+function FooterColumn({ title, links, value }: { title: string; links: { label: string; href: string }[]; value: string }) {
   return (
-    <div className="min-w-0 border-b border-white/15 py-4 sm:border-none sm:py-0">
-      <input type="checkbox" id={id} className="peer hidden" />
-      
-      <label
-        htmlFor={id}
-        className="flex cursor-pointer items-center justify-between sm:hidden"
-      >
-        <B3 className="font-bold leading-[18px] text-[#f1f1f1]">{title}</B3>
-        <ChevronDown className="size-4 text-white/70 transition-transform duration-300 peer-checked:rotate-180" />
-      </label>
+    <>
+      <AccordionItem value={value} className="border-none py-2 sm:hidden">
+        <AccordionTrigger className="hover:no-underline py-2 [&_[data-slot=accordion-trigger-icon]]:text-white/70 hover:opacity-100 focus-visible:ring-0 focus-visible:border-transparent outline-none">
+          <B3 className="font-bold leading-[18px] text-[#f1f1f1] text-left">{title}</B3>
+        </AccordionTrigger>
+        <AccordionContent className="pb-2 [&_a]:no-underline">
+          <ul className="mt-2 space-y-3">
+            {links.map((link) => (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="block text-[13px] font-medium leading-[17px] text-[#f1f1f1]/88 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </AccordionContent>
+      </AccordionItem>
 
-      <B3 className="mb-3 hidden font-bold leading-[18px] text-[#f1f1f1] sm:block">
-        {title}
-      </B3>
-
-      <ul className="mt-4 hidden space-y-3 peer-checked:block sm:mt-0 sm:block sm:space-y-[9px]">
-        {links.map((link) => (
-          <li key={link.label}>
-            <Link
-              href={link.href}
-              className="block text-[13px] font-medium leading-[17px] text-[#f1f1f1]/88 transition-colors hover:text-white sm:text-xs sm:leading-[15px]"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="hidden min-w-0 sm:block">
+        <B3 className="mb-3 font-bold leading-[18px] text-[#f1f1f1]">
+          {title}
+        </B3>
+        <ul className="space-y-[9px]">
+          {links.map((link) => (
+            <li key={link.label}>
+              <Link
+                href={link.href}
+                className="block text-xs font-medium leading-[15px] text-[#f1f1f1]/88 transition-colors hover:text-white"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   )
 }
 
@@ -194,15 +209,17 @@ export default function Footer() {
               </div>
             </div>
 
-            <nav
-              className="grid grid-cols-1 border-t border-white/15 text-[#f1f1f1] sm:grid-cols-4 sm:gap-x-10 sm:gap-y-8 sm:border-none lg:gap-x-16"
-              aria-label="Footer"
-            >
-              <FooterColumn title="Fitur" links={featureLinks} />
-              <FooterColumn title="Divisi" links={divisionLinks} />
-              <FooterColumn title="BSO" links={bsoLinks} />
-              <FooterColumn title="Event" links={eventLinks} />
-            </nav>
+            <Accordion className="w-full">
+              <nav
+                className="grid grid-cols-1 text-[#f1f1f1] sm:grid-cols-4 sm:gap-x-10 sm:gap-y-8 lg:gap-x-16"
+                aria-label="Footer"
+              >
+                <FooterColumn value="item-1" title="Fitur" links={featureLinks} />
+                <FooterColumn value="item-2" title="Divisi" links={divisionLinks} />
+                <FooterColumn value="item-3" title="BSO" links={bsoLinks} />
+                <FooterColumn value="item-4" title="Event" links={eventLinks} />
+              </nav>
+            </Accordion>
           </div>
 
           <div className="mt-9 border-t border-white/35 pt-6 sm:pt-7 lg:mt-8">

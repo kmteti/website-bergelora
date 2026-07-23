@@ -8,6 +8,12 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 type NavLink = {
   label: string
@@ -101,7 +107,6 @@ export function Navbar() {
   const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isTentangOpen, setIsTentangOpen] = useState(false)
   const [isDesktopTentangOpen, setIsDesktopTentangOpen] = useState(false)
   const [navbarTone, setNavbarTone] = useState<NavbarTone>('light')
   const desktopTentangRef = useRef<HTMLDivElement>(null)
@@ -124,7 +129,6 @@ export function Navbar() {
 
   useEffect(() => {
     setIsMobileMenuOpen(false)
-    setIsTentangOpen(false)
     setIsDesktopTentangOpen(false)
   }, [pathname])
 
@@ -138,14 +142,12 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-
-
   const isDarkTone = navbarTone === 'dark' && !isMobileMenuOpen
   const desktopNavTextClass = cn(
-    'text-sm font-normal leading-6 tracking-normal transition-colors focus-visible:outline-3 focus-visible:outline-offset-4',
+    'text-sm font-medium leading-6 tracking-normal transition-all duration-200 focus-visible:outline-3 focus-visible:outline-offset-4',
     isDarkTone
-      ? 'text-white hover:text-neutral-300 focus-visible:outline-white/50'
-      : 'text-neutral-950 hover:text-neutral-950 focus-visible:outline-primary-100',
+      ? 'text-white hover:text-primary-200 focus-visible:outline-white/50'
+      : 'text-black/70 hover:text-black/90 focus-visible:outline-primary-100',
   )
 
   return (
@@ -160,7 +162,7 @@ export function Navbar() {
       <div
         aria-hidden="true"
         className={cn(
-          'pointer-events-none absolute inset-x-0 top-0 -z-10 h-[118px] transition-opacity duration-300 backdrop-blur-[5px] [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)]',
+          'pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100px] transition-opacity duration-300 backdrop-blur-[5px] [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)]',
           isDarkTone
             ? 'bg-gradient-to-b from-black/22 via-black/8 to-transparent'
             : 'bg-gradient-to-b from-white/72 via-white/26 to-transparent',
@@ -190,9 +192,9 @@ export function Navbar() {
               type="button"
               onClick={() => setIsDesktopTentangOpen(!isDesktopTentangOpen)}
               className={cn(
-                'flex h-11 items-center gap-2 rounded-2xl bg-transparent px-3 py-2 text-base font-normal leading-6 transition-colors hover:text-neutral-950',
+                'flex h-11 items-center cursor-pointer gap-2 rounded-2xl bg-transparent px-3 py-2 text-sm leading-6 transition-all duration-200',
                 desktopNavTextClass,
-                isDesktopTentangOpen && (isDarkTone ? 'text-primary-100' : 'text-primary-500'),
+                isDesktopTentangOpen && (isDarkTone ? 'text-primary-200' : 'text-black/50'),
               )}
             >
               Tentang
@@ -206,10 +208,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={cn(
-                'inline-flex h-11 items-center rounded-2xl px-3',
-                desktopNavTextClass,
-              )}
+              className={cn('inline-flex h-11 items-center rounded-2xl px-3', desktopNavTextClass)}
             >
               {link.label}
             </Link>
@@ -219,15 +218,21 @@ export function Navbar() {
             Hubungi Kami
           </Button>
 
-          {isDesktopTentangOpen && (
-            <div className="absolute right-0 top-full z-[100] mt-4 grid w-[600px] cursor-default grid-cols-4 gap-6 rounded-[24px] border border-black/5 bg-white/95 p-6 text-neutral-950 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl">
+          <div
+            className={cn(
+              'absolute right-0 top-full z-[100] mt-4 grid w-[600px] cursor-default grid-cols-4 gap-6 rounded-[24px] border border-black/5 bg-white/95 p-6 text-neutral-950 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-200 origin-top-right',
+              isDesktopTentangOpen
+                ? 'opacity-100 visible scale-100 translate-y-0'
+                : 'opacity-0 invisible scale-95 -translate-y-2 pointer-events-none',
+            )}
+          >
               {/* Information */}
               <div className="flex flex-col">
                 <h3
                   className="mb-4 text-xs font-regular
 r text-neutral-400"
                 >
-                  Information
+                  Informasi
                 </h3>
                 <div className="flex flex-col gap-4">
                   <Link
@@ -246,9 +251,7 @@ r text-neutral-400"
               </div>
               {/* Divisi */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">
-                  Divisi
-                </h3>
+                <h3 className="mb-4 text-xs font-regular text-neutral-400">Divisi</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.divisi.map((item) => (
                     <Link
@@ -257,7 +260,13 @@ r text-neutral-400"
                       className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
                       {'icon' in item && item.icon ? (
-                        <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
+                        <Image
+                          src={item.icon}
+                          alt={item.label}
+                          width={18}
+                          height={18}
+                          className="size-[18px] object-contain"
+                        />
                       ) : (
                         <div className="size-[18px] shrink-0" />
                       )}
@@ -268,9 +277,7 @@ r text-neutral-400"
               </div>
               {/* BSO */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">
-                  BSO
-                </h3>
+                <h3 className="mb-4 text-xs font-regular text-neutral-400">BSO</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.bso.map((item) => (
                     <Link
@@ -279,7 +286,13 @@ r text-neutral-400"
                       className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
                       {'icon' in item && item.icon ? (
-                        <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
+                        <Image
+                          src={item.icon}
+                          alt={item.label}
+                          width={18}
+                          height={18}
+                          className="size-[18px] object-contain"
+                        />
                       ) : (
                         <div className="size-[18px] shrink-0" />
                       )}
@@ -290,9 +303,7 @@ r text-neutral-400"
               </div>
               {/* Event */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">
-                  Event
-                </h3>
+                <h3 className="mb-4 text-xs font-regular text-neutral-400">Event</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.event.map((item) => (
                     <Link
@@ -305,8 +316,7 @@ r text-neutral-400"
                   ))}
                 </div>
               </div>
-            </div>
-          )}
+          </div>
         </div>
 
         <button
@@ -328,99 +338,102 @@ r text-neutral-400"
       {isMobileMenuOpen ? (
         <div className="fixed inset-x-0 top-[75px] z-[98] max-h-[calc(100dvh-75px)] overflow-y-auto rounded-b-3xl border-t border-neutral-100 bg-white px-5 py-5 shadow-[0_20px_40px_rgba(15,23,42,0.12)] lg:hidden">
           <div className="flex flex-col gap-2">
-            <button
-              type="button"
-              onClick={() => setIsTentangOpen((open) => !open)}
-              className="flex h-12 w-full items-center justify-between rounded-lg px-3 text-left text-sm font-semibold text-neutral-950 hover:bg-neutral-100"
-              aria-expanded={isTentangOpen}
-            >
-              Tentang
-              <ChevronDown
-                aria-hidden="true"
-                className={cn(
-                  'size-5 transition-transform duration-200',
-                  isTentangOpen && 'rotate-180',
-                )}
-              />
-            </button>
+            <Accordion className="w-full">
+              <AccordionItem value="tentang" className="border-none">
+                <AccordionTrigger className="flex h-12 w-full items-center justify-between rounded-lg px-3 text-left text-sm font-semibold text-neutral-950 hover:bg-neutral-100 hover:no-underline py-0 [&_[data-slot=accordion-trigger-icon]]:text-neutral-950">
+                  Tentang
+                </AccordionTrigger>
+                <AccordionContent className="pb-0 [&_a]:no-underline">
+                  <div className="mb-2 flex flex-col gap-6 px-3 py-2">
+                    {/* Informasi */}
+                    <div className="flex flex-col gap-3">
+                      <span className="text-xs font-normal text-neutral-400">Informasi</span>
+                      <div className="flex flex-col gap-3">
+                        {tentangLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
 
-            {isTentangOpen ? (
-              <div className="mb-2 flex flex-col gap-6 px-3 py-2">
-                {/* Informasi */}
-                <div className="flex flex-col gap-3">
-                  <span className="text-xs font-normal text-neutral-400">Informasi</span>
-                  <div className="flex flex-col gap-3">
-                    {tentangLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+                    {/* Divisi */}
+                    <div className="flex flex-col gap-3">
+                      <span className="text-xs font-normal text-neutral-400">Divisi</span>
+                      <div className="flex flex-col gap-4">
+                        {megaMenuData.divisi.map((item) => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                          >
+                            {'icon' in item && item.icon ? (
+                              <Image
+                                src={item.icon}
+                                alt={item.label}
+                                width={18}
+                                height={18}
+                                className="size-[18px] object-contain"
+                              />
+                            ) : (
+                              <div className="size-[18px] shrink-0" />
+                            )}
+                            <span>{item.label}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
 
-                {/* Divisi */}
-                <div className="flex flex-col gap-3">
-                  <span className="text-xs font-normal text-neutral-400">Divisi</span>
-                  <div className="flex flex-col gap-4">
-                    {megaMenuData.divisi.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
-                      >
-                        {'icon' in item && item.icon ? (
-                          <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
-                        ) : (
-                          <div className="size-[18px] shrink-0" />
-                        )}
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+                    {/* BSO */}
+                    <div className="flex flex-col gap-3">
+                      <span className="text-xs font-normal text-neutral-400">BSO</span>
+                      <div className="flex flex-col gap-4">
+                        {megaMenuData.bso.map((item) => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                          >
+                            {'icon' in item && item.icon ? (
+                              <Image
+                                src={item.icon}
+                                alt={item.label}
+                                width={18}
+                                height={18}
+                                className="size-[18px] object-contain"
+                              />
+                            ) : (
+                              <div className="size-[18px] shrink-0" />
+                            )}
+                            <span>{item.label}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
 
-                {/* BSO */}
-                <div className="flex flex-col gap-3">
-                  <span className="text-xs font-normal text-neutral-400">BSO</span>
-                  <div className="flex flex-col gap-4">
-                    {megaMenuData.bso.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
-                      >
-                        {'icon' in item && item.icon ? (
-                          <Image src={item.icon} alt={item.label} width={18} height={18} className="size-[18px] object-contain" />
-                        ) : (
-                          <div className="size-[18px] shrink-0" />
-                        )}
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
+                    {/* Event */}
+                    <div className="flex flex-col gap-3">
+                      <span className="text-xs font-normal text-neutral-400">Event</span>
+                      <div className="flex flex-col gap-3">
+                        {megaMenuData.event.map((item) => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                {/* Event */}
-                <div className="flex flex-col gap-3">
-                  <span className="text-xs font-normal text-neutral-400">Event</span>
-                  <div className="flex flex-col gap-3">
-                    {megaMenuData.event.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : null}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
 
             {mainLinks.map((link) => (
               <Link

@@ -11,8 +11,12 @@ export interface SearchBarProps {
   className?: string
   defaultValue?: string
   onSearch?: (value: string) => void
+  onValueChange?: (value: string) => void
   onFilterClick?: () => void
+  filterContent?: React.ReactNode
 }
+
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 /**
  * Search bar dengan input + tombol Filter.
@@ -24,9 +28,17 @@ export function SearchBar({
   className,
   defaultValue = '',
   onSearch,
+  onValueChange,
   onFilterClick,
+  filterContent,
 }: SearchBarProps) {
   const [value, setValue] = useState(defaultValue)
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value
+    setValue(newValue)
+    onValueChange?.(newValue)
+  }
 
   return (
     <form
@@ -43,16 +55,29 @@ export function SearchBar({
         <input
           type="text"
           value={value}
-          onChange={(event) => setValue(event.target.value)}
+          onChange={handleChange}
           placeholder={placeholder}
           aria-label={placeholder}
           className="w-full flex-1 bg-transparent text-sm text-neutral-1000 placeholder:text-neutral-500 focus:outline-none"
         />
         <Search className="size-5 shrink-0 text-neutral-500" aria-hidden="true" />
       </div>
-      <Button type="button" variant="black" onClick={onFilterClick} rightIcon={<SlidersHorizontal />}>
-        Filter
-      </Button>
+      {filterContent ? (
+        <Popover>
+          <PopoverTrigger render={
+            <Button type="button" variant="black" className="size-11 rounded-[10px] p-0" aria-label="Filter">
+              <SlidersHorizontal className="size-5" />
+            </Button>
+          } />
+          <PopoverContent className="w-80 rounded-[20px] bg-white p-5 shadow-[0_6px_16px_rgba(0,0,0,0.1)] border-none" align="end" sideOffset={12}>
+            {filterContent}
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <Button type="button" variant="black" onClick={onFilterClick} className="size-11 rounded-[10px] p-0" aria-label="Filter">
+          <SlidersHorizontal className="size-5" />
+        </Button>
+      )}
     </form>
   )
 }

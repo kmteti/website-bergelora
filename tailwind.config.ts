@@ -107,9 +107,14 @@ const config: Config = {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-100%)' },
         },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         marquee: 'marquee 50s linear infinite',
+        'fade-in-up': 'fade-in-up 0.4s ease-out forwards',
       },
     },
   },

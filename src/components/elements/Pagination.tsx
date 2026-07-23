@@ -13,7 +13,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
   return (
     <div 
       className={cn(
-        "flex w-fit items-center gap-2 md:gap-4 rounded-[20px] bg-white/70 backdrop-blur-md p-2.5 shadow-[0_6px_16px_rgba(0,0,0,0.1)]", 
+        "flex w-full sm:w-fit justify-between sm:justify-start items-center gap-2 md:gap-4 rounded-[20px] bg-white/70 backdrop-blur-md p-2.5 shadow-[0_6px_16px_rgba(0,0,0,0.1)]", 
         className
       )}
     >
@@ -22,11 +22,12 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
         leftIcon={<ArrowLeft className="w-5 h-5" />}
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
+        className="px-3 sm:px-4"
       >
-        Previous
+        <span className="hidden sm:inline">Previous</span>
       </Button>
       
-      <div className="hidden sm:flex items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2">
         {/* Simple pagination logic for demo purposes */}
         {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
           let pageNum = i + 1;
@@ -68,8 +69,9 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
         rightIcon={<ArrowRight className="w-5 h-5" />}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
+        className="px-3 sm:px-4"
       >
-        Next
+        <span className="hidden sm:inline">Next</span>
       </Button>
     </div>
   )

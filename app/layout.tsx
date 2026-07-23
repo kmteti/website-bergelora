@@ -31,7 +31,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en" className={cn(montserrat.variable, sourceSerif4.variable, 'font-sans')}>
-      <body className="font-sans antialiased text-neutral-1000 flex flex-col min-h-screen">
+      <body className="font-sans antialiased text-neutral-1000 flex flex-col min-h-screen overflow-x-hidden">
         <LenisProvider>
           <main className="flex-1 flex flex-col">
             <Navbar />
