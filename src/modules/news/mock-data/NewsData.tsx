@@ -15,13 +15,37 @@ Maecenas commodo elementum libero a semper. Curabitur blandit, purus in vulputat
 
 Suspendisse tincidunt sit amet massa quis convallis. Praesent ullamcorper, metus nec aliquet congue, aliquam massa enim, id vehicula est tellus id nulla. Fusce sed nunc id lectus egestas euismod vel ut est. Nam ligula scelerisque arcu, semper lorem sapien quis nulla. Donec pulvinar ligula sed amet libero scelerisque volutpat vitae vel urna. Integer convallis commodo mauris. Nam ipsum sem, bibendum non erat vel, pretium sagittis lorem. Ut quis bibendum elit, ac porttitor metus. In vel velit justo. Nullam auctor lorem odio. Nullam ac iaculis velit, a eu faucibus risus. Cras vulputate nec metus nec blandit. Curabitur laoreet egestas condimentum. Quisque sit amet libero ipsum. Donec ornare viverra ligula, iaculis ultrices diam. Aliquam egestas risus id enim.`
 
+const SAMPLE_TITLES = [
+  'Tim Robotik KMTETI Sabet Juara Umum Kontes Robot Nasional',
+  'Seminar Nasional Teknologi Berkelanjutan Dihadiri Ratusan Peserta',
+  'Mahasiswa UGM Borong Dua Kemenangan di Ajang Internasional',
+  'Peluncuran Inovasi Smart Farming oleh Kelompok Studi TETI',
+  'KMTETI Mengadakan Pelatihan Dasar Kepemimpinan untuk Anggota Baru',
+  'Mahasiswa TETI Ciptakan Sistem Deteksi Dini Bencana Alam',
+  'Pekan Olahraga TETI: Mempererat Tali Persaudaraan Antar Angkatan',
+  'Diskusi Publik: Peran Teknologi AI dalam Transformasi Digital UGM',
+  'Prestasi Gemilang! Tim Esport TETI Juarai Turnamen Universitas',
+  'Kunjungan Industri ke Perusahaan Teknologi Terkemuka di Jakarta',
+]
+
+const SAMPLE_DATES = [
+  '12 Juni 2026',
+  '15 Juni 2026',
+  '20 Juni 2026',
+  '1 Juli 2026',
+  '5 Juli 2026',
+  '7 Juli 2026',
+  '10 Juli 2026',
+  '15 Juli 2026',
+  '22 Juli 2026',
+  '30 Juli 2026',
+]
+
 export const ALL_NEWS_DATA: NewsItem[] = Array.from({ length: 50 }, (_, i) => ({
-  slug: `mahasiswa-ugm-borong-dua-kemenangan-${i + 1}`,
-  category: 'Press Release',
-  title: i === 0 
-    ? 'UGM Kenalkan Pertanian Cerdas Lewat Teknologi Agrivoltaic UGM Kenalkan Pertanian Cerdas Lewat Teknologi Agrivoltaic' 
-    : `Mahasiswa UGM Borong Dua Kemenangan (Berita ${i + 1})`,
-  date: '7 Juli 2026',
+  slug: `berita-kmteti-${i + 1}`,
+  category: i % 2 === 0 ? 'Press Release' : 'TETI Champion',
+  title: SAMPLE_TITLES[i % SAMPLE_TITLES.length] + (i >= SAMPLE_TITLES.length ? ` (Bagian ${Math.floor(i / SAMPLE_TITLES.length) + 1})` : ''),
+  date: SAMPLE_DATES[i % SAMPLE_DATES.length],
   image: `/images/home/hero/slide${(i % 3) + 1}.webp`,
   content: LOREM_IPSUM,
 }))

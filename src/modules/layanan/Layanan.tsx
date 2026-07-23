@@ -1,8 +1,18 @@
+'use client'
+
+import React, { useState, useMemo } from 'react'
 import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
 import { SearchBar } from '@/components/elements/SearchBar'
 import { SectionHeader } from '@/components/elements/SectionHeader'
 import DefaultLayout from '@/components/layout/DefaultLayout'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import { ServiceCard, type ServiceCardProps } from './components/ServiceCard'
 
@@ -107,6 +117,31 @@ const serviceSections: ServiceSection[] = [
 ]
 
 export default function Layanan() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('Semua Layanan')
+
+  const filteredSections = useMemo(() => {
+    return serviceSections
+      .map((section) => {
+        // Jika kategori tidak "Semua Layanan" dan tidak cocok dengan judul section, sembunyikan semua itemnya.
+        if (categoryFilter !== 'Semua Layanan' && section.title !== categoryFilter) {
+          return { ...section, items: [] }
+        }
+
+        // Lakukan pencarian teks di title atau description layanan
+        const lowerQuery = searchQuery.toLowerCase().trim()
+        const filteredItems = section.items.filter(
+          (item) =>
+            item.title.toLowerCase().includes(lowerQuery) ||
+            item.description.toLowerCase().includes(lowerQuery)
+        )
+
+        return { ...section, items: filteredItems }
+      })
+      // Hanya biarkan section yang punya item (agar headernya ikut hilang jika kosong)
+      .filter((section) => section.items.length > 0)
+  }, [searchQuery, categoryFilter])
+
   return (
     <main className="relative w-full bg-neutral-100">
       {/* 1. Hero header full width */}
@@ -121,21 +156,62 @@ export default function Layanan() {
         <DefaultLayout>
           {/* Search bar */}
           <div className="flex justify-center">
-            <SearchBar className="max-w-[586px]" />
+            <SearchBar
+              className="max-w-[586px]"
+              placeholder="Cari layanan, form, atau dokumen..."
+              onValueChange={(val) => setSearchQuery(val)}
+              filterContent={
+                <div className="flex w-full flex-col gap-5">
+                  <div className="flex flex-col gap-2">
+                    <label className="mb-4 text-sm font-regular text-neutral-400">
+                      Kategori Layanan
+                    </label>
+                    <Select
+                      value={categoryFilter}
+                      onValueChange={(val) => setCategoryFilter(val ?? 'Semua Layanan')}
+                    >
+                      <SelectTrigger className="w-full h-11 bg-neutral-100 hover:bg-neutral-200 border-none rounded-xl px-4 text-neutral-800 font-medium shadow-none transition-colors focus-visible:ring-2 focus-visible:ring-primary/20">
+                        <SelectValue placeholder="Semua Layanan" />
+                      </SelectTrigger>
+                      <SelectContent
+                        alignItemWithTrigger={false}
+                        className="rounded-xl border-none shadow-xl bg-white p-2.5"
+                      >
+                        <SelectItem value="Semua Layanan" className="rounded-lg hover:bg-neutral-100 py-2.5">
+                          Semua Layanan
+                        </SelectItem>
+                        {serviceSections.map((sec) => (
+                          <SelectItem key={sec.title} value={sec.title} className="rounded-lg hover:bg-neutral-100 py-2.5">
+                            {sec.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              }
+            />
           </div>
 
           {/* Section-section layanan */}
-          <div className="mt-16 flex flex-col gap-16 md:mt-20 md:gap-20">
-            {serviceSections.map((section) => (
-              <section key={section.title} className="flex flex-col gap-8 md:gap-10">
-                <SectionHeader title={section.title} />
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {section.items.map((item) => (
-                    <ServiceCard key={item.title} {...item} />
-                  ))}
-                </div>
-              </section>
-            ))}
+          <div className="mt-16 flex flex-col gap-16 md:mt-20 md:gap-20 pb-20">
+            {filteredSections.length > 0 ? (
+              filteredSections.map((section) => (
+                <section key={section.title} className="flex flex-col gap-8 md:gap-10">
+                  <SectionHeader title={section.title} />
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {section.items.map((item) => (
+                      <ServiceCard key={item.title} {...item} />
+                    ))}
+                  </div>
+                </section>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-20 text-neutral-500">
+                <p className="text-lg font-medium">Layanan tidak ditemukan</p>
+                <p className="text-sm text-neutral-400">Coba sesuaikan kata kunci atau pilih kategori lain</p>
+              </div>
+            )}
           </div>
         </DefaultLayout>
       </PageOverlap>

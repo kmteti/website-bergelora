@@ -8,6 +8,13 @@ import { SearchBar } from '@/components/elements/SearchBar'
 import { SectionHeader } from '@/components/elements/SectionHeader'
 import { Pagination } from '@/components/elements/Pagination'
 import { ALL_NEWS_DATA } from '@/modules/news/mock-data/NewsData'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { NewsCard } from './components/NewsCard'
 import { SpotlightCard } from './components/SpotlightCard'
 import { SpotlightCarousel } from './components/SpotlightCarousel'
@@ -24,18 +31,48 @@ const News = () => {
     href: `/tentang/berita/${item.slug}`,
   }))
 
-  // Dummy data untuk contoh tampilan (sisa berita untuk pagination)
-  const allNewsData = ALL_NEWS_DATA.slice(3).map((item) => ({
-    ...item,
-    href: `/tentang/berita/${item.slug}`,
-  }))
-
+  // State untuk filter
+  const [searchQuery, setSearchQuery] = useState('')
+  // TODO: Implementasi Debouncing untuk search bar. 
+  // Gunakan custom hook (seperti useDebounce) agar searchQuery tidak langsung 
+  // mem-filter atau nge-hit API setiap kali user mengetik 1 huruf.
+  
+  const [categoryFilter, setCategoryFilter] = useState('Semua Kategori')
+  const [sortOrder, setSortOrder] = useState('Terbaru')
   const [currentPage, setCurrentPage] = useState(1)
   const ITEMS_PER_PAGE = 12
-  const totalPages = Math.ceil(allNewsData.length / ITEMS_PER_PAGE)
+
+  // Filter & Sort Logic
+  const filteredAndSortedNews = React.useMemo(() => {
+    let result = [...ALL_NEWS_DATA.slice(3)]
+
+    // Filter berdasarkan kategori
+    if (categoryFilter !== 'Semua Kategori') {
+      result = result.filter((item) => item.category === categoryFilter)
+    }
+
+    // Filter berdasarkan pencarian
+    if (searchQuery.trim() !== '') {
+      const lowerQuery = searchQuery.toLowerCase()
+      result = result.filter(
+        (item) =>
+          item.title.toLowerCase().includes(lowerQuery) ||
+          item.content.toLowerCase().includes(lowerQuery),
+      )
+    }
+
+    // Sort berdasarkan waktu (karena mock data date string, kita simulate sort)
+    if (sortOrder === 'Terlama') {
+      result.reverse()
+    }
+
+    return result
+  }, [categoryFilter, searchQuery, sortOrder])
+
+  const totalPages = Math.max(1, Math.ceil(filteredAndSortedNews.length / ITEMS_PER_PAGE))
 
   // Ambil data untuk halaman saat ini
-  const paginatedNews = allNewsData.slice(
+  const paginatedNews = filteredAndSortedNews.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   )
@@ -53,7 +90,97 @@ const News = () => {
       <PageOverlap className="bg-gradient-to-b from-[#f6f6f6] from-[94%] to-[#c2dfff] min-h-[500px]">
         <DefaultLayout>
           <div className="mb-12 flex justify-center">
-            <SearchBar className="max-w-[586px]" />
+            <SearchBar
+              className="max-w-[586px]"
+              placeholder="Cari Berita KMTETI"
+              onValueChange={(val) => {
+                setSearchQuery(val)
+                setCurrentPage(1) // Reset halaman ke 1 saat ngetik
+              }}
+              filterContent={
+                <div className="flex w-full flex-col gap-5">
+                  <div className="flex flex-col gap-2">
+                    <label
+                      className="mb-4 text-sm font-regular
+r text-neutral-400"
+                    >
+                      Kategori
+                    </label>
+                    <Select
+                      value={categoryFilter}
+                      onValueChange={(val) => {
+                        setCategoryFilter(val ?? 'Semua Kategori');
+                        setCurrentPage(1);
+                      }}
+                    >
+                      <SelectTrigger className="w-full h-11 bg-neutral-100 hover:bg-neutral-200 border-none rounded-xl px-4 text-neutral-800 font-medium shadow-none transition-colors focus-visible:ring-2 focus-visible:ring-primary/20">
+                        <SelectValue placeholder="Semua Kategori" />
+                      </SelectTrigger>
+                      <SelectContent
+                        alignItemWithTrigger={false}
+                        className="rounded-xl border-none shadow-xl bg-white p-2.5"
+                      >
+                        <SelectItem
+                          value="Semua Kategori"
+                          className="rounded-lg hover:bg-neutral-100 py-2.5"
+                        >
+                          Semua Kategori
+                        </SelectItem>
+                        <SelectItem
+                          value="Press Release"
+                          className="rounded-lg hover:bg-neutral-100 py-2.5"
+                        >
+                          Press Release
+                        </SelectItem>
+                        <SelectItem
+                          value="TETI Champion"
+                          className="rounded-lg hover:bg-neutral-100 py-2.5"
+                        >
+                          TETI Champion
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="h-[1px] w-full bg-neutral-200/60" />
+
+                  <div className="flex flex-col gap-2">
+                    <label className="mb-4 text-sm font-regular
+r text-neutral-400">
+                      Waktu
+                    </label>
+                    <Select
+                      value={sortOrder}
+                      onValueChange={(val) => {
+                        setSortOrder(val ?? 'Terbaru');
+                        setCurrentPage(1);
+                      }}
+                    >
+                      <SelectTrigger className="w-full h-11 bg-neutral-100 hover:bg-neutral-200 border-none rounded-xl px-4 text-neutral-800 font-medium shadow-none transition-colors focus-visible:ring-2 focus-visible:ring-primary/20">
+                        <SelectValue placeholder="Terbaru" />
+                      </SelectTrigger>
+                      <SelectContent
+                        alignItemWithTrigger={false}
+                        className="rounded-xl border-none shadow-xl bg-white p-1"
+                      >
+                        <SelectItem
+                          value="Terbaru"
+                          className="rounded-lg hover:bg-neutral-100 py-2.5"
+                        >
+                          Terbaru
+                        </SelectItem>
+                        <SelectItem
+                          value="Terlama"
+                          className="rounded-lg hover:bg-neutral-100 py-2.5"
+                        >
+                          Terlama
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              }
+            />
           </div>
 
           {/* Spotlight Section - Mobile Carousel */}
@@ -79,23 +206,32 @@ const News = () => {
           <SectionHeader title="Berita dan Artikel" className="mb-8 md:mb-10" />
 
           {/* Grid Berita */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {paginatedNews.map((news, idx) => (
-              <NewsCard key={idx} {...news} />
-            ))}
-          </div>
+          {paginatedNews.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {paginatedNews.map((news, idx) => (
+                <NewsCard key={idx} {...news} href={`/tentang/berita/${news.slug}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-20 text-neutral-500">
+              <p className="text-lg font-medium">Berita tidak ditemukan</p>
+              <p className="text-sm">Coba sesuaikan kata kunci atau filter Anda</p>
+            </div>
+          )}
 
-          <div className="mt-12 flex justify-center">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={(page) => {
-                setCurrentPage(page)
-                // Scroll sedikit ke atas (opsional) saat pindah halaman
-                window.scrollTo({ top: 500, behavior: 'smooth' })
-              }}
-            />
-          </div>
+          {paginatedNews.length > 0 && (
+            <div className="mt-12 flex justify-center">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(page) => {
+                  setCurrentPage(page)
+                  // Scroll sedikit ke atas (opsional) saat pindah halaman
+                  window.scrollTo({ top: 500, behavior: 'smooth' })
+                }}
+              />
+            </div>
+          )}
         </DefaultLayout>
       </PageOverlap>
     </main>
