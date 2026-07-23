@@ -32,7 +32,7 @@ export default function News() {
   ]
 
   return (
-    <section className="relative w-full bg-[#FAFAFA] pt-[95px] pb-[95px]">
+    <section className="relative w-full bg-[#FAFAFA] pt-[95px] pb-[160px]">
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-14">
