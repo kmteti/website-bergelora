@@ -53,7 +53,7 @@ export default function Event() {
           <div className="hidden md:flex flex-col flex-grow w-full">
             {/* 3 Overlapping Folders Layout */}
             <div 
-              className="relative z-10 w-full px-4 md:px-11 lg:px-22 pb-8 pt-4 md:pb-10 flex justify-center items-start"
+              className="relative z-30 w-full px-4 md:px-11 lg:px-22 pb-8 pt-4 md:pb-10 flex justify-center items-start"
               onMouseLeave={() => setActiveIndex(null)}
             >
             {/* Left Folder */}

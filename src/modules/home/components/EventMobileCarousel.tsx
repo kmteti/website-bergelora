@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import EventFolderCard from './EventFolderCard'
 import { B3, H4 } from '@/components/elements/Typography'
+import { Button } from '@/components/ui/button'
 
 interface EventMobileCarouselProps {
   data: {
@@ -76,6 +77,12 @@ export default function EventMobileCarousel({ data }: EventMobileCarouselProps) 
           <B3 className="text-[#0a4c5a] text-center">
             {data[activeIndex].description}
           </B3>
+          <Button 
+            className="mt-6 font-semibold"
+            onClick={() => handleNavigate(data[activeIndex].name)}
+          >
+            Jelajahi Event
+          </Button>
         </div>
       </div>
     </div>
