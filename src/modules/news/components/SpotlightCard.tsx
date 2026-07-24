@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { H3, H4, H5 } from '@/components/elements/Typography'
+import { H4, H5 } from '@/components/elements/Typography'
 
 export interface SpotlightCardProps {
   category: string

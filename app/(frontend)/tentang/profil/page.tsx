@@ -1,8 +1,9 @@
 import React from 'react'
+import Profile from '@/modules/profile/Profile'
 
 const page = () => {
   return (
-    <div>ini page berita</div>
+    <Profile />
   )
 }
 

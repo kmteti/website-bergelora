@@ -1,9 +1,8 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { B3, H2, H4 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import FolderCarousel from './components/FolderCarousel'
 

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { H1, B1, H2, B2, B3, H3 } from '@/components/elements/Typography'
+import { H2, B2 } from '@/components/elements/Typography'
 import { cn } from '@/lib/utils'
 
 export interface PageHeaderProps {
