@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import EventFolderCard from './EventFolderCard'
 import { B3, H4 } from '@/components/elements/Typography'

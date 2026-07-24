@@ -5,7 +5,7 @@ import { SpotlightCard } from './SpotlightCard'
 import { useEffect, useCallback, useState } from 'react'
 import { cn } from '@/lib/utils'
 
-export function SpotlightCarousel({ data }: { data: any[] }) {
+export function SpotlightCarousel({ data }: { data: React.ComponentProps<typeof SpotlightCard>[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
     align: 'start',
@@ -15,10 +15,12 @@ export function SpotlightCarousel({ data }: { data: any[] }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onInit = useCallback((emblaApi: any) => {
     setScrollSnaps(emblaApi.scrollSnapList())
   }, [])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSelect = useCallback((emblaApi: any) => {
     setSelectedIndex(emblaApi.selectedScrollSnap())
   }, [])

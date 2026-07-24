@@ -5,7 +5,7 @@ import { NewsCard } from '@/modules/news/components/NewsCard'
 import { useEffect, useCallback, useState } from 'react'
 import { cn } from '@/lib/utils'
 
-export function LatestArticleCarousel({ data }: { data: any[] }) {
+export function LatestArticleCarousel({ data }: { data: React.ComponentProps<typeof NewsCard>[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
     align: 'start',
@@ -15,10 +15,12 @@ export function LatestArticleCarousel({ data }: { data: any[] }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onInit = useCallback((emblaApi: any) => {
     setScrollSnaps(emblaApi.scrollSnapList())
   }, [])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSelect = useCallback((emblaApi: any) => {
     setSelectedIndex(emblaApi.selectedScrollSnap())
   }, [])
