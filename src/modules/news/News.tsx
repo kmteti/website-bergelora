@@ -57,7 +57,7 @@ const News = ({ initialNews }: { initialNews: any[] }) => {
 
   // Filter & Sort Logic
   const filteredAndSortedNews = React.useMemo(() => {
-    let result = [...formattedNews.slice(3)]
+    let result = [...formattedNews]
 
     // Filter berdasarkan kategori
     if (categoryFilter !== 'Semua Kategori') {
@@ -89,6 +89,8 @@ const News = ({ initialNews }: { initialNews: any[] }) => {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   )
+
+  const isSearchingOrFiltering = searchQuery.trim() !== '' || categoryFilter !== 'Semua Kategori'
 
   return (
     <main className="w-full relative min-h-screen bg-neutral-100">
@@ -196,47 +198,51 @@ r text-neutral-400">
             />
           </div>
 
-          {/* Spotlight Section - Mobile Carousel */}
-          <div className="mb-12 block lg:hidden">
-            <SpotlightCarousel data={spotlightData} />
-          </div>
-
-          {/* Spotlight Section - Desktop Grid */}
-          {spotlightData.length > 0 && (
-            <div className="mb-16 hidden lg:grid grid-cols-1 gap-6 lg:h-[500px] lg:grid-cols-3">
-              <div className="h-[400px] lg:col-span-2 lg:h-full">
-                <SpotlightCard {...spotlightData[0]} isLarge />
+          {/* Spotlight Section (Hidden during search/filter) */}
+          {!isSearchingOrFiltering && (
+            <>
+              {/* Spotlight Section - Mobile Carousel */}
+              <div className="mb-12 block lg:hidden">
+                <SpotlightCarousel data={spotlightData} />
               </div>
-              {(spotlightData[1] || spotlightData[2]) && (
-                <div className="flex h-[600px] flex-col gap-6 lg:col-span-1 lg:h-full">
-                  {spotlightData[1] && (
-                    <div className="h-full flex-1">
-                      <SpotlightCard {...spotlightData[1]} />
-                    </div>
-                  )}
-                  {spotlightData[2] && (
-                    <div className="h-full flex-1">
-                      <SpotlightCard {...spotlightData[2]} />
+
+              {/* Spotlight Section - Desktop Grid */}
+              {spotlightData.length > 0 && (
+                <div className="mb-16 hidden lg:grid grid-cols-1 gap-6 lg:h-[500px] lg:grid-cols-3">
+                  <div className="h-[400px] lg:col-span-2 lg:h-full">
+                    <SpotlightCard {...spotlightData[0]} isLarge />
+                  </div>
+                  {(spotlightData[1] || spotlightData[2]) && (
+                    <div className="flex h-[600px] flex-col gap-6 lg:col-span-1 lg:h-full">
+                      {spotlightData[1] && (
+                        <div className="h-full flex-1">
+                          <SpotlightCard {...spotlightData[1]} />
+                        </div>
+                      )}
+                      {spotlightData[2] && (
+                        <div className="h-full flex-1">
+                          <SpotlightCard {...spotlightData[2]} />
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
               )}
-            </div>
+            </>
           )}
 
-          <SectionHeader title="Berita dan Artikel" className="mb-8 md:mb-10" />
+          <SectionHeader title={isSearchingOrFiltering ? "Hasil Pencarian" : "Berita dan Artikel"} className="mb-8 md:mb-10" />
 
           {/* Grid Berita */}
           {paginatedNews.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {paginatedNews.map((news, idx) => (
-                <NewsCard key={idx} {...news} href={`/tentang/berita/${news.slug}`} />
+                <NewsCard key={idx} {...news} href={`/tentang/berita/${news.slug}`} searchQuery={searchQuery} />
               ))}
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-neutral-500">
               <p className="text-lg font-medium">Berita tidak ditemukan</p>
-              <p className="text-sm">Coba sesuaikan kata kunci atau filter Anda</p>
             </div>
           )}
 

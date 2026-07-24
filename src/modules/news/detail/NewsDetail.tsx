@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Share2 } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { H2 } from '@/components/elements/Typography'
@@ -30,43 +30,22 @@ export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] 
         <DefaultLayout>
           <NavbarResolver />
 
-          {/* Back button */}
-          <Link href="/tentang/berita" className="inline-block mb-10">
+          {/* Main Article Container */}
+          <div className="max-w-[960px] mx-auto w-full mt-6 md:mt-10">
+            {/* Back button */}
+            <Link href="/tentang/berita" className="inline-block mb-10">
             <Button variant="black" leftIcon={<ArrowLeft className="w-5 h-5" />}>
               Kembali
             </Button>
           </Link>
 
           {/* Title and Metadata */}
-          <div className="mb-10 w-full flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <H2 className="text-[#2D2D2D] mb-4">{news.title}</H2>
-              <div className="flex items-center gap-2 text-sm font-medium text-[#A0A0A0]">
-                <span>{formattedDate}</span>
-                <span className="text-[#D9D9D9]">|</span>
-                <span className="text-primary-400">{news.category}</span>
-              </div>
-            </div>
-            {/* Share Button */}
-            <div className="flex-shrink-0">
-              <Button 
-                variant="secondary" 
-                className="rounded-full gap-2 text-neutral-600 hover:bg-neutral-100"
-                onClick={() => {
-                  if (typeof navigator !== 'undefined' && navigator.share) {
-                    navigator.share({
-                      title: news.title,
-                      url: window.location.href,
-                    }).catch(console.error)
-                  } else {
-                    navigator.clipboard.writeText(window.location.href)
-                    alert('Link disalin ke clipboard!')
-                  }
-                }}
-              >
-                <Share2 className="w-4 h-4" />
-                Bagikan
-              </Button>
+          <div className="mb-10 w-full">
+            <H2 className="text-[#2D2D2D] mb-4 text-wrap">{news.title}</H2>
+            <div className="flex items-center gap-2 text-sm font-medium text-[#A0A0A0]">
+              <span>{formattedDate}</span>
+              <span className="text-[#D9D9D9]">|</span>
+              <span className="text-primary-400">{news.category}</span>
             </div>
           </div>
 
@@ -80,8 +59,9 @@ export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] 
             <RichText data={news.content} />
           </div>
 
-          {/* Latest Articles */}
-          <LatestArticle data={mappedLatestNews} />
+            {/* Latest Articles */}
+            <LatestArticle data={mappedLatestNews} />
+          </div>
         </DefaultLayout>
       </div>
     </main>

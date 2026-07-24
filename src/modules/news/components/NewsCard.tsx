@@ -10,9 +10,27 @@ export interface NewsCardProps {
   image: string
   href?: string
   className?: string
+  searchQuery?: string
 }
 
-export function NewsCard({ category, title, date, image, href = '#', className }: NewsCardProps) {
+export function NewsCard({ category, title, date, image, href = '#', className, searchQuery }: NewsCardProps) {
+  const renderTitle = () => {
+    if (!searchQuery || searchQuery.trim() === '') return title
+    
+    // Pecah string berdasarkan kata kunci pencarian (case-insensitive)
+    const regex = new RegExp(`(${searchQuery})`, 'gi')
+    const parts = title.split(regex)
+    
+    return parts.map((part, i) => 
+      regex.test(part) ? (
+        <span key={i} className="bg-yellow-300/80 text-black px-0.5 rounded-sm">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    )
+  }
   return (
     <Link
       href={href}
@@ -31,7 +49,7 @@ export function NewsCard({ category, title, date, image, href = '#', className }
       </div>
       <div className="flex flex-col flex-grow p-5 md:p-6 text-left">
         <span className="mb-3 text-xs md:text-sm font-medium text-primary-400">{category}</span>
-        <H5 className="mb-6 text-[#2D2D2D] transition-colors group-hover:text-primary line-clamp-3">{title}</H5>
+        <H5 className="mb-6 text-[#2D2D2D] transition-colors group-hover:text-primary line-clamp-3">{renderTitle()}</H5>
         <span className="mt-auto text-xs md:text-sm text-[#A0A0A0]">{date}</span>
       </div>
     </Link>

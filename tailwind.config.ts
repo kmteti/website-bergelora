@@ -111,10 +111,14 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
       },
       animation: {
         marquee: 'marquee 50s linear infinite',
         'fade-in-up': 'fade-in-up 0.4s ease-out forwards',
+        shimmer: 'shimmer 2s infinite',
       },
     },
   },
