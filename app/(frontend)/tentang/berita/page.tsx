@@ -3,7 +3,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
 
 export default async function Page() {
   const payload = await getPayload({ config })
