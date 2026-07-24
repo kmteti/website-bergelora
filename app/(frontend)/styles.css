@@ -3,7 +3,7 @@
 @import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
-@config "../tailwind.config.ts";
+@config "../../tailwind.config.ts";
 
 :root {
   --font-mono: 'Roboto Mono', Courier, monospace;
