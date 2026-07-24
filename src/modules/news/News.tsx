@@ -7,7 +7,9 @@ import DefaultLayout from '@/components/layout/DefaultLayout'
 import { SearchBar } from '@/components/elements/SearchBar'
 import { SectionHeader } from '@/components/elements/SectionHeader'
 import { Pagination } from '@/components/elements/Pagination'
-import { ALL_NEWS_DATA } from '@/modules/news/mock-data/NewsData'
+// import { ALL_NEWS_DATA } from '@/modules/news/mock-data/NewsData'
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 import {
   Select,
   SelectContent,
@@ -19,14 +21,25 @@ import { NewsCard } from './components/NewsCard'
 import { SpotlightCard } from './components/SpotlightCard'
 import { SpotlightCarousel } from './components/SpotlightCarousel'
 
-const News = () => {
-  // TODO: Nanti saat integrasi dengan backend/Payload CMS,
-  // fetch data berita dengan query sort by date descending (latest).
+const News = ({ initialNews }: { initialNews: any[] }) => {
+  // Format Payload data ke bentuk yang dipahami UI
+  const formattedNews = React.useMemo(() => {
+    return (initialNews || []).map((news) => ({
+      title: news.title,
+      slug: news.slug,
+      category: news.category,
+      date: news.date ? format(new Date(news.date), 'dd MMMM yyyy', { locale: id }) : '-',
+      image: typeof news.image === 'object' && news.image?.url ? news.image.url : '/images/news/placeholder.webp',
+      content: '', // content tidak perlu dicari di pencarian grid kecuali kita convert rich text ke plain text
+      rawContent: news.content,
+    }))
+  }, [initialNews])
+
   // 3 data pertama masukkan ke `spotlightData`,
   // sisanya (mulai dari data ke-4) masukkan ke `newsData` untuk grid di bawah.
 
   // Dummy data untuk spotlight (3 berita terbaru)
-  const spotlightData = ALL_NEWS_DATA.slice(0, 3).map((item) => ({
+  const spotlightData = formattedNews.slice(0, 3).map((item) => ({
     ...item,
     href: `/tentang/berita/${item.slug}`,
   }))
@@ -44,7 +57,7 @@ const News = () => {
 
   // Filter & Sort Logic
   const filteredAndSortedNews = React.useMemo(() => {
-    let result = [...ALL_NEWS_DATA.slice(3)]
+    let result = [...formattedNews.slice(3)]
 
     // Filter berdasarkan kategori
     if (categoryFilter !== 'Semua Kategori') {
@@ -189,19 +202,27 @@ r text-neutral-400">
           </div>
 
           {/* Spotlight Section - Desktop Grid */}
-          <div className="mb-16 hidden lg:grid grid-cols-1 gap-6 lg:h-[500px] lg:grid-cols-3">
-            <div className="h-[400px] lg:col-span-2 lg:h-full">
-              <SpotlightCard {...spotlightData[0]} isLarge />
-            </div>
-            <div className="flex h-[600px] flex-col gap-6 lg:col-span-1 lg:h-full">
-              <div className="h-full flex-1">
-                <SpotlightCard {...spotlightData[1]} />
+          {spotlightData.length > 0 && (
+            <div className="mb-16 hidden lg:grid grid-cols-1 gap-6 lg:h-[500px] lg:grid-cols-3">
+              <div className="h-[400px] lg:col-span-2 lg:h-full">
+                <SpotlightCard {...spotlightData[0]} isLarge />
               </div>
-              <div className="h-full flex-1">
-                <SpotlightCard {...spotlightData[2]} />
-              </div>
+              {(spotlightData[1] || spotlightData[2]) && (
+                <div className="flex h-[600px] flex-col gap-6 lg:col-span-1 lg:h-full">
+                  {spotlightData[1] && (
+                    <div className="h-full flex-1">
+                      <SpotlightCard {...spotlightData[1]} />
+                    </div>
+                  )}
+                  {spotlightData[2] && (
+                    <div className="h-full flex-1">
+                      <SpotlightCard {...spotlightData[2]} />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-          </div>
+          )}
 
           <SectionHeader title="Berita dan Artikel" className="mb-8 md:mb-10" />
 
