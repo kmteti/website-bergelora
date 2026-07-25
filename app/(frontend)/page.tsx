@@ -4,6 +4,7 @@ import Divisi from '@/modules/home/Divisi'
 import BSO from '@/modules/home/BSO'
 import News from '@/modules/home/News'
 import Event from '@/modules/home/Event'
+import Life from '@/modules/home/Life'
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       <Divisi />
       <BSO />
       <Event />
+      <Life />
     </>
   )
 }
