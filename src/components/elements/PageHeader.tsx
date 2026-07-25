@@ -8,6 +8,8 @@ export interface PageHeaderProps {
   imageSrc: string
   iconSrc?: string
   className?: string
+  leftButton?: React.ReactNode
+  rightButton?: React.ReactNode
 }
 
 export function PageHeader({
@@ -15,7 +17,9 @@ export function PageHeader({
   description,
   imageSrc,
   iconSrc,
-  className
+  className,
+  leftButton,
+  rightButton
 }: PageHeaderProps) {
   return (
     <section 
@@ -40,7 +44,7 @@ export function PageHeader({
       <div className="absolute top-0 left-0 w-full h-full">
       
         <div className="relative z-10 flex h-full flex-col justify-end pb-[210px] container mx-auto px-3 md:px-4 max-w-6xl pointer-events-none">
-          <div className="flex items-center gap-5 md:gap-6">
+          <div className="flex items-center gap-5 md:gap-6 pointer-events-auto">
             {/* Render Icon */}
             {iconSrc && (
               <div className="relative w-16 h-16 md:w-[84px] md:h-[84px] shrink-0 rounded-xl overflow-hidden bg-white/10 shadow-lg">
@@ -59,6 +63,14 @@ export function PageHeader({
               <B2 className="text-white/90 mt-1 md:mt-2 drop-shadow-sm">{description}</B2>
             </div>
           </div>
+          
+          {/* Navigation Buttons */}
+          {(leftButton || rightButton) && (
+            <div className="flex justify-between items-center w-full mt-6 md:mt-8 pointer-events-auto">
+              <div>{leftButton}</div>
+              <div>{rightButton}</div>
+            </div>
+          )}
         </div>
       </div>
     </section>
