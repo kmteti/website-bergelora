@@ -70,7 +70,7 @@ const H4 = ({ className, children, weight = 'semibold', ...props }: TypographyPr
 const H5 = ({ className, children, weight = 'semibold', ...props }: TypographyProps) => (
   <h5
     className={cn(
-      'font-heading text-balance text-[clamp(18px,1.7vw,24px)] leading-[clamp(24px,2.2vw,32px)]',
+      'font-heading text-balance text-[clamp(14px,1.7vw,20px)] leading-[clamp(21px,2.2vw,28px)]',
       weightClasses[weight],
       className,
     )}

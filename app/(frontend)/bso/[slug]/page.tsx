@@ -1,9 +1,11 @@
 import React from 'react'
+import { BSO } from '@/modules/bso/BSO'
 
-const page = () => {
-  return (
-    <div>ini slug page bso</div>
-  )
+type PageProps = {
+  params: Promise<{ slug: string }>
 }
 
-export default page
+export default async function BsoPage({ params }: PageProps) {
+  const { slug } = await params
+  return <BSO slug={slug} />
+}
