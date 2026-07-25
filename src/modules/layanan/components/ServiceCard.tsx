@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 
 import { B4 } from '@/components/elements/Typography'
@@ -8,6 +8,7 @@ export interface ServiceCardProps {
   title: string
   description: string
   href?: string
+  icon?: LucideIcon
   className?: string
 }
 
@@ -15,7 +16,7 @@ export interface ServiceCardProps {
  * Kartu layanan/link (Component 67 di Figma).
  * Ikon panah di kanan atas, judul + deskripsi di bawah. Seluruh kartu clickable.
  */
-export function ServiceCard({ title, description, href = '#', className }: ServiceCardProps) {
+export function ServiceCard({ title, description, href = '#', icon: Icon, className }: ServiceCardProps) {
   const isExternal = href.startsWith('http')
 
   return (
@@ -28,10 +29,19 @@ export function ServiceCard({ title, description, href = '#', className }: Servi
         className,
       )}
     >
-      <ArrowUpRight
-        className="size-6 shrink-0 self-end text-primary-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-        aria-hidden="true"
-      />
+      <div className="flex items-start justify-between">
+        {Icon ? (
+          <span className="flex size-12 items-center justify-center rounded-2xl bg-primary-100/60 text-primary-400 transition-colors duration-300 group-hover:bg-primary-100">
+            <Icon className="size-6" aria-hidden="true" />
+          </span>
+        ) : (
+          <span />
+        )}
+        <ArrowUpRight
+          className="size-6 shrink-0 text-primary-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          aria-hidden="true"
+        />
+      </div>
       <div className="flex flex-col gap-1">
         <p className="font-heading text-lg font-semibold leading-6 text-neutral-1000">{title}</p>
         <B4 className="text-neutral-600">{description}</B4>
