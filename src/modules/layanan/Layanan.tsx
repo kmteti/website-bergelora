@@ -56,16 +56,14 @@ const serviceSections: ServiceSection[] = [
         href: 'https://s.id/ILBAdkesmaKMTETI',
       },
       {
-        // TODO: URL belum tersedia di FigJam (disebut "GDrive")
         title: 'Forwati',
         description: 'Arsip Forwati yang dapat diakses melalui Google Drive.',
-        href: '#',
+        href: 'https://drive.google.com/drive/folders/1MyGcaAB7Nm4_yowgzL2n0EE0kWiYE55F?usp=drive_link',
       },
       {
-        // TODO: URL belum tersedia di FigJam
-        title: 'Kebutuhan Heregistrasi',
-        description: 'Panduan dan berkas yang dibutuhkan untuk heregistrasi.',
-        href: '#',
+        title: 'Form Aspirasi',
+        description: 'Sampaikan aspirasi, keluh, dan saranmu untuk KMTETI lewat Adkesma.',
+        href: 'https://bit.ly/ASPIRASIADKESMA2026',
       },
     ],
   },
