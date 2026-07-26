@@ -20,6 +20,7 @@ export const eventData: EventData[] = [
     slug: 'findit',
     nama: 'Find-IT',
     header: '/images/divisi/Adkesma1.webp',
+    logo: '/logo/event/findit.svg',
     detail: 'Future IT and National Development',
     tujuan: 'Find-IT',
     deskripsi_tujuan:
@@ -41,6 +42,7 @@ export const eventData: EventData[] = [
     slug: 'technocorner',
     nama: 'Technocorner',
     header: '/images/divisi/Adkesma1.webp',
+    logo: '/logo/event/technocorner.webp',
     detail: 'Ajang Kompetisi Teknologi dan Edukasi Nasional',
     tujuan: 'Technocorner',
     deskripsi_tujuan:
@@ -62,6 +64,7 @@ export const eventData: EventData[] = [
     slug: 'nesco',
     nama: 'NESCO',
     header: '/images/divisi/Adkesma1.webp',
+    logo: '/logo/event/nesco.svg',
     detail: 'National Electrical School Competition',
     tujuan: 'NESCO',
     deskripsi_tujuan:

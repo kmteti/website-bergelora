@@ -52,8 +52,8 @@ export function PageHeader({
                   <Image 
                     src={iconSrc} 
                     alt={`${title} icon`} 
-                    fill 
-                    className="object-cover"
+                    fill
+                    className="object-contain p-1.5"
                   />
                 </div>
               )}
