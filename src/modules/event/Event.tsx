@@ -27,7 +27,7 @@ export const Event = ({ slug }: { slug: string }) => {
         title={data.nama}
         description={data.detail}
         imageSrc={data.header.startsWith('/') ? data.header : `/${data.header}`}
-        iconSrc={data.logo.startsWith('/') ? data.logo : `/${data.logo}`}
+        iconSrc={data.logo && (data.logo.startsWith('/') ? data.logo : `/${data.logo}`)}
         leftButton={
           prevEvent ? (
             <Link href={`/event/${prevEvent.slug}`}>
@@ -48,23 +48,27 @@ export const Event = ({ slug }: { slug: string }) => {
         }
       />
 
-      {/* 2. Container Overlap (FULL WIDTH) - Background Basic White */}
-      <PageOverlap className="bg-white min-h-[500px]">
-        <DefaultLayout>
-          
-          {/* Section Placeholder dengan Animasi */}
-          <div className="pb-20">
-            <TujuanSection 
-              tujuan={data.tujuan} 
-              deskripsi={data.deskripsi_tujuan} 
-              gambar={data.gambar} 
-              nama={data.nama}
-              website={data.website}
-              imageFit="cover"
-            />
-          </div>
+      {/* 2. Container Overlap (FULL WIDTH) - Gradient + blob sesuai Figma */}
+      <PageOverlap className="min-h-[500px] bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA]">
+        {/* Blob dekoratif: biru kanan-atas, hijau kiri-bawah */}
+        <div className="absolute -top-[12%] left-[69%] w-[42%] aspect-square rounded-full bg-[#64CAEF] opacity-60 blur-[120px] pointer-events-none" />
+        <div className="absolute top-[59%] -left-[11%] w-[41%] aspect-square rounded-full bg-[#C7E07C] opacity-60 blur-[120px] pointer-events-none" />
 
-        </DefaultLayout>
+        <div className="relative">
+          <DefaultLayout>
+            {/* Section Placeholder dengan Animasi */}
+            <div className="pb-20">
+              <TujuanSection
+                tujuan={data.tujuan}
+                deskripsi={data.deskripsi_tujuan}
+                gambar={data.gambar}
+                nama={data.nama}
+                website={data.website}
+                imageFit="cover"
+              />
+            </div>
+          </DefaultLayout>
+        </div>
       </PageOverlap>
     </main>
   )

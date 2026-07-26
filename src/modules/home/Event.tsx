@@ -5,31 +5,22 @@ import { useRouter } from 'next/navigation'
 import { B3, H2, H4 } from '@/components/elements/Typography'
 import EventFolderCard from './components/EventFolderCard'
 import EventMobileCarousel from './components/EventMobileCarousel'
+import { eventData as allEvents } from '@/modules/event/data/data'
 
-const eventData = [
-  {
-    name: 'Find-IT',
-    photo: '/images/home/about/about.webp',
-    description: 'Find-IT (Future IT and National Development) adalah kompetisi berskala nasional yang berfokus pada inovasi teknologi, keamanan siber, dan pengembangan perangkat lunak.',
-  },
-  {
-    name: 'Technocorner',
-    photo: '/images/home/about/about.webp',
-    description: 'Technocorner adalah ajang kompetisi teknologi dan edukasi berskala nasional yang bertujuan mengembangkan potensi inovator muda dalam memajukan teknologi di Indonesia.',
-  },
-  {
-    name: 'NESCO',
-    photo: '/images/home/about/about.webp',
-    description: 'NESCO (National Electrical School Competition) merupakan wadah kompetisi bergengsi untuk pelajar yang memiliki minat tinggi di bidang teknik kelistrikan dan energi cerdas.',
-  },
-]
+// Baca dari sumber data event yang sama dengan halaman detail, biar slug-nya nggak drift.
+const eventData = allEvents.map((e) => ({
+  slug: e.slug,
+  name: e.nama,
+  photo: e.gambar[0],
+  description: e.deskripsi_tujuan,
+}))
 
 export default function Event() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const router = useRouter()
 
-  const handleNavigate = (name: string) => {
-    router.push(`/event/${name.toLowerCase().replace(/\s+/g, '-')}`)
+  const handleNavigate = (slug: string) => {
+    router.push(`/event/${slug}`)
   }
 
   return (
@@ -60,7 +51,7 @@ export default function Event() {
             <div 
               className="absolute left-[-2%] md:left-[5%] lg:left-[10%] top-16 md:top-20 z-10 w-[75%] sm:w-[50%] md:w-[42%] max-w-[420px] group cursor-pointer transition-all duration-300 hover:-translate-y-4"
               onMouseEnter={() => setActiveIndex(0)}
-              onClick={() => handleNavigate(eventData[0].name)}
+              onClick={() => handleNavigate(eventData[0].slug)}
             >
               <EventFolderCard name={eventData[0].name} photo={eventData[0].photo} />
             </div>
@@ -69,7 +60,7 @@ export default function Event() {
             <div 
               className="absolute right-[-2%] md:right-[5%] lg:right-[10%] top-16 md:top-20 z-30 w-[75%] sm:w-[50%] md:w-[42%] max-w-[420px] group cursor-pointer transition-all duration-300 hover:-translate-y-4"
               onMouseEnter={() => setActiveIndex(2)}
-              onClick={() => handleNavigate(eventData[2].name)}
+              onClick={() => handleNavigate(eventData[2].slug)}
             >
               <EventFolderCard name={eventData[2].name} photo={eventData[2].photo} />
             </div>
@@ -78,7 +69,7 @@ export default function Event() {
             <div 
               className="relative z-20 w-[85%] sm:w-[60%] md:w-[50%] max-w-[450px] group cursor-pointer transition-all duration-300 hover:-translate-y-4"
               onMouseEnter={() => setActiveIndex(1)}
-              onClick={() => handleNavigate(eventData[1].name)}
+              onClick={() => handleNavigate(eventData[1].slug)}
             >
               <EventFolderCard name={eventData[1].name} photo={eventData[1].photo} />
             </div>

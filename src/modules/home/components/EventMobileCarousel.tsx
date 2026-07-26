@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 
 interface EventMobileCarouselProps {
   data: {
+    slug: string
     name: string
     photo: string
     description: string
@@ -33,8 +34,8 @@ export default function EventMobileCarousel({ data }: EventMobileCarouselProps) 
     }
   }
 
-  const handleNavigate = (name: string) => {
-    router.push(`/event/${name.toLowerCase().replace(/\s+/g, '-')}`)
+  const handleNavigate = (slug: string) => {
+    router.push(`/event/${slug}`)
   }
 
   return (
@@ -48,7 +49,7 @@ export default function EventMobileCarousel({ data }: EventMobileCarouselProps) 
         {data.map((item, idx) => (
           <div
             key={idx}
-            onClick={() => handleNavigate(item.name)}
+            onClick={() => handleNavigate(item.slug)}
             className="w-[92%] shrink-0 snap-center cursor-pointer transition-transform duration-300 hover:-translate-y-2"
           >
             <EventFolderCard name={item.name} photo={item.photo} />
@@ -79,7 +80,7 @@ export default function EventMobileCarousel({ data }: EventMobileCarouselProps) 
           </B3>
           <Button 
             className="mt-6 font-semibold"
-            onClick={() => handleNavigate(data[activeIndex].name)}
+            onClick={() => handleNavigate(data[activeIndex].slug)}
           >
             Jelajahi Event
           </Button>
