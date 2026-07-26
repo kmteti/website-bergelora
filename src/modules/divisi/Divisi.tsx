@@ -6,10 +6,10 @@ import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
 import DefaultLayout from '@/components/layout/DefaultLayout'
 import { H3 } from '@/components/elements/Typography'
-import { TujuanSection } from '@/modules/divisi/components/TujuanSection'
+import { TujuanSection } from '@/components/elements/TujuanSection'
 import { ProkerCard } from '@/modules/divisi/components/ProkerCard'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 export const Divisi = ({ slug }: { slug: string }) => {
   // Find the division matching the slug
@@ -34,9 +34,8 @@ export const Divisi = ({ slug }: { slug: string }) => {
         leftButton={
           prevDivisi ? (
             <Link href={`/divisi/${prevDivisi.slug}`}>
-              <Button variant="secondary" className="gap-2 shadow-lg drop-shadow-sm text-sm">
-                <ChevronLeft className="w-4 h-4" />
-                <span className="hidden sm:inline">Divisi {prevDivisi.nama}</span>
+              <Button variant="secondary" size="icon" className="shadow-lg drop-shadow-sm">
+                <ArrowLeft className="w-5 h-5" />
               </Button>
             </Link>
           ) : undefined
@@ -44,9 +43,8 @@ export const Divisi = ({ slug }: { slug: string }) => {
         rightButton={
           nextDivisi ? (
             <Link href={`/divisi/${nextDivisi.slug}`}>
-              <Button variant="secondary" className="gap-2 shadow-lg drop-shadow-sm text-sm">
-                <span className="hidden sm:inline">Divisi {nextDivisi.nama}</span>
-                <ChevronRight className="w-4 h-4" />
+              <Button variant="secondary" size="icon" className="shadow-lg drop-shadow-sm">
+                <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
           ) : undefined

@@ -5,15 +5,20 @@ import Image from 'next/image'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { H3, B4 } from '@/components/elements/Typography'
+import { Button } from '@/components/ui/button'
+import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 
 interface TujuanSectionProps {
   tujuan: string
   deskripsi: string
   gambar: string[]
   nama: string
+  website?: string
+  imageFit?: 'cover' | 'contain'
 }
 
-export function TujuanSection({ tujuan, deskripsi, gambar, nama }: TujuanSectionProps) {
+export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageFit = 'contain' }: TujuanSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   
@@ -115,7 +120,7 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama }: TujuanSection
               <div 
                 key={idx} 
                 ref={(el) => { imageRefs.current[idx] = el }}
-                className={`absolute rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] border-4 border-white transition-shadow duration-300 pointer-events-auto group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] bg-white p-2 ${shapeClasses[idx % shapeClasses.length]}`}
+                className={`absolute rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-white/50 transition-shadow duration-300 pointer-events-auto group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] bg-white p-[2px] ${shapeClasses[idx % shapeClasses.length]}`}
                 style={{ zIndex: 30 - idx }}
               >
                 <div className="relative w-full h-full rounded-2xl overflow-hidden">
@@ -123,7 +128,7 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama }: TujuanSection
                     src={gbr.startsWith('/') ? gbr : `/${gbr}`} 
                     alt={`Galeri ${idx + 1} ${nama}`} 
                     fill 
-                    className="object-contain"
+                    className={`object-${imageFit}`}
                   />
                 </div>
               </div>
@@ -135,10 +140,21 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama }: TujuanSection
       {/* Center Text */}
       <div 
         ref={textRef}
-        className="relative z-10 text-center max-w-2xl mx-auto px-4 pointer-events-none"
+        className="relative z-10 text-center max-w-2xl mx-auto px-4 flex flex-col items-center gap-6"
       >
-        <H3 className="line-clamp-2 text-primary-500 mb-4">{tujuan}</H3>
-        <B4>{deskripsi}</B4>
+        <div className="pointer-events-none">
+          <H3 className="line-clamp-2 text-primary-500 mb-4">{tujuan}</H3>
+          <B4>{deskripsi}</B4>
+        </div>
+        
+        {website && (
+          <Link href={website} target="_blank" rel="noopener noreferrer">
+            <Button variant="secondary" className="gap-2 shadow-lg drop-shadow-sm pointer-events-auto">
+              Website Resmi
+              <ArrowUpRight className="w-4 h-4" />
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   )

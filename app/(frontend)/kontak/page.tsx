@@ -1,9 +1,6 @@
 import React from 'react'
+import { Kontak } from '@/modules/kontak/Kontak'
 
-const page = () => {
-  return (
-    <div>ini page kontak</div>
-  )
+export default function KontakPage() {
+  return <Kontak />
 }
-
-export default page

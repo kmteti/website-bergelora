@@ -55,9 +55,11 @@ export default function FolderCarousel({ data, activeIndex = null, onActiveChang
         scrollTrigger: {
           trigger: containerNode,
           pin: true,
-          scrub: 1, // Beri sedikit lag (1 detik) agar pergerakan lebih halus saat discroll cepat
+          scrub: 1,
           end: () => `+=${getScrollAmount() * scrollMultiplier}`,
           invalidateOnRefresh: true,
+          anticipatePin: 1,
+          refreshPriority: 1, // Lower than Profile (10), calculated after Profile's pin
           snap: {
             snapTo: 1 / (data.length - 1),
             duration: 0.3,

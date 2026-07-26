@@ -1,9 +1,7 @@
 import React from 'react'
+import { Event } from '@/modules/event/Event'
 
-const page = () => {
-  return (
-    <div>ini slug page event</div>
-  )
+export default async function EventPage({ params }: { params: { slug: string } }) {
+  const { slug } = await params
+  return <Event slug={slug} />
 }
-
-export default page
