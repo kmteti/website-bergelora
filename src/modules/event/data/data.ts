@@ -23,7 +23,7 @@ export const eventData: EventData[] = [
     detail: 'Future IT and National Development',
     tujuan: 'Find-IT',
     deskripsi_tujuan:
-      'Find-IT (Future IT and National Development) adalah kompetisi berskala nasional yang berfokus pada inovasi teknologi, keamanan siber, dan pengembangan perangkat lunak.',
+      'FIND IT (Future Innovation and Discovery Information Technology) merupakan acara tahunan yang diselenggarakan oleh DTETI FT UGM. Event ini mencakup pameran IT Fest serta berbagai kompetisi, seperti Competitive Programming, Data Analytics Competition, Hackathon, Capture the Flag, UX Competition, dan Informatics Competition. FIND IT bertujuan menjadi wadah pengembangan minat dan potensi masyarakat di bidang teknologi informasi sekaligus memperkenalkan dunia TI kepada masyarakat luas di era Revolusi Industri 5.0.',
     gambar: [
       '/images/home/about/about.webp',
       '/images/home/about/about.webp',
@@ -44,7 +44,7 @@ export const eventData: EventData[] = [
     detail: 'Ajang Kompetisi Teknologi dan Edukasi Nasional',
     tujuan: 'Technocorner',
     deskripsi_tujuan:
-      'Technocorner adalah ajang kompetisi teknologi dan edukasi berskala nasional yang bertujuan mengembangkan potensi inovator muda dalam memajukan teknologi di Indonesia.',
+      'Technocorner merupakan acara tahunan berbasis teknologi yang diselenggarakan oleh Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) Fakultas Teknik Universitas Gadjah Mada, yang bertujuan membina generasi penerus yang kreatif dan kompetitif.',
     gambar: [
       '/images/home/about/about.webp',
       '/images/home/about/about.webp',
@@ -65,7 +65,7 @@ export const eventData: EventData[] = [
     detail: 'National Electrical School Competition',
     tujuan: 'NESCO',
     deskripsi_tujuan:
-      'NESCO (National Electrical School Competition) merupakan wadah kompetisi bergengsi untuk pelajar yang memiliki minat tinggi di bidang teknik kelistrikan dan energi cerdas.',
+      'NESCO merupakan sebuah kompetisi tingkat nasional dan seminar yang diselenggarakan oleh BSO Magatrika (Badan Semi Otonom Magatrika) dibawah naungan Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (FT UGM). NESCO memiliki tujuan untuk meningkatkan perkembangan ketenagalistrikan di Indonesia. Oleh karena itu NESCO selalu membawa tema menarik yang berhubungan dengan listrik tegangan tinggi.',
     gambar: [
       '/images/home/about/about.webp',
       '/images/home/about/about.webp',
