@@ -79,8 +79,8 @@ export default function News() {
 
         {/* Action Button */}
         <div className="flex justify-center">
-          <Button variant="primary" className="rounded-xl px-6 py-6 shadow-md hover:shadow-lg transition-shadow">
-            <span className="font-semibold text-base">KMTETI News</span>
+          <Button variant="secondary" size={"default"} className="rounded-xl px-6 py-6 shadow-md hover:shadow-lg transition-shadow">
+            <B2>KMTETI News</B2>
             <ArrowUpRight className="ml-2 w-5 h-5" />
           </Button>
         </div>

@@ -45,9 +45,9 @@ export default function FolderCarousel({ data, activeIndex = null, onActiveChang
       return carousel.scrollWidth - window.innerWidth + 100
     }
     
-    // Di mobile, kita kalikan jarak scroll agar terasa lebih lambat (1 swipe = 1 card).
-    // Di desktop kita tambah multiplier jadi 2 agar tidak terlalu licin/cepat.
-    const scrollMultiplier = window.innerWidth < 768 ? 3 : 2
+    // Use a fixed scroll duration so the pinned section height remains identical
+    // when toggling between Divisi (8 cards) and BSO (5 cards).
+    const pinDuration = window.innerWidth < 768 ? 1200 : 1800
 
       gsap.to(carousel, {
         x: () => -getScrollAmount(),
@@ -56,7 +56,7 @@ export default function FolderCarousel({ data, activeIndex = null, onActiveChang
           trigger: containerNode,
           pin: true,
           scrub: 1,
-          end: () => `+=${getScrollAmount() * scrollMultiplier}`,
+          end: () => `+=${pinDuration}`,
           invalidateOnRefresh: true,
           anticipatePin: 1,
           refreshPriority: 1, // Lower than Profile (10), calculated after Profile's pin
@@ -80,7 +80,7 @@ export default function FolderCarousel({ data, activeIndex = null, onActiveChang
     <div className="overflow-hidden w-full px-4 md:px-11 lg:px-22 pt-24 -mt-24">
       <div 
         ref={carouselRef}
-        className="flex pb-10 w-max"
+        className="flex pb-10 w-max will-change-transform"
         onMouseLeave={() => onActiveChange(null)}
       >
         {data.map((item, index) => {
