@@ -1,125 +1,178 @@
 'use client'
 
-import React, { useState } from 'react'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { B3, H2, H4 } from '@/components/elements/Typography'
-import EventFolderCard from './components/EventFolderCard'
-import EventMobileCarousel from './components/EventMobileCarousel'
-import { eventData as allEvents } from '@/modules/event/data/data'
+import React, { useEffect, useRef, useState } from 'react'
 
-// Baca dari sumber data event yang sama dengan halaman detail, biar slug-nya nggak drift.
-const eventData = allEvents.map((e) => ({
-  slug: e.slug,
-  name: e.nama,
-  photo: e.gambar[0],
-  description: e.deskripsi_tujuan,
-}))
+import { H2 } from '@/components/elements/Typography'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { eventData } from '@/modules/event/data/data'
+
+import EventBrowserCard from './components/EventBrowserCard'
+
+const LAST = eventData.length - 1
+
+// Penanda event di kartu. Sengaja lokal di section ini — `logo` di data event masih
+// dipakai apa adanya buat header halaman detail.
+const EVENT_EMOJI: Record<string, string> = {
+  findit: '💻',
+  technocorner: '🤖',
+  nesco: '⚡',
+}
 
 export default function Event() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(Math.floor(eventData.length / 2))
   const router = useRouter()
 
-  const handleNavigate = (slug: string) => {
-    router.push(`/event/${slug}`)
+  const scrollToCard = (i: number, behavior: ScrollBehavior = 'smooth') => {
+    const track = trackRef.current
+    const card = track?.children[i] as HTMLElement | undefined
+    if (!track || !card) return
+    track.scrollTo({
+      left: card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2,
+      behavior,
+    })
+  }
+
+  // Mulai dari kartu tengah supaya dua sisinya sama-sama nongol kayak komposisi Figma.
+  useEffect(() => {
+    scrollToCard(Math.floor(eventData.length / 2), 'instant')
+  }, [])
+
+  // Kartu aktif dibaca dari posisi scroll, bukan sebaliknya — biar swipe & tombol satu sumber kebenaran.
+  const handleScroll = () => {
+    const track = trackRef.current
+    if (!track) return
+    const mid = track.scrollLeft + track.clientWidth / 2
+    let best = 0
+    let bestDistance = Infinity
+    for (let i = 0; i < track.children.length; i++) {
+      const card = track.children[i] as HTMLElement
+      const distance = Math.abs(card.offsetLeft + card.offsetWidth / 2 - mid)
+      if (distance < bestDistance) {
+        bestDistance = distance
+        best = i
+      }
+    }
+
+    // Di ujung, scroll-nya mentok jadi kartu ujung nggak pernah benar-benar di tengah —
+    // tanpa ini kartu tetangganya yang kehitung paling dekat, dan aktifnya jadi salah.
+    if (track.scrollLeft <= 1) best = 0
+    else if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 1) best = LAST
+
+    setActive(best)
   }
 
   return (
-    <div className="relative z-20 w-full -mt-1">
+    <div className="relative z-20 -mt-1 w-full">
       <section
         data-navbar-tone="light"
         id="event"
-        className="w-full min-h-screen flex flex-col bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA] pt-[110px] relative overflow-hidden rounded-b-[40px] border-l-[2px] border-r-[2px] border-white"
+        className="relative w-full overflow-hidden rounded-b-[40px] border-l-2 border-r-2 border-white bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA] pt-[110px] pb-24 md:pb-32"
       >
-        {/* Background Gradient Blobs */}
-        <div className="absolute top-[60%] -translate-y-1/2 -left-[10%] md:left-[5%] w-[150px] md:w-[200px] aspect-square rounded-full bg-[#64CAEF] blur-[80px] md:blur-[100px] pointer-events-none z-21" />
-        <div className="absolute top-[60%] -translate-y-1/2 -right-[10%] md:right-[5%] w-[200px] md:w-[250px] aspect-square rounded-full bg-[#C7E07C] blur-[70px] md:blur-[90px] pointer-events-none z-21" />
+        {/* Blob gradient — posisi mengikuti Ellipse 6 & 7 di Figma */}
+        <div className="pointer-events-none absolute left-[27.4%] top-[75.2%] w-[33vw] max-w-[472px] -translate-x-1/2 -translate-y-1/2 aspect-square rounded-full bg-[#64CAEF] opacity-70 blur-[100px]" />
+        <div className="pointer-events-none absolute left-[67.9%] top-[48.2%] w-[34vw] max-w-[492px] -translate-x-1/2 -translate-y-1/2 aspect-square rounded-full bg-[#c7e07c] opacity-80 blur-[100px]" />
 
-        <div className="relative w-full flex flex-col flex-grow">
-          {/* Header Title */}
-          <div className="container mx-auto px-4 md:px-8 max-w-6xl flex items-center justify-center mb-8 md:mb-10 relative">
-            <H2 className="text-[#0a4c5a] text-center">Event Ternama Nasional</H2>
-          </div>
+        <div className="relative flex w-full flex-col">
+          <div className="mx-auto mb-14 flex w-full max-w-6xl items-center justify-between gap-6 px-4 md:mb-20 md:px-8">
+            <H2 className="text-left text-[#0a4c5a]">Event Ternama Nasional</H2>
 
-          {/* Desktop Layout (hidden on mobile) */}
-          <div className="hidden md:flex flex-col flex-grow w-full">
-            {/* 3 Overlapping Folders Layout */}
-            <div 
-              className="relative z-30 w-full px-4 md:px-11 lg:px-22 pb-8 pt-4 md:pb-10 flex justify-center items-start"
-              onMouseLeave={() => setActiveIndex(null)}
-            >
-            {/* Left Folder */}
-            <div 
-              className="absolute left-[-2%] md:left-[5%] lg:left-[10%] top-16 md:top-20 z-10 w-[75%] sm:w-[50%] md:w-[42%] max-w-[420px] group cursor-pointer transition-all duration-300 hover:-translate-y-4"
-              onMouseEnter={() => setActiveIndex(0)}
-              onClick={() => handleNavigate(eventData[0].slug)}
-            >
-              <EventFolderCard name={eventData[0].name} photo={eventData[0].photo} />
-            </div>
-
-            {/* Right Folder */}
-            <div 
-              className="absolute right-[-2%] md:right-[5%] lg:right-[10%] top-16 md:top-20 z-30 w-[75%] sm:w-[50%] md:w-[42%] max-w-[420px] group cursor-pointer transition-all duration-300 hover:-translate-y-4"
-              onMouseEnter={() => setActiveIndex(2)}
-              onClick={() => handleNavigate(eventData[2].slug)}
-            >
-              <EventFolderCard name={eventData[2].name} photo={eventData[2].photo} />
-            </div>
-
-            {/* Center Folder (Front) */}
-            <div 
-              className="relative z-20 w-[85%] sm:w-[60%] md:w-[50%] max-w-[450px] group cursor-pointer transition-all duration-300 hover:-translate-y-4"
-              onMouseEnter={() => setActiveIndex(1)}
-              onClick={() => handleNavigate(eventData[1].slug)}
-            >
-              <EventFolderCard name={eventData[1].name} photo={eventData[1].photo} />
+            {/* Di mobile nggak muat sebelah judul, jadi kontrolnya pakai dot di bawah track */}
+            <div className="hidden shrink-0 items-center gap-3 md:flex">
+              <Button
+                variant="black"
+                size="icon"
+                aria-label="Event sebelumnya"
+                disabled={active === 0}
+                onClick={() => scrollToCard(active - 1)}
+                className="shadow-lg drop-shadow-sm"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="black"
+                size="icon"
+                aria-label="Event berikutnya"
+                disabled={active === LAST}
+                onClick={() => scrollToCard(active + 1)}
+                className="shadow-lg drop-shadow-sm"
+              >
+                <ArrowRight className="h-5 w-5" />
+              </Button>
             </div>
           </div>
 
-          {/* Description Detail matching BSO layout */}
-          <div className="relative z-30 w-full flex-grow pt-8 md:pt-10 pb-16 md:pb-24 transition-all duration-300">
-            <div className="container mx-auto px-4 md:px-11 lg:px-22">
-              <div className="grid w-full">
-                {/* Empty State */}
+          {/*
+            Scroll-snap native: dapat swipe, trackpad, momentum, dan keyboard tanpa JS.
+            --card dipakai bareng buat lebar kartu, padding penengah, tumpang tindih, dan turunnya kartu samping.
+            pb-nya wajib — track ini overflow-y jadi `auto`, tanpa itu kartu yang turun bikin scroll vertikal.
+          */}
+          <div
+            ref={trackRef}
+            onScroll={handleScroll}
+            style={{ '--card': 'min(700px,86vw)' } as React.CSSProperties}
+            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pb-[calc(var(--card)*0.1022+24px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {eventData.map((event, i) => {
+              const isActive = i === active
+
+              return (
                 <div
-                  className={`col-start-1 row-start-1 transition-all duration-300 w-full hidden md:flex justify-center items-center ${
-                    activeIndex === null
-                      ? 'opacity-100 translate-y-0 z-10 delay-300'
-                      : 'opacity-0 translate-y-4 pointer-events-none delay-0'
-                  }`}
+                  key={event.slug}
+                  className={cn(
+                    '@container relative w-[var(--card)] shrink-0 snap-center',
+                    isActive ? 'z-20' : 'z-10',
+                    // Tumpang tindih 57px dari 773px, sesuai jarak 716px di Figma
+                    i !== LAST && '-mr-[calc(var(--card)*0.0737)]',
+                  )}
                 >
-                  <B3 className="text-[#0a4c5a]/50 text-center">
-                    Hover di salah satu folder untuk melihat detail mengenai Event.
-                  </B3>
-                </div>
-
-                {/* Content States */}
-                {eventData.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className={`col-start-1 row-start-1 transition-all duration-300 w-full grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-10 items-start ${
-                      activeIndex === idx
-                        ? 'opacity-100 translate-y-0 z-10 delay-300'
-                        : 'opacity-0 translate-y-4 pointer-events-none delay-0'
-                    }`}
+                  <button
+                    type="button"
+                    aria-label={
+                      isActive
+                        ? `Pelajari lebih lanjut tentang ${event.nama}`
+                        : `Tampilkan ${event.nama}`
+                    }
+                    aria-current={isActive || undefined}
+                    onClick={() =>
+                      isActive ? router.push(`/event/${event.slug}`) : scrollToCard(i)
+                    }
+                    className="w-full cursor-pointer text-left focus-visible:outline-3 focus-visible:outline-offset-8 focus-visible:outline-[#0a4c5a]"
                   >
-                    <div className="md:col-span-4 lg:col-span-3">
-                      <H4 className="text-[#0a4c5a] text-center md:text-left">{item.name}</H4>
-                    </div>
-                    <div className="md:col-span-8 lg:col-span-9 flex flex-col items-center md:items-start">
-                      <B3 className="text-[#0a4c5a] text-center md:text-left">
-                        {item.description}
-                      </B3>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+                    <EventBrowserCard
+                      name={event.nama}
+                      description={event.deskripsi_tujuan}
+                      emoji={EVENT_EMOJI[event.slug]}
+                      website={event.website}
+                      className={cn(
+                        // `translate`, bukan `transform` — Tailwind v4 pakai properti translate buat translate-y-*
+                        'transition-[translate,filter] duration-500 ease-out motion-reduce:transition-none',
+                        !isActive && 'translate-y-[10.22cqw] blur-[8px] hover:blur-none',
+                      )}
+                    />
+                  </button>
+                </div>
+              )
+            })}
           </div>
 
-          {/* Mobile Layout (Spotlight Carousel) */}
-          <div className="flex md:hidden flex-col flex-grow w-full relative z-30">
-            <EventMobileCarousel data={eventData} />
+          {/* Kartu samping cuma nongol sedikit di layar kecil, jadi dot-nya yang jadi kontrol */}
+          <div className="mt-8 flex items-center justify-center gap-2 md:hidden">
+            {eventData.map((event, i) => (
+              <button
+                key={event.slug}
+                type="button"
+                aria-label={`Tampilkan ${event.nama}`}
+                aria-current={i === active || undefined}
+                onClick={() => scrollToCard(i)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === active ? 'w-6 bg-[#0a4c5a]' : 'w-2 bg-[#0a4c5a]/25'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
