@@ -60,14 +60,15 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Full width group image section within overlap */}
-        <div className="w-full relative h-auto aspect-video mb-20 md:mb-32 z-10">
-           <Image 
-             src="/images/profile/foto-kabinet.webp" 
-             alt="KMTETI Group Photo" 
-             fill
-             className="object-contain"
-           />
+        {/* YouTube Video Section within overlap */}
+        <div className="w-full relative aspect-video mb-20 md:mb-32 z-10">
+          <iframe
+            src="https://www.youtube.com/embed/8dmi2DqeLDs"
+            title="KMTETI Profile Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full border-none"
+          ></iframe>
         </div>
 
         <DefaultLayout className="relative z-10 py-0 pb-32">

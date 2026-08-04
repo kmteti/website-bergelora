@@ -4,6 +4,7 @@ import DivisiBSO from '@/modules/home/DivisiBSO'
 import News from '@/modules/home/News'
 import Event from '@/modules/home/Event'
 import Life from '@/modules/home/Life'
+import React from 'react'
 
 export default function HomePage() {
   return (

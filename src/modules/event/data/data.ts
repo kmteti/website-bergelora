@@ -1,3 +1,10 @@
+export interface BidangLomba {
+  nama: string
+  deskripsi: string
+  icon?: string
+  subCategories?: string[]
+}
+
 export interface EventData {
   id: number
   slug: string
@@ -10,6 +17,7 @@ export interface EventData {
   deskripsi_tujuan: string
   gambar: string[]
   website?: string
+  bidangLomba: BidangLomba[]
 }
 
 // Satu-satunya sumber data event. Section home & halaman detail sama-sama baca dari sini
@@ -18,13 +26,13 @@ export const eventData: EventData[] = [
   {
     id: 1,
     slug: 'findit',
-    nama: 'Find-IT',
+    nama: 'FindIT!',
     header: '/images/divisi/Adkesma1.webp',
     logo: '/logo/event/findit.svg',
-    detail: 'Future IT and National Development',
-    tujuan: 'Find-IT',
+    detail: 'Ajang kompetisi di bidang teknologi informasi yang diselenggarakan oleh KMTETI FT UGM.',
+    tujuan: 'FindIT!',
     deskripsi_tujuan:
-      'FIND IT (Future Innovation and Discovery Information Technology) merupakan acara tahunan yang diselenggarakan oleh DTETI FT UGM. Event ini mencakup pameran IT Fest serta berbagai kompetisi, seperti Competitive Programming, Data Analytics Competition, Hackathon, Capture the Flag, UX Competition, dan Informatics Competition. FIND IT bertujuan menjadi wadah pengembangan minat dan potensi masyarakat di bidang teknologi informasi sekaligus memperkenalkan dunia TI kepada masyarakat luas di era Revolusi Industri 5.0.',
+      'FIND IT (Future Innovation and Discovery Information Technology) merupakan acara tahunan yang diselenggarakan oleh KMTETI FT UGM. Event ini mencakup pameran IT Fest serta berbagai kompetisi menarik di bidang teknologi informasi guna menjadi wadah pengembangan minat dan potensi masyarakat.',
     gambar: [
       '/images/home/about/about.webp',
       '/images/home/about/about.webp',
@@ -35,15 +43,91 @@ export const eventData: EventData[] = [
       '/images/home/about/about.webp',
       '/images/home/about/about.webp',
     ],
-    website: 'https://www.find-it.id/',
+    website: 'https://find-it.id',
+    bidangLomba: [
+      {
+        nama: 'Competitive Programming (CP)',
+        deskripsi: 'Kompetisi pemecahan masalah (problem solving) secara algoritmik.',
+        icon: 'Code',
+      },
+      {
+        nama: 'UX Competition',
+        deskripsi: 'Kompetisi perancangan pengalaman dan desain antarmuka pengguna (UX) untuk aplikasi mobile.',
+        icon: 'Palette',
+      },
+      {
+        nama: 'Data Analytics Competition (DAC)',
+        deskripsi: 'Kompetisi analisis big data untuk menghasilkan rekomendasi dan solusi optimal.',
+        icon: 'Database',
+      },
+      {
+        nama: 'Capture the Flag (CTF)',
+        deskripsi: 'Kompetisi keamanan siber (cybersecurity) yang menguji kemampuan menemukan flag tersembunyi melalui tantangan eksploitasi/kriptografi.',
+        icon: 'Flag',
+      },
+      {
+        nama: 'Hackathon',
+        deskripsi: 'Kompetisi pengembangan ide dan produk solusi teknologi secara cepat untuk menyelesaikan masalah nyata.',
+        icon: 'Cpu',
+      },
+      {
+        nama: 'Informatics Competition (IC)',
+        deskripsi: 'Kompetisi penyelesaian soal logika dan dasar informatika (khusus jenjang SMA/Sederajat).',
+        icon: 'BookOpen',
+      },
+    ],
   },
   {
     id: 2,
+    slug: 'nesco',
+    nama: 'NESCO UGM',
+    header: '/images/divisi/Adkesma1.webp',
+    logo: '/logo/event/nesco.svg',
+    detail: 'National Electrical Power System Competition yang berfokus pada ketenagalistrikan dan energi.',
+    tujuan: 'NESCO UGM',
+    deskripsi_tujuan:
+      'NESCO merupakan sebuah kompetisi tingkat nasional dan seminar yang diselenggarakan oleh BSO Magatrika di bawah naungan Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (FT UGM). NESCO memiliki tujuan untuk meningkatkan perkembangan ketenagalistrikan di Indonesia.',
+    gambar: [
+      '/images/home/about/about.webp',
+      '/images/home/about/about.webp',
+      '/images/home/about/about.webp',
+      '/images/home/about/about.webp',
+      '/images/home/about/about.webp',
+      '/images/home/about/about.webp',
+      '/images/home/about/about.webp',
+      '/images/home/about/about.webp',
+    ],
+    website: 'https://nesco.id',
+    bidangLomba: [
+      {
+        nama: 'Paper Competition',
+        deskripsi: 'Kompetisi penulisan karya tulis ilmiah seputar ketenagalistrikan dan sistem energi.',
+        icon: 'FileText',
+      },
+      {
+        nama: 'Innovation Competition',
+        deskripsi: 'Kompetisi rancang bangun dan inovasi teknologi berbasis energi & sistem listrik.',
+        icon: 'Lightbulb',
+      },
+      {
+        nama: 'Poster Competition',
+        deskripsi: 'Kompetisi desain media publikasi/poster edukatif terkait ketenagalistrikan.',
+        icon: 'Image',
+      },
+      {
+        nama: 'Debate Competition',
+        deskripsi: 'Kompetisi debat seputar isu-isu strategis, kebijakan, dan teknologi ketenagalistrikan.',
+        icon: 'Users',
+      },
+    ],
+  },
+  {
+    id: 3,
     slug: 'technocorner',
     nama: 'Technocorner',
     header: '/images/divisi/Adkesma1.webp',
     logo: '/logo/event/technocorner.webp',
-    detail: 'Ajang Kompetisi Teknologi dan Edukasi Nasional',
+    detail: 'Ajang kompetisi tahunan yang berfokus pada bidang robotika, IoT, dan teknik elektro.',
     tujuan: 'Technocorner',
     deskripsi_tujuan:
       'Technocorner merupakan acara tahunan berbasis teknologi yang diselenggarakan oleh Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) Fakultas Teknik Universitas Gadjah Mada, yang bertujuan membina generasi penerus yang kreatif dan kompetitif.',
@@ -58,27 +142,29 @@ export const eventData: EventData[] = [
       '/images/home/about/about.webp',
     ],
     website: 'https://technocorner.id',
-  },
-  {
-    id: 3,
-    slug: 'nesco',
-    nama: 'NESCO',
-    header: '/images/divisi/Adkesma1.webp',
-    logo: '/logo/event/nesco.svg',
-    detail: 'National Electrical School Competition',
-    tujuan: 'NESCO',
-    deskripsi_tujuan:
-      'NESCO merupakan sebuah kompetisi tingkat nasional dan seminar yang diselenggarakan oleh BSO Magatrika (Badan Semi Otonom Magatrika) dibawah naungan Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (FT UGM). NESCO memiliki tujuan untuk meningkatkan perkembangan ketenagalistrikan di Indonesia. Oleh karena itu NESCO selalu membawa tema menarik yang berhubungan dengan listrik tegangan tinggi.',
-    gambar: [
-      '/images/home/about/about.webp',
-      '/images/home/about/about.webp',
-      '/images/home/about/about.webp',
-      '/images/home/about/about.webp',
-      '/images/home/about/about.webp',
-      '/images/home/about/about.webp',
-      '/images/home/about/about.webp',
-      '/images/home/about/about.webp',
+    bidangLomba: [
+      {
+        nama: 'Kategori Robotika',
+        deskripsi: 'Kompetisi robotika tingkat nasional yang menguji inovasi, kecepatan, dan akurasi robot di arena pertandingan.',
+        icon: 'Bot',
+        subCategories: [
+          'Line Follower',
+          'Sumobot Auto',
+          'Sumobot RC',
+          'Soccerbot',
+          'Transporter',
+        ],
+      },
+      {
+        nama: 'IoT (Internet of Things) Competition',
+        deskripsi: 'Kompetisi perancangan dan implementasi sistem/perangkat IoT yang inovatif.',
+        icon: 'Network',
+      },
+      {
+        nama: 'EEC (Electrical Engineering Competition)',
+        deskripsi: 'Kompetisi akademik yang menguji pemahaman dan pemecahan masalah di bidang matematika, fisika, dan ilmu komputer/teknik elektro.',
+        icon: 'Activity',
+      },
     ],
-    website: 'https://nesco.id',
   },
 ]

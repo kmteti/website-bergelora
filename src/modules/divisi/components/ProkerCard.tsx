@@ -29,7 +29,7 @@ export function ProkerCard({ proker }: { proker: ProkerProps }) {
         
         {/* Front Side */}
         <div className="absolute inset-0 [backface-visibility:hidden] bg-white rounded-[32px] shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-8 border border-gray-100/50 flex flex-col items-center text-center transition-all group-hover:-translate-y-2 group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
-          {LucideIcon ? <LucideIcon className="w-12 h-12 mb-4 text-[#F5A826]" /> : <div className="text-5xl mb-6">🏆</div>}
+          {LucideIcon ? <LucideIcon className="w-12 h-12 mb-4 text-[#abd03b]" /> : <div className="text-5xl mb-6">🏆</div>}
           <H5 className="text-gray-800 mb-4">{proker.nama}</H5>
           <B5 className="text-gray-500 mb-4 overflow-hidden">
             {proker.deskripsi}
@@ -47,7 +47,7 @@ export function ProkerCard({ proker }: { proker: ProkerProps }) {
             {proker.anggota && proker.anggota.length > 0 ? (
               <ul className="list-disc list-inside space-y-0 w-full text-left pl-2">
                 {proker.anggota.map((member, idx) => (
-                  <li key={idx} className="text-white marker:text-[#F5A826]">
+                  <li key={idx} className="text-white marker:text-[#abd03b]">
                     <B5 className="inline-block tracking-wide">{member}</B5>
                   </li>
                 ))}

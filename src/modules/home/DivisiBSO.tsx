@@ -1,16 +1,11 @@
 'use client'
 
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import { B3, B4, H2, H4 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import FolderCarousel from './components/FolderCarousel'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import gsap from 'gsap'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import FolderCarousel, { FolderCarouselRef } from './components/FolderCarousel'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 type Tab = 'divisi' | 'bso'
 
@@ -99,7 +94,7 @@ const bsoData = [
 ]
 
 export default function DivisiBSO() {
-  const [containerNode, setContainerNode] = useState<HTMLElement | null>(null)
+  const carouselRef = useRef<FolderCarouselRef>(null)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<Tab>('divisi')
 
@@ -112,88 +107,93 @@ export default function DivisiBSO() {
 
   const handleTabChange = useCallback((tab: Tab) => {
     if (tab === activeTab) return
-
-    // Scroll user back to section start so the new carousel pins correctly
-    if (containerNode) {
-      const rect = containerNode.getBoundingClientRect()
-      const scrollTop = window.scrollY + rect.top
-      window.scrollTo({ top: scrollTop, behavior: 'instant' })
-    }
-
-    // Kill all existing ScrollTriggers on this container before switching
-    ScrollTrigger.getAll().forEach(st => {
-      if (st.trigger === containerNode) {
-        st.kill()
-      }
-    })
-
     setActiveIndex(null)
     setActiveTab(tab)
-  }, [activeTab, containerNode])
-
-  // Refresh ScrollTrigger positions after tab switch settles
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => {
-      ScrollTrigger.refresh()
-    })
-    return () => cancelAnimationFrame(raf)
   }, [activeTab])
 
   return (
     <div className="relative z-20 w-full -mt-16">
       <section 
-        ref={setContainerNode}
         data-navbar-tone="light"
-        className="w-full min-h-screen flex flex-col overflow-hidden rounded-t-[40px] border-t-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_0_50px_rgba(0,0,0,0.05)] bg-gradient-to-b from-[#E1F3FA] from-[51%] to-[#C5E2ED] pt-[110px] relative"
+        className={`w-full flex flex-col overflow-hidden rounded-t-[40px] border-t-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_0_50px_rgba(0,0,0,0.05)] pt-[110px] relative transition-colors duration-300 ${
+          activeTab === 'divisi' ? 'bg-gradient-to-b from-[#E1F3FA] from-[51%] to-[#C5E2ED]' : 'bg-gradient-to-b from-[#eaf9ff] from-[51%] to-[#A3D1E0]'
+        }`}
       >
         {/* Background Gradient Blobs */}
         <div className="absolute top-[50%] -translate-y-1/2 -left-[10%] md:left-[5%] w-[200px] md:w-[250px] aspect-square rounded-full bg-[#C7E07C] blur-[70px] md:blur-[90px] pointer-events-none z-0" />
         <div className="absolute top-[50%] -translate-y-1/2 -right-[10%] md:right-[5%] w-[150px] md:w-[200px] aspect-square rounded-full bg-[#64CAEF] blur-[80px] md:blur-[100px] pointer-events-none z-0" />
 
         <div className="relative w-full flex flex-col flex-grow">
-          {/* Header: Toggle Capsule */}
-          <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col items-center gap-8 mb-32 md:mb-28 relative z-10">
-            {/* Toggle Capsule */}
-            <div className="inline-flex items-center bg-white/40 backdrop-blur-sm rounded-full p-1 shadow-sm border border-white/60 gap-1">
-              <Button
-                variant={activeTab === 'divisi' ? 'secondary' : 'black'}
-                size="default"
-                onClick={() => handleTabChange('divisi')}
-                className="rounded-full"
-              >
-                Divisi
-              </Button>
-              <Button
-                variant={activeTab === 'bso' ? 'secondary' : 'black'}
-                size="default"
-                onClick={() => handleTabChange('bso')}
-                className="rounded-full"
-              >
-                BSO
-              </Button>
-            </div>
+          {/* Header Title & Navigation Row */}
+          <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 mb-32 md:mb-28 relative z-10">
+            {/* Title (animated) */}
+            <H2 className="text-primary-500 transition-opacity duration-300">
+              {activeTab === 'divisi' ? 'Divisi' : 'Badan Semi Otonom'}
+            </H2>
 
-            <div className="flex flex-col items-center gap-3 text-center">
-              {/* Title (animated) */}
-              <H2 className="text-primary-500 transition-opacity duration-300">
-                {activeTab === 'divisi' ? 'Divisi' : 'Badan Semi Otonom'}
-              </H2>
+            {/* Navigation Group */}
+            <div className="flex items-center gap-4">
+              {/* Left Arrow Button */}
+              <Button
+                variant="black"
+                size="icon"
+                onClick={() => carouselRef.current?.scrollLeft()}
+                className="shadow-lg drop-shadow-sm rounded-xl w-10 h-10 flex items-center justify-center bg-black/60 hover:bg-black/85"
+                aria-label="Scroll left"
+              >
+                <ArrowLeft className="h-5 w-5 text-white" />
+              </Button>
+
+              {/* Toggle Capsule */}
+              <div className="inline-flex items-center bg-white/40 backdrop-blur-sm rounded-2xl p-1 shadow-sm border border-white/60 gap-1">
+                <Button
+                  variant={activeTab === 'divisi' ? 'secondary' : 'black'}
+                  size="default"
+                  onClick={() => handleTabChange('divisi')}
+                  className="rounded-xl"
+                >
+                  Divisi
+                </Button>
+                <Button
+                  variant={activeTab === 'bso' ? 'secondary' : 'black'}
+                  size="default"
+                  onClick={() => handleTabChange('bso')}
+                  className="rounded-xl"
+                >
+                  BSO
+                </Button>
+              </div>
+
+              {/* Right Arrow Button */}
+              <Button
+                variant="black"
+                size="icon"
+                onClick={() => carouselRef.current?.scrollRight()}
+                className="shadow-lg drop-shadow-sm rounded-xl w-10 h-10 flex items-center justify-center bg-black/60 hover:bg-black/85"
+                aria-label="Scroll right"
+              >
+                <ArrowRight className="h-5 w-5 text-white" />
+              </Button>
             </div>
           </div>
 
           {/* Reusable Carousel Component - kept mounted for stable layout height */}
           <div className="relative z-10">
             <FolderCarousel 
+              ref={carouselRef}
               data={currentData} 
               activeIndex={activeIndex}
               onActiveChange={setActiveIndex} 
-              containerNode={containerNode}
               basePath={basePath}
+              folderStartColor={activeTab === 'bso' ? '#00C0E8' : undefined}
+              folderEndColor={activeTab === 'bso' ? '#0088FF' : undefined}
             />
           </div>
 
           {/* Description Detail matching Figma with overlap */}
-          <div className="relative z-20 w-full flex-grow bg-[#E1F3FA] -mt-18 md:-mt-15 pt-8 md:pt-12 pb-8 md:pb-16 transition-all duration-300">
+          <div className={`relative z-20 w-full flex-grow -mt-18 md:-mt-15 pt-8 md:pt-12 pb-8 md:pb-16 transition-colors duration-300 ${
+            activeTab === 'divisi' ? 'bg-[#E1F3FA]' : 'bg-[#eaf9ff]'
+          }`}>
             <div className="container mx-auto px-4 md:px-11 lg:px-22">
               <div className="grid w-full min-h-[96px] md:min-h-[80px] items-center">
                 {/* Empty State */}

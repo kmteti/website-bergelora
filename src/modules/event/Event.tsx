@@ -7,6 +7,8 @@ import DefaultLayout from '@/components/layout/DefaultLayout'
 import { TujuanSection } from '@/components/elements/TujuanSection'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { BidangLombaCard } from './components/BidangLombaCard'
+import { H3 } from '@/components/elements/Typography'
 
 export const Event = ({ slug }: { slug: string }) => {
   // Find the event matching the slug
@@ -56,8 +58,8 @@ export const Event = ({ slug }: { slug: string }) => {
 
         <div className="relative">
           <DefaultLayout>
-            {/* Section Placeholder dengan Animasi */}
-            <div className="pb-20">
+            {/* Section Tujuan & Galeri */}
+            <div className="pb-16">
               <TujuanSection
                 tujuan={data.tujuan}
                 deskripsi={data.deskripsi_tujuan}
@@ -66,6 +68,22 @@ export const Event = ({ slug }: { slug: string }) => {
                 website={data.website}
                 imageFit="cover"
               />
+            </div>
+
+            {/* Section Bidang Lomba (Menggunakan card flip identik Proker pada divisi) */}
+            <div className="pt-8 pb-20">
+              <div className="text-center mb-16">
+                <H3 className="text-[#1E5D7B] font-heading font-semibold">Bidang Lomba</H3>
+                <p className="text-gray-600 font-sans mt-4 max-w-2xl mx-auto">
+                  Berikut ini adalah berbagai bidang kompetisi/lomba yang diselenggarakan di {data.nama}.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {data.bidangLomba.map((item, idx) => (
+                  <BidangLombaCard key={idx} item={item} />
+                ))}
+              </div>
             </div>
           </DefaultLayout>
         </div>

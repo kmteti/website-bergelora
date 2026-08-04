@@ -44,7 +44,7 @@ export default function Profile() {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white"></div>
       
       <div ref={pinTargetRef}>
-        <section className="relative z-10 w-full overflow-hidden bg-blue-100 rounded-[40px] pt-[112px] pb-[112px]">
+        <section className="relative z-10 w-full overflow-hidden bg-[#E1F3FA] rounded-[40px] pt-[112px] pb-[112px]">
           {/* Glow Effects (Pure CSS/Tailwind) */}
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
             {/* Biru Glow (Kiri Atas Gambar) */}
@@ -74,9 +74,9 @@ export default function Profile() {
               <div className="absolute inset-0 w-full h-full bg-white/70 rounded-[28px] shadow-sm transform -rotate-[3deg] scale-[1.01] border border-white/60 z-0"></div>
               
               {/* Front Image */}
-              <div className="relative z-10 w-full h-full rounded-[24px] overflow-hidden shadow-xl border-[6px] border-white bg-gray-100">
+              <div className="relative z-10 hover:rotate-[-1deg] rotate-[1deg] transition-transform duration-300 w-full h-full rounded-[24px] overflow-hidden shadow-xl border-[6px] border-white bg-gray-100">
                 <Image 
-                  src="/images/home/about/about.webp" 
+                  src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 
                   fill 
                   className="object-cover"
