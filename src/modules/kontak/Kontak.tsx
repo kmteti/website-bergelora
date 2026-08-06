@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
 import DefaultLayout from '@/components/layout/DefaultLayout'
@@ -9,7 +9,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ServiceCard } from '@/modules/layanan/components/ServiceCard'
 import { StepIndicator } from '@/components/elements/StepIndicator'
-import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Faq } from '@/modules/kontak/components/Faq'
+import { PANDUAN_TOPICS } from '@/modules/kontak/data/panduan'
+import { NARAHUBUNG, type Narahubung } from '@/modules/kontak/data/narahubung'
+import { ArrowLeft, ArrowRight, CheckCircle2, MessageCircle, BookOpen } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   Select,
@@ -22,8 +25,17 @@ import {
 export const Kontak = () => {
   // Step/Tahap state (3 steps total)
   const [step, setStep] = useState(1)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  // Tiga tahap tampilan:
+  //   form    -> pengisian 3 langkah
+  //   contact -> memilih narahubung (data belum dikirim ke mana pun)
+  //   done    -> konfirmasi setelah data benar-benar terkirim
+  const [stage, setStage] = useState<'form' | 'contact' | 'done'>('form')
+  const [selectedContact, setSelectedContact] = useState<Narahubung | null>(null)
   const [saveError, setSaveError] = useState(false)
+
+  // Ref, bukan state: pengguna bisa mengklik kartu narahubung kedua sebelum
+  // re-render selesai, dan itu akan membuat record ganda.
+  const hasSavedRef = useRef(false)
 
   // Multi-step form state
   const [formData, setFormData] = useState({
@@ -31,6 +43,7 @@ export const Kontak = () => {
     instansi: '',
     jenisInstansi: '',
     kategori: '',
+    divisi: '',
     deskripsi: '',
     proposal: '',
     whatsapp: '',
@@ -43,11 +56,14 @@ export const Kontak = () => {
   }
 
   // Steps configuration
-  const steps = useMemo(() => [
-    { number: 1, label: 'Tahap 1', subtitle: 'Identitas Profil' },
-    { number: 2, label: 'Tahap 2', subtitle: 'Detail Kebutuhan' },
-    { number: 3, label: 'Tahap 3', subtitle: 'Kontak & Redirect' },
-  ], [])
+  const steps = useMemo(
+    () => [
+      { number: 1, label: 'Tahap 1', subtitle: 'Identitas Profil' },
+      { number: 2, label: 'Tahap 2', subtitle: 'Detail Kebutuhan' },
+      { number: 3, label: 'Tahap 3', subtitle: 'Kontak & Redirect' },
+    ],
+    [],
+  )
 
   // Validation to enable/disable "Next" / "Submit" button
   const isStepValid = useMemo(() => {
@@ -63,31 +79,46 @@ export const Kontak = () => {
     }
   }, [step, formData])
 
-  // Form WA auto redirect text generator
-  const formatWaText = () => {
-    const text = `Halo CP KMTETI, saya *${formData.nama}* dari *${formData.instansi}*.\n\n*Kategori:* ${formData.kategori}\n*Detail:* ${formData.deskripsi}\n\nSaya sudah mengisi form di website, mohon informasinya terima kasih.`
-    return `https://wa.me/6281227136311?text=${encodeURIComponent(text)}`
+  // WhatsApp deep link untuk satu narahubung, berisi ringkasan isian form
+  const buildWaUrl = (contact: Narahubung) => {
+    const divisiLine = formData.divisi ? `\n*Divisi Dituju:* ${formData.divisi}` : ''
+    const text = `Halo Kak ${contact.nama}, saya *${formData.nama}* dari *${formData.instansi}*.\n\n*Kategori:* ${formData.kategori}${divisiLine}\n*Detail:* ${formData.deskripsi}\n\nSaya sudah mengisi form di website, mohon informasinya terima kasih.`
+    return `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`
   }
 
-  // Handle Form Submit, WhatsApp Redirect, and record persistence
+  // Tombol submit hanya membuka pemilihan narahubung. Data belum dikirim ke
+  // mana pun sampai salah satu kontak dipilih.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!isStepValid) return
 
-    // Open WA URL in new tab. This must stay synchronous inside the event
-    // handler: awaiting first breaks the user-gesture chain and popup blockers
-    // will silently kill the tab.
-    const waUrl = formatWaText()
-    window.open(waUrl, '_blank', 'noopener,noreferrer')
-    setIsSubmitted(true)
+    setStage('contact')
     setSaveError(false)
+  }
 
-    // Persist to Payload + Google Sheet in the background.
-    // keepalive keeps the request alive even as the tab switches to WhatsApp.
+  // Klik kartu narahubung: baru di sinilah data disimpan ke Payload + Sheet.
+  //
+  // Sengaja tanpa preventDefault. Tag <a target="_blank"> tetap membuka WhatsApp
+  // lewat navigasi bawaan browser, jadi gesture user tidak terputus dan popup
+  // blocker tidak ikut campur. fetch berjalan berdampingan dengan keepalive
+  // supaya tetap tuntas meski tab berpindah ke WhatsApp.
+  const handleContactSelect = (contact: Narahubung) => {
+    if (hasSavedRef.current) return
+    hasSavedRef.current = true
+
+    // Ditunda satu macrotask. React memproses klik sebagai discrete event dan
+    // mem-flush state secara sinkron di akhir handler, yaitu SEBELUM browser
+    // menjalankan aksi bawaan tag <a>. Kalau kartunya ter-unmount lebih dulu,
+    // tab WhatsApp berisiko tidak jadi terbuka.
+    window.setTimeout(() => {
+      setSelectedContact(contact)
+      setStage('done')
+    }, 0)
+
     fetch('/kontak/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ ...formData, narahubung: contact.nama }),
       keepalive: true,
     })
       .then((res) => {
@@ -103,14 +134,17 @@ export const Kontak = () => {
       instansi: '',
       jenisInstansi: '',
       kategori: '',
+      divisi: '',
       deskripsi: '',
       proposal: '',
       whatsapp: '',
       email: '',
     })
     setStep(1)
-    setIsSubmitted(false)
+    setStage('form')
+    setSelectedContact(null)
     setSaveError(false)
+    hasSavedRef.current = false
   }
 
   return (
@@ -126,7 +160,7 @@ export const Kontak = () => {
       <PageOverlap className="bg-white min-h-[500px]">
         <DefaultLayout className="pt-14 md:pt-16 pb-12">
           {/* Section: Panduan */}
-          <section className="mb-12">
+          <section id="panduan" className="mb-12 scroll-mt-28">
             <div className="flex items-center gap-6 mb-10">
               <H3 className="text-neutral-900 font-heading shrink-0">Panduan</H3>
               <div className="h-[2px] w-full bg-neutral-200" />
@@ -134,26 +168,14 @@ export const Kontak = () => {
 
             {/* Grid of ServiceCards (same component as /layanan) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <ServiceCard
-                title="Media Partner"
-                description="Berisi panduan lengkap mengenai informasi perkuliahan, kegiatan-kegiatan, dan panduan persuratan."
-                href="#"
-              />
-              <ServiceCard
-                title="Collaboration"
-                description="Berisi panduan lengkap mengenai informasi perkuliahan, kegiatan-kegiatan, dan panduan persuratan."
-                href="#"
-              />
-              <ServiceCard
-                title="Organizational Visits"
-                description="Berisi panduan lengkap mengenai informasi perkuliahan, kegiatan-kegiatan, dan panduan persuratan."
-                href="#"
-              />
-              <ServiceCard
-                title="Topik Umum"
-                description="Berisi panduan lengkap mengenai informasi perkuliahan, kegiatan-kegiatan, dan panduan persuratan."
-                href="#"
-              />
+              {PANDUAN_TOPICS.map((topic) => (
+                <ServiceCard
+                  key={topic.slug}
+                  title={topic.title}
+                  description={topic.description}
+                  href={`/kontak/panduan/${topic.slug}`}
+                />
+              ))}
             </div>
           </section>
         </DefaultLayout>
@@ -164,14 +186,31 @@ export const Kontak = () => {
           <div className="absolute -top-20 -left-20 w-[350px] md:w-[450px] aspect-square rounded-full bg-secondary-200 blur-[100px] md:blur-[140px] opacity-60 pointer-events-none z-0" />
           <div className="absolute -bottom-20 -right-20 w-[350px] md:w-[450px] aspect-square rounded-full bg-primary-200 blur-[100px] md:blur-[140px] opacity-60 pointer-events-none z-0" />
 
-          <H2 className="text-primary-500 font-heading text-center mb-12 relative z-10">
+          <H2 className="text-primary-500 font-heading text-center mb-6 relative z-10">
             Formulir Komunikasi Eksternal
           </H2>
+
+          {/* Pengarah: baca booklet dulu sebelum mengisi form */}
+          <div className="container mx-auto px-4 md:px-8 max-w-[760px] relative z-10 mb-8">
+            <div className="flex items-start gap-3.5 rounded-2xl border border-primary-100 bg-white/70 px-5 py-4 text-left backdrop-blur-sm">
+              <BookOpen className="mt-0.5 size-5 shrink-0 text-primary-400" aria-hidden="true" />
+              <B4 className="font-sans text-neutral-600">
+                Sebelum mengisi, silakan pilih salah satu{' '}
+                <a
+                  href="#panduan"
+                  className="font-semibold text-primary-500 underline underline-offset-2 hover:text-primary-400"
+                >
+                  panduan di bagian atas halaman ini
+                </a>{' '}
+                dan baca bookletnya terlebih dahulu.
+              </B4>
+            </div>
+          </div>
 
           {/* Form Card wrapper for centering (made more compact to avoid excessive whitespace) */}
           <div className="container mx-auto px-4 md:px-8 max-w-[760px] relative z-10">
             <div className="w-full bg-white rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] border border-white/60 p-6 md:p-8 flex flex-col">
-              {!isSubmitted ? (
+              {stage === 'form' ? (
                 <form onSubmit={step === 3 ? handleSubmit : (e) => e.preventDefault()}>
                   {/* Reusable StepIndicator Component */}
                   <StepIndicator
@@ -183,12 +222,8 @@ export const Kontak = () => {
 
                   {/* Step Heading */}
                   <div className="text-center mb-6">
-                    <H5 className="text-primary-500 font-heading font-semibold">
-                      Tahap {step}
-                    </H5>
-                    <B4 className="text-neutral-500 font-sans mt-1">
-                      {steps[step - 1].subtitle}
-                    </B4>
+                    <H5 className="text-primary-500 font-heading font-semibold">Tahap {step}</H5>
+                    <B4 className="text-neutral-500 font-sans mt-1">{steps[step - 1].subtitle}</B4>
                   </div>
 
                   {/* Step Form Content */}
@@ -227,7 +262,10 @@ export const Kontak = () => {
                             value={formData.jenisInstansi}
                             onValueChange={(val) => handleInputChange('jenisInstansi', val ?? '')}
                           >
-                            <SelectTrigger size="lg" className="w-full h-12 bg-neutral-100/50 hover:bg-neutral-200/50 border border-neutral-200 rounded-full px-6 text-neutral-800 font-sans font-medium shadow-none transition-all focus-visible:ring-4 focus-visible:ring-primary/10">
+                            <SelectTrigger
+                              size="lg"
+                              className="w-full h-12 bg-neutral-100/50 hover:bg-neutral-200/50 border border-neutral-200 rounded-full px-6 text-neutral-800 font-sans font-medium shadow-none transition-all focus-visible:ring-4 focus-visible:ring-primary/10"
+                            >
                               <SelectValue placeholder="Pilih Jenis Instansi" />
                             </SelectTrigger>
                             <SelectContent
@@ -266,7 +304,10 @@ export const Kontak = () => {
                             value={formData.kategori}
                             onValueChange={(val) => handleInputChange('kategori', val ?? '')}
                           >
-                            <SelectTrigger size="lg" className="w-full h-12 bg-neutral-100/50 hover:bg-neutral-200/50 border border-neutral-200 rounded-full px-6 text-neutral-800 font-sans font-medium shadow-none transition-all focus-visible:ring-4 focus-visible:ring-primary/10">
+                            <SelectTrigger
+                              size="lg"
+                              className="w-full h-12 bg-neutral-100/50 hover:bg-neutral-200/50 border border-neutral-200 rounded-full px-6 text-neutral-800 font-sans font-medium shadow-none transition-all focus-visible:ring-4 focus-visible:ring-primary/10"
+                            >
                               <SelectValue placeholder="Pilih Kategori Kerjasama" />
                             </SelectTrigger>
                             <SelectContent
@@ -274,12 +315,14 @@ export const Kontak = () => {
                               className="rounded-xl border-none shadow-xl bg-white p-2.5 z-50 font-sans"
                             >
                               {[
-                                { val: 'Sponsorship', label: '🤝 Sponsorship' },
-                                { val: 'Media Partner', label: '📢 Media Partner' },
-                                { val: 'Kunjungan / Studi Banding', label: '🏫 Kunjungan / Studi Banding' },
-                                { val: 'Permohonan Pembicara / Juri', label: '🎤 Permohonan Pembicara / Juri' },
-                                { val: 'Kolaborasi Event / Project', label: '💡 Kolaborasi Event / Project' },
-                                { val: 'Lainnya', label: '❓ Lainnya' },
+                                { val: 'Partnership', label: 'Partnership' },
+                                { val: 'Sponsorship', label: 'Sponsorship' },
+                                { val: 'Media Relation', label: 'Media Relation' },
+                                {
+                                  val: 'Organizational Inquiries',
+                                  label: 'Organizational Inquiries',
+                                },
+                                { val: 'Other', label: 'Other' },
                               ].map((option) => (
                                 <SelectItem
                                   key={option.val}
@@ -287,6 +330,46 @@ export const Kontak = () => {
                                   className="rounded-lg hover:bg-neutral-100 py-2.5"
                                 >
                                   {option.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="flex flex-col gap-2 text-left">
+                          <label className="text-sm font-semibold text-neutral-800 font-sans">
+                            Divisi yang Dituju (Opsional)
+                          </label>
+                          <Select
+                            value={formData.divisi}
+                            onValueChange={(val) => handleInputChange('divisi', val ?? '')}
+                          >
+                            <SelectTrigger
+                              size="lg"
+                              className="w-full h-12 bg-neutral-100/50 hover:bg-neutral-200/50 border border-neutral-200 rounded-full px-6 text-neutral-800 font-sans font-medium shadow-none transition-all focus-visible:ring-4 focus-visible:ring-primary/10"
+                            >
+                              <SelectValue placeholder="Pilih Divisi (kosongkan jika belum tahu)" />
+                            </SelectTrigger>
+                            <SelectContent
+                              alignItemWithTrigger={false}
+                              className="rounded-xl border-none shadow-xl bg-white p-2.5 z-50 font-sans"
+                            >
+                              {[
+                                'Electropreneur',
+                                'HUMAS',
+                                'SOSMAS',
+                                'Workshop',
+                                'Minat & Bakat',
+                                'ADKESMA',
+                                'INFOKOM',
+                                'BPO',
+                              ].map((option) => (
+                                <SelectItem
+                                  key={option}
+                                  value={option}
+                                  className="rounded-lg hover:bg-neutral-100 py-2.5"
+                                >
+                                  {option}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -354,16 +437,35 @@ export const Kontak = () => {
                           </h4>
                           <div className="grid grid-cols-3 gap-2 py-1 border-b border-neutral-100">
                             <span className="text-neutral-400 font-semibold">Nama:</span>
-                            <span className="col-span-2 text-neutral-800 font-medium">{formData.nama}</span>
+                            <span className="col-span-2 text-neutral-800 font-medium">
+                              {formData.nama}
+                            </span>
                           </div>
                           <div className="grid grid-cols-3 gap-2 py-1 border-b border-neutral-100">
                             <span className="text-neutral-400 font-semibold">Instansi:</span>
-                            <span className="col-span-2 text-neutral-800 font-medium">{formData.instansi}</span>
+                            <span className="col-span-2 text-neutral-800 font-medium">
+                              {formData.instansi}
+                            </span>
                           </div>
-                          <div className="grid grid-cols-3 gap-2 py-1">
+                          <div
+                            className={cn(
+                              'grid grid-cols-3 gap-2 py-1',
+                              formData.divisi && 'border-b border-neutral-100',
+                            )}
+                          >
                             <span className="text-neutral-400 font-semibold">Kategori:</span>
-                            <span className="col-span-2 text-neutral-800 font-medium">{formData.kategori}</span>
+                            <span className="col-span-2 text-neutral-800 font-medium">
+                              {formData.kategori}
+                            </span>
                           </div>
+                          {formData.divisi && (
+                            <div className="grid grid-cols-3 gap-2 py-1">
+                              <span className="text-neutral-400 font-semibold">Divisi:</span>
+                              <span className="col-span-2 text-neutral-800 font-medium">
+                                {formData.divisi}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </>
                     )}
@@ -402,27 +504,80 @@ export const Kontak = () => {
                         disabled={!isStepValid}
                         className="rounded-xl px-6 h-11 bg-secondary text-white hover:bg-secondary-600 flex items-center gap-2 ml-auto font-sans font-semibold"
                       >
-                        Submit & Chat WhatsApp
+                        Kirim & Pilih Narahubung
                         <ArrowRight className="w-4 h-4 text-white" />
                       </Button>
                     )}
                   </div>
                 </form>
-              ) : (
-                /* Success View */
+              ) : stage === 'contact' ? (
+                /* Tahap pemilihan narahubung — data belum dikirim ke mana pun */
                 <div className="flex flex-col items-center text-center py-8">
-                  <CheckCircle2 className="w-16 h-16 text-[#abd03b] mb-6 animate-bounce" />
-                  <H3 className="text-primary font-heading mb-3">
-                    Formulir Berhasil Dikirim!
-                  </H3>
-                  <B2 className="text-neutral-600 max-w-md mb-10 leading-relaxed font-sans">
-                    Terima kasih atas pengajuan Anda. Halaman obrolan WhatsApp tim Customer Service KMTETI telah dibuka di tab baru untuk melanjutkan diskusi.
+                  <span className="mb-6 flex size-16 items-center justify-center rounded-full bg-[#abd03b]/15 text-[#7fa32c]">
+                    <MessageCircle className="size-8" aria-hidden="true" />
+                  </span>
+                  <H3 className="text-primary font-heading mb-3">Pilih Narahubung</H3>
+                  <B2 className="text-neutral-600 max-w-md mb-8 leading-relaxed font-sans">
+                    Isian Anda sudah lengkap. Pilih salah satu narahubung untuk melanjutkan diskusi
+                    lewat WhatsApp. Ringkasan isian Anda akan otomatis tertulis di pesannya.
+                  </B2>
+
+                  <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-4">
+                    {NARAHUBUNG.map((contact) => (
+                      <a
+                        key={contact.id}
+                        href={buildWaUrl(contact)}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => handleContactSelect(contact)}
+                        className="group flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white p-4 text-left no-underline transition-all duration-200 hover:-translate-y-0.5 hover:border-[#abd03b] hover:shadow-[0_10px_24px_rgba(0,0,0,0.08)] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-primary-100"
+                      >
+                        <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#abd03b]/15 text-[#7fa32c] transition-colors group-hover:bg-[#abd03b]/25">
+                          <MessageCircle className="size-5" aria-hidden="true" />
+                        </span>
+                        <span className="flex min-w-0 flex-col">
+                          <span className="font-sans text-sm font-semibold text-neutral-900 truncate">
+                            {contact.nama}
+                          </span>
+                          {contact.keterangan && (
+                            <span className="font-sans text-xs text-neutral-500 truncate">
+                              {contact.keterangan}
+                            </span>
+                          )}
+                        </span>
+                        <ArrowRight
+                          className="ml-auto size-4 shrink-0 text-neutral-300 transition-all group-hover:translate-x-0.5 group-hover:text-[#abd03b]"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* Jalan keluar kalau pengaju ingin membetulkan isiannya dulu */}
+                  <button
+                    type="button"
+                    onClick={() => setStage('form')}
+                    className="mt-8 inline-flex items-center gap-2 font-sans text-sm font-semibold text-neutral-500 transition-colors hover:text-primary-500"
+                  >
+                    <ArrowLeft className="size-4" aria-hidden="true" />
+                    Kembali ubah isian
+                  </button>
+                </div>
+              ) : (
+                /* Tahap selesai — data sudah dikirim ke Payload + Google Sheet */
+                <div className="flex flex-col items-center text-center py-8">
+                  <CheckCircle2 className="w-16 h-16 text-[#abd03b] mb-6" />
+                  <H3 className="text-primary font-heading mb-3">Formulir Berhasil Dikirim!</H3>
+                  <B2 className="text-neutral-600 max-w-md mb-8 leading-relaxed font-sans">
+                    Terima kasih atas pengajuan Anda. Obrolan WhatsApp
+                    {selectedContact ? ` dengan ${selectedContact.nama}` : ''} sudah dibuka di tab
+                    baru. Silakan lanjutkan diskusinya di sana.
                   </B2>
 
                   {saveError && (
-                    <div className="w-full max-w-md -mt-6 mb-10 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-left font-sans text-sm text-amber-800">
-                      Pengajuan Anda belum tercatat di sistem kami. Silakan lanjutkan
-                      lewat WhatsApp yang sudah terbuka agar tidak terlewat.
+                    <div className="w-full max-w-md -mt-4 mb-8 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-left font-sans text-sm text-amber-800">
+                      Pengajuan Anda belum tercatat di sistem kami. Silakan tetap lanjutkan lewat
+                      WhatsApp agar tidak terlewat.
                     </div>
                   )}
 
@@ -437,6 +592,11 @@ export const Kontak = () => {
             </div>
           </div>
         </section>
+
+        {/* Section: FAQ */}
+        <DefaultLayout className="pt-0 pb-24 md:pt-0 md:pb-32">
+          <Faq />
+        </DefaultLayout>
       </PageOverlap>
     </main>
   )

@@ -48,3 +48,7 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Booklet PDF (~54MB) — disimpan di object storage, bukan di repo
+BOOKLET PARTNERSHIP.pdf
+booklet-partnership-kmteti.pdf

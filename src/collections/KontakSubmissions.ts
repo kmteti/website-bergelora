@@ -8,7 +8,7 @@ export const KontakSubmissions: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'nama',
-    defaultColumns: ['nama', 'instansi', 'kategori', 'sheetStatus', 'createdAt'],
+    defaultColumns: ['nama', 'instansi', 'kategori', 'divisi', 'sheetStatus', 'createdAt'],
     description: 'Isian Formulir Komunikasi Eksternal dari halaman /kontak.',
   },
   access: {
@@ -44,6 +44,11 @@ export const KontakSubmissions: CollectionConfig = {
       label: 'Kategori Kerjasama',
     },
     {
+      name: 'divisi',
+      type: 'text',
+      label: 'Divisi yang Dituju',
+    },
+    {
       name: 'deskripsi',
       type: 'textarea',
       required: true,
@@ -64,6 +69,14 @@ export const KontakSubmissions: CollectionConfig = {
       name: 'email',
       type: 'text',
       label: 'Email Penanggung Jawab',
+    },
+    {
+      name: 'narahubung',
+      type: 'text',
+      label: 'Narahubung yang Dipilih',
+      admin: {
+        description: 'Nama narahubung yang diklik pengaju saat melanjutkan ke WhatsApp.',
+      },
     },
     {
       name: 'sheetStatus',

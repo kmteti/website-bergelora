@@ -18,7 +18,9 @@ export type SheetRow = Record<string, string>
 
 export type SheetSyncResult = { ok: true } | { ok: false; error: string }
 
-const REQUEST_TIMEOUT_MS = 10_000
+// Panggilan pertama ke Apps Script setelah lama menganggur kena cold start dan
+// bisa lewat 10 detik. Panggilan berikutnya biasanya di bawah 3 detik.
+const REQUEST_TIMEOUT_MS = 25_000
 
 /** Data pengajuan yang dipetakan jadi satu baris sheet. */
 export type KontakSubmissionRow = {
@@ -27,10 +29,12 @@ export type KontakSubmissionRow = {
   instansi: string
   jenisInstansi?: string | null
   kategori: string
+  divisi?: string | null
   deskripsi: string
   proposal?: string | null
   whatsapp?: string | null
   email?: string | null
+  narahubung?: string | null
   createdAt?: string | null
 }
 
@@ -44,10 +48,12 @@ export const buildKontakSheetRow = (doc: KontakSubmissionRow): SheetRow => ({
   'Instansi': doc.instansi,
   'Jenis Instansi': doc.jenisInstansi ?? '',
   'Kategori': doc.kategori,
+  'Divisi Dituju': doc.divisi ?? '',
   'Detail Kebutuhan': doc.deskripsi,
   'Link Proposal': doc.proposal ?? '',
   'WhatsApp': doc.whatsapp ?? '',
   'Email': doc.email ?? '',
+  'Narahubung Dipilih': doc.narahubung ?? '',
   'ID Payload': String(doc.id),
 })
 

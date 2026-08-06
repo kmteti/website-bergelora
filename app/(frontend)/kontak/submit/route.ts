@@ -12,10 +12,12 @@ type ParsedForm = {
   instansi: string
   jenisInstansi: string
   kategori: string
+  divisi: string
   deskripsi: string
   proposal: string
   whatsapp: string
   email: string
+  narahubung: string
 }
 
 // `key` diikat ke ParsedForm supaya menambah field tidak bisa lupa divalidasi.
@@ -26,10 +28,12 @@ const FIELD_RULES: FieldRule[] = [
   { key: 'instansi', required: true, max: 160 },
   { key: 'jenisInstansi', required: false, max: 60 },
   { key: 'kategori', required: true, max: 80 },
+  { key: 'divisi', required: false, max: 60 },
   { key: 'deskripsi', required: true, max: 4000 },
   { key: 'proposal', required: false, max: 500 },
   { key: 'whatsapp', required: true, max: 25 },
   { key: 'email', required: false, max: 160 },
+  { key: 'narahubung', required: false, max: 120 },
 ]
 
 const parseForm = (body: unknown): { data: ParsedForm } | { error: string } => {

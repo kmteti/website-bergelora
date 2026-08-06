@@ -217,10 +217,15 @@ export interface KontakSubmission {
   instansi: string;
   jenisInstansi?: string | null;
   kategori: string;
+  divisi?: string | null;
   deskripsi: string;
   proposal?: string | null;
   whatsapp: string;
   email?: string | null;
+  /**
+   * Nama narahubung yang diklik pengaju saat melanjutkan ke WhatsApp.
+   */
+  narahubung?: string | null;
   /**
    * Diisi otomatis setelah pengajuan diteruskan ke Google Sheet.
    */
@@ -379,10 +384,12 @@ export interface KontakSubmissionsSelect<T extends boolean = true> {
   instansi?: T;
   jenisInstansi?: T;
   kategori?: T;
+  divisi?: T;
   deskripsi?: T;
   proposal?: T;
   whatsapp?: T;
   email?: T;
+  narahubung?: T;
   sheetStatus?: T;
   sheetError?: T;
   updatedAt?: T;
