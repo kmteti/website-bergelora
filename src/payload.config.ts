@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { News } from './collections/News'
+import { KontakSubmissions } from './collections/KontakSubmissions'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,7 +20,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, News],
+  collections: [Users, Media, News, KontakSubmissions],
   editor: lexicalEditor(),
   sharp,
   secret: process.env.PAYLOAD_SECRET || '',

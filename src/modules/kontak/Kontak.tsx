@@ -23,6 +23,7 @@ export const Kontak = () => {
   // Step/Tahap state (3 steps total)
   const [step, setStep] = useState(1)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [saveError, setSaveError] = useState(false)
 
   // Multi-step form state
   const [formData, setFormData] = useState({
@@ -68,15 +69,31 @@ export const Kontak = () => {
     return `https://wa.me/6281227136311?text=${encodeURIComponent(text)}`
   }
 
-  // Handle Form Submit and WhatsApp Redirect
+  // Handle Form Submit, WhatsApp Redirect, and record persistence
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!isStepValid) return
 
-    // Open WA URL in new tab
+    // Open WA URL in new tab. This must stay synchronous inside the event
+    // handler: awaiting first breaks the user-gesture chain and popup blockers
+    // will silently kill the tab.
     const waUrl = formatWaText()
     window.open(waUrl, '_blank', 'noopener,noreferrer')
     setIsSubmitted(true)
+    setSaveError(false)
+
+    // Persist to Payload + Google Sheet in the background.
+    // keepalive keeps the request alive even as the tab switches to WhatsApp.
+    fetch('/kontak/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+      keepalive: true,
+    })
+      .then((res) => {
+        if (!res.ok) setSaveError(true)
+      })
+      .catch(() => setSaveError(true))
   }
 
   // Reset form
@@ -93,6 +110,7 @@ export const Kontak = () => {
     })
     setStep(1)
     setIsSubmitted(false)
+    setSaveError(false)
   }
 
   return (
@@ -400,6 +418,14 @@ export const Kontak = () => {
                   <B2 className="text-neutral-600 max-w-md mb-10 leading-relaxed font-sans">
                     Terima kasih atas pengajuan Anda. Halaman obrolan WhatsApp tim Customer Service KMTETI telah dibuka di tab baru untuk melanjutkan diskusi.
                   </B2>
+
+                  {saveError && (
+                    <div className="w-full max-w-md -mt-6 mb-10 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-left font-sans text-sm text-amber-800">
+                      Pengajuan Anda belum tercatat di sistem kami. Silakan lanjutkan
+                      lewat WhatsApp yang sudah terbuka agar tidak terlewat.
+                    </div>
+                  )}
+
                   <Button
                     onClick={handleReset}
                     className="rounded-xl px-6 h-11 bg-primary text-white hover:bg-primary-600"
