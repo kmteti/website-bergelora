@@ -24,7 +24,7 @@ export default function Profile() {
 
       {/* 2. Container Overlap (FULL WIDTH) */}
       <PageOverlap className="bg-white min-h-[500px] relative">
-        <DefaultLayout className="relative z-10 pt-16 md:pt-24 pb-20">
+        <DefaultLayout className="relative z-10 pt-14 md:pt-16 pb-22 md:pb-24">
           
           {/* Visi & Misi Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 mb-10">
@@ -53,21 +53,22 @@ export default function Profile() {
         {/* Glow Effects */}
         <div className="absolute left-0 right-0 w-full flex justify-between z-0 pointer-events-none">
           <div className="relative w-full aspect-square scale-125 md:scale-[2] -left-12 md:-left-[18.75rem] origin-left -translate-y-[15%] md:-translate-y-[50%]">
-            <Image src="/images/profile/biruglow.svg" alt="Biru Glow" fill className="object-cover md:object-contain object-left" />
+            <Image src="/images/biruglow.svg" alt="Biru Glow" fill className="object-cover md:object-contain object-left" />
           </div>
           <div className="relative w-full aspect-square scale-125 md:scale-[2] -right-12 md:-right-[18.75rem] origin-right -translate-y-[15%] md:-translate-y-[50%]">
-            <Image src="/images/profile/hijauglow.svg" alt="Hijau Glow" fill className="object-cover md:object-contain object-right" />
+            <Image src="/images/hijauglow.svg" alt="Hijau Glow" fill className="object-cover md:object-contain object-right" />
           </div>
         </div>
 
-        {/* Full width group image section within overlap */}
-        <div className="w-full relative h-auto aspect-video mb-20 md:mb-32 z-10">
-           <Image 
-             src="/images/profile/foto-kabinet.webp" 
-             alt="KMTETI Group Photo" 
-             fill
-             className="object-contain"
-           />
+        {/* YouTube Video Section within overlap */}
+        <div className="w-full relative aspect-video mb-20 md:mb-32 z-10">
+          <iframe
+            src="https://www.youtube.com/embed/8dmi2DqeLDs"
+            title="KMTETI Profile Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full border-none"
+          ></iframe>
         </div>
 
         <DefaultLayout className="relative z-10 py-0 pb-32">

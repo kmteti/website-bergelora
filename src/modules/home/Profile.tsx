@@ -44,8 +44,16 @@ export default function Profile() {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white"></div>
       
       <div ref={pinTargetRef}>
-        <section className="relative z-10 w-full bg-blue-100 rounded-[40px] pt-[112px] pb-[112px]">
-          <div className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center">
+        <section className="relative z-10 w-full overflow-hidden bg-[#E1F3FA] rounded-[40px] pt-[112px] pb-[112px]">
+          {/* Glow Effects (Pure CSS/Tailwind) */}
+          <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+            {/* Biru Glow (Kiri Atas Gambar) */}
+            <div className="absolute top-[20%] -left-[20%] w-[450px] md:w-[800px] aspect-square rounded-full bg-[#64CAEF] blur-[100px] md:blur-[180px] opacity-50" />
+            {/* Hijau Glow (Kanan Bawah Gambar) */}
+            <div className="absolute -bottom-[20%] -right-[20%] w-[450px] md:w-[800px] aspect-square rounded-full bg-[#C7E07C] blur-[100px] md:blur-[180px] opacity-50" />
+          </div>
+
+          <div className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center relative z-10">
             {/* Title */}
             <H2 className="text-[#0a4c5a] font-semibold mb-6">Ruang Tumbuh Bersama</H2>
             
@@ -55,8 +63,8 @@ export default function Profile() {
             </B2>
             
             {/* Button */}
-            <Button variant={'primary'} className="rounded-xl px-6 py-6 mb-16 shadow-md hover:shadow-lg transition-shadow">
-              <span className="font-semibold text-base">Profil KMTETI</span>
+            <Button variant={'secondary'} size={"default"} className="rounded-xl px-6 py-6 mb-16 shadow-md hover:shadow-lg transition-shadow">
+              <B2>Profil KMTETI</B2>
               <ArrowUpRight className="ml-2 w-5 h-5" />
             </Button>
 
@@ -66,9 +74,9 @@ export default function Profile() {
               <div className="absolute inset-0 w-full h-full bg-white/70 rounded-[28px] shadow-sm transform -rotate-[3deg] scale-[1.01] border border-white/60 z-0"></div>
               
               {/* Front Image */}
-              <div className="relative z-10 w-full h-full rounded-[24px] overflow-hidden shadow-xl border-[6px] border-white bg-gray-100">
+              <div className="relative z-10 hover:rotate-[-1deg] rotate-[1deg] transition-transform duration-300 w-full h-full rounded-[24px] overflow-hidden shadow-xl border-[6px] border-white bg-gray-100">
                 <Image 
-                  src="/images/home/about/about.webp" 
+                  src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 
                   fill 
                   className="object-cover"

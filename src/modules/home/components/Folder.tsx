@@ -4,9 +4,11 @@ import React, { useId } from 'react';
 
 interface FolderProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
+  startColor?: string;
+  endColor?: string;
 }
 
-export default function Folder({ children, className = '', ...props }: FolderProps) {
+export default function Folder({ children, className = '', startColor = '#FFE7AE', endColor = '#E3C67F', ...props }: FolderProps) {
   // useId() menghasilkan ID unik per instance, mencegah konflik filter SVG
   const uid = useId().replace(/:/g, '');
   const gradientId = `folderGrad-${uid}`;
@@ -43,8 +45,8 @@ export default function Folder({ children, className = '', ...props }: FolderPro
         >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#FFE7AE" />
-              <stop offset="100%" stopColor="#E3C67F" />
+              <stop offset="0%" stopColor={startColor} />
+              <stop offset="100%" stopColor={endColor} />
             </linearGradient>
 
             {/* Inner shadow filter only */}

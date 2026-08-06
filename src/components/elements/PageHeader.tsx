@@ -43,7 +43,7 @@ export function PageHeader({
       {/* Wrapper Konten Teks */}
       <div className="absolute top-0 left-0 w-full h-full">
       
-        <div className="relative z-10 flex h-full flex-col justify-end pb-[210px] container mx-auto px-3 md:px-4 max-w-6xl pointer-events-none">
+        <div className="relative z-10 flex h-full flex-col justify-end pb-[210px] mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8 pointer-events-none">
           <div className="flex items-end justify-between w-full pointer-events-auto">
             <div className="flex items-center gap-5 md:gap-6">
               {/* Render Icon */}
@@ -61,7 +61,7 @@ export function PageHeader({
               {/* Title & Description */}
               <div className="flex flex-col">
                 <H2 className="text-white drop-shadow-md">{title}</H2>
-                <B2 className="text-white/90 mt-1 md:mt-2 drop-shadow-sm">{description}</B2>
+                <B2 className="text-white/90 mt-[2px] drop-shadow-sm">{description}</B2>
               </div>
             </div>
             

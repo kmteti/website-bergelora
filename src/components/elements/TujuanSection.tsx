@@ -4,10 +4,13 @@ import React, { useRef } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { H3, B4 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface TujuanSectionProps {
   tujuan: string
@@ -44,7 +47,17 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
       gsap.set(img, { x: init.x, y: init.y, rotation: init.rotation, scale: 0.85 })
     })
 
-    const tl = gsap.timeline({ paused: true })
+    // Timeline controlled by scrolling with pinning
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: '+=800',
+        scrub: 1.2,
+        pin: true,
+        anticipatePin: 1,
+      }
+    })
 
     // Animate text (unblur and scale up)
     tl.to(textRef.current, {
@@ -81,20 +94,6 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
         ease: 'power2.inOut'
       }, 0)
     })
-
-    if (containerRef.current) {
-      // Create mouse event listeners to trigger the animation timeline
-      const playTimeline = () => tl.play()
-      const reverseTimeline = () => tl.reverse()
-
-      containerRef.current.addEventListener('mouseenter', playTimeline)
-      containerRef.current.addEventListener('mouseleave', reverseTimeline)
-
-      return () => {
-        containerRef.current?.removeEventListener('mouseenter', playTimeline)
-        containerRef.current?.removeEventListener('mouseleave', reverseTimeline)
-      }
-    }
   }, { scope: containerRef })
 
   return (

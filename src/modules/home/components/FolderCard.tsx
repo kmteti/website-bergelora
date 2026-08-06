@@ -12,11 +12,13 @@ interface FolderCardProps {
   logo: string
   /** Tambahan className untuk wrapper Folder */
   className?: string
+  startColor?: string
+  endColor?: string
 }
 
-export default function FolderCard({ name, photo, logo, className = '' }: FolderCardProps) {
+export default function FolderCard({ name, photo, logo, className = '', startColor, endColor }: FolderCardProps) {
   return (
-    <Folder className={className}>
+    <Folder className={className} startColor={startColor} endColor={endColor}>
       {/* Images Layer */}
       <div className="absolute top-[12%] left-0 right-0 flex justify-center pointer-events-none z-0">
         <div className="relative flex items-center justify-center w-[220px] h-[180px]">

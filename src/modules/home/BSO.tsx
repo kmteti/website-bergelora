@@ -45,16 +45,14 @@ const bsoData = [
 ]
 
 export default function BSO() {
-  const [containerNode, setContainerNode] = useState<HTMLElement | null>(null)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   return (
     <div className="relative z-10 w-full -mt-1">
       <section
-        ref={setContainerNode}
         data-navbar-tone="light"
         id="bso"
-        className="w-full min-h-screen flex flex-col bg-gradient-to-b from-[#eaf9ff] to-[#A3D1E0] pt-[110px] relative overflow-hidden border-l-[2px] border-r-[2px] border-white"
+        className="w-full flex flex-col bg-gradient-to-b from-[#eaf9ff] to-[#A3D1E0] pt-[110px] relative border-l-[2px] border-r-[2px] border-white"
       >
         {/* Background Gradient Blobs */}
         <div className="absolute top-[42%] -translate-y-1/2 -left-[10%] md:left-[5%] w-[150px] md:w-[200px] aspect-square rounded-full bg-[#64CAEF] blur-[80px] md:blur-[100px] pointer-events-none z-0" />
@@ -74,8 +72,9 @@ export default function BSO() {
               data={bsoData}
               activeIndex={activeIndex}
               onActiveChange={setActiveIndex}
-              containerNode={containerNode}
               basePath="/bso"
+              folderStartColor="#00C0E8"
+              folderEndColor="#0088FF"
             />
           </div>
 
