@@ -57,37 +57,37 @@ export const Event = ({ slug }: { slug: string }) => {
         <div className="absolute top-[59%] -left-[11%] w-[41%] aspect-square rounded-full bg-[#C7E07C] opacity-60 blur-[120px] pointer-events-none" />
 
         <div className="relative">
-          <DefaultLayout>
+          <DefaultLayout className="pb-16 md:pb-24 pt-0 md:pt-0">
             {/* Section Tujuan & Galeri */}
-            <div className="pb-16">
-              <TujuanSection
-                tujuan={data.tujuan}
-                deskripsi={data.deskripsi_tujuan}
-                gambar={data.gambar}
-                nama={data.nama}
-                website={data.website}
-                imageFit="cover"
-              />
-            </div>
-
-            {/* Section Bidang Lomba (Menggunakan card flip identik Proker pada divisi) */}
-            <div className="pt-8 pb-20">
-              <div className="text-center mb-16">
-                <H3 className="text-[#1E5D7B] font-heading font-semibold">Bidang Lomba</H3>
-                <p className="text-gray-600 font-sans mt-4 max-w-2xl mx-auto">
-                  Berikut ini adalah berbagai bidang kompetisi/lomba yang diselenggarakan di {data.nama}.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {data.bidangLomba.map((item, idx) => (
-                  <BidangLombaCard key={idx} item={item} />
-                ))}
-              </div>
-            </div>
+            <TujuanSection
+              tujuan={data.tujuan}
+              deskripsi={data.deskripsi_tujuan}
+              gambar={data.gambar}
+              nama={data.nama}
+              website={data.website}
+              imageFit="cover"
+            />
           </DefaultLayout>
         </div>
       </PageOverlap>
+
+      {/* Section Bidang Lomba - Background Basic White */}
+      <div className="relative w-full z-20 bg-white rounded-b-[24px] md:rounded-b-[32px] -mb-[24px] md:-mb-[32px] overflow-hidden">
+        <DefaultLayout className="pt-20 pb-[196px]">
+          <div className="text-center mb-16">
+            <H3 className="text-[#1E5D7B] font-heading font-semibold">Bidang Lomba</H3>
+            <p className="text-gray-600 font-sans mt-4 max-w-2xl mx-auto">
+              Berikut ini adalah berbagai bidang kompetisi/lomba yang diselenggarakan di {data.nama}.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {data.bidangLomba.map((item, idx) => (
+              <BidangLombaCard key={idx} item={item} />
+            ))}
+          </div>
+        </DefaultLayout>
+      </div>
     </main>
   )
 }
