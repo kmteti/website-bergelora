@@ -29,15 +29,18 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
   const imageRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useGSAP(() => {
+    // ponytail: positions read viewport width once on mount; a rotate-to-landscape
+    // keeps the mobile layout until reload. Re-run inside a resize listener if that matters.
+    const spread = window.innerWidth < 768 ? 0.55 : 1
     const initialPositions = [
-      { x: -210, y: -70, rotation: -5 },
-      { x: -70, y: -70, rotation: 3 },
-      { x: 70, y: -70, rotation: -4 },
-      { x: 210, y: -70, rotation: 6 },
-      { x: -210, y: 70, rotation: 4 },
-      { x: -70, y: 70, rotation: -6 },
-      { x: 70, y: 70, rotation: 2 },
-      { x: 210, y: 70, rotation: -8 }
+      { x: -210 * spread, y: -70, rotation: -5 },
+      { x: -70 * spread, y: -70, rotation: 3 },
+      { x: 70 * spread, y: -70, rotation: -4 },
+      { x: 210 * spread, y: -70, rotation: 6 },
+      { x: -210 * spread, y: 70, rotation: 4 },
+      { x: -70 * spread, y: 70, rotation: -6 },
+      { x: 70 * spread, y: 70, rotation: 2 },
+      { x: 210 * spread, y: 70, rotation: -8 }
     ]
 
     // Set initial GSAP styles specifically to avoid flash
@@ -69,17 +72,30 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
     }, 0)
 
     // Calculate target positions for exactly 8 images
-    // 4 on top row, 4 on bottom row around the text
-    const targets = [
-      { x: -420, y: -90, rotation: -12 },  // 0: Far Left
-      { x: -180, y: -270, rotation: -4 },  // 1: Top Left
-      { x: 180, y: -270, rotation: 4 },    // 2: Top Right
-      { x: 420, y: -90, rotation: 12 },    // 3: Far Right
-      { x: -420, y: 90, rotation: 8 },     // 4: Bottom Left
-      { x: -180, y: 270, rotation: -2 },   // 5: Bottom Left Center
-      { x: 180, y: 270, rotation: 2 },     // 6: Bottom Right Center
-      { x: 420, y: 90, rotation: -8 }      // 7: Far Right Bottom
-    ]
+    // Desktop: ring around the text. Mobile: two rows above/below it,
+    // since there is no horizontal room to sit beside the paragraph.
+    const isNarrow = window.innerWidth < 768
+    const targets = isNarrow
+      ? [
+          { x: -115, y: -300, rotation: -10 },
+          { x: -40, y: -350, rotation: -3 },
+          { x: 40, y: -350, rotation: 4 },
+          { x: 115, y: -300, rotation: 10 },
+          { x: -115, y: 300, rotation: 8 },
+          { x: -40, y: 350, rotation: -3 },
+          { x: 40, y: 350, rotation: 3 },
+          { x: 115, y: 300, rotation: -8 },
+        ]
+      : [
+          { x: -420, y: -90, rotation: -12 },  // 0: Far Left
+          { x: -180, y: -270, rotation: -4 },  // 1: Top Left
+          { x: 180, y: -270, rotation: 4 },    // 2: Top Right
+          { x: 420, y: -90, rotation: 12 },    // 3: Far Right
+          { x: -420, y: 90, rotation: 8 },     // 4: Bottom Left
+          { x: -180, y: 270, rotation: -2 },   // 5: Bottom Left Center
+          { x: 180, y: 270, rotation: 2 },     // 6: Bottom Right Center
+          { x: 420, y: 90, rotation: -8 }      // 7: Far Right Bottom
+        ]
 
     imageRefs.current.forEach((img, i) => {
       if (!img) return
@@ -99,7 +115,7 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
   return (
     <div 
       ref={containerRef} 
-      className="relative w-full min-h-[800px] flex items-center justify-center py-20 overflow-hidden cursor-default group"
+      className="relative w-full min-h-[900px] md:min-h-[800px] flex items-center justify-center py-20 overflow-hidden cursor-default group"
     >
       {/* Absolute centered images */}
       {gambar && gambar.length > 0 && (() => {

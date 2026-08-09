@@ -3,7 +3,6 @@
 import React, { useState, useCallback, useRef } from 'react'
 import { B3, B4, H2, H4 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import FolderCarousel, { FolderCarouselRef } from './components/FolderCarousel'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
@@ -103,7 +102,6 @@ export default function DivisiBSO() {
   const emptyText = activeTab === 'divisi'
     ? 'Hover di salah satu folder untuk melihat detail mengenai divisi.'
     : 'Hover di salah satu folder untuk melihat detail mengenai BSO.'
-  const buttonLabel = activeTab === 'divisi' ? 'Jelajahi Divisi' : 'Jelajahi BSO'
 
   const handleTabChange = useCallback((tab: Tab) => {
     if (tab === activeTab) return
@@ -191,11 +189,12 @@ export default function DivisiBSO() {
           </div>
 
           {/* Description Detail matching Figma with overlap */}
-          <div className={`relative z-20 w-full flex-grow -mt-18 md:-mt-15 pt-8 md:pt-12 pb-8 md:pb-16 transition-colors duration-300 ${
+          {/* Hover-driven detail: unreachable on touch, so it does not reserve height there */}
+          <div className={`relative z-20 w-full flex-grow -mt-18 md:-mt-15 pt-8 md:pt-12 pb-8 md:pb-16 transition-colors duration-300 hidden md:block ${
             activeTab === 'divisi' ? 'bg-[#E1F3FA]' : 'bg-[#eaf9ff]'
           }`}>
             <div className="container mx-auto px-4 md:px-11 lg:px-22">
-              <div className="grid w-full min-h-[96px] md:min-h-[80px] items-center">
+              <div className="grid w-full min-h-0 md:min-h-[80px] items-center">
                 {/* Empty State */}
                 <div 
                   className={`col-start-1 row-start-1 transition-all duration-300 w-full hidden md:flex justify-center items-center ${
@@ -224,11 +223,6 @@ export default function DivisiBSO() {
                     </div>
                     <div className="md:col-span-8 lg:col-span-9 flex flex-col items-center md:items-start">
                       <B3 className="text-gray-700 text-center md:text-left">{item.description}</B3>
-                      <Link href={`${basePath}/${item.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        <Button className="mt-6 md:hidden">
-                          {buttonLabel}
-                        </Button>
-                      </Link>
                     </div>
                   </div>
                 ))}
