@@ -114,7 +114,7 @@ export default function Hero() {
               <div className="absolute top-0 left-0 w-full h-full">
 
               {/* Konten Hero */}
-              <div className="relative z-10 flex h-full flex-col justify-end px-8 md:px-16 lg:px-24 pb-12 md:pb-16 lg:pb-24 max-w-5xl pointer-events-none">
+              <div className="relative z-10 flex h-full flex-col justify-end px-6 sm:px-8 md:px-16 lg:px-24 pb-28 sm:pb-12 md:pb-16 lg:pb-24 max-w-5xl pointer-events-none">
                 <H1 className="text-white w-full drop-shadow-md">{slide.title}</H1>
                 <B2 className="text-white mt-4 drop-shadow-md">{slide.description}</B2>
 
@@ -135,7 +135,7 @@ export default function Hero() {
       {/* Wrapper untuk Navigasi */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20">
         {/* Navigasi Indikator di bagian bawah Kanan */}
-        <div className="absolute bottom-12 md:bottom-16 lg:bottom-24 right-8 md:right-16 lg:right-24 flex gap-3 items-center pointer-events-auto">
+        <div className="absolute bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-24 right-6 sm:right-8 md:right-16 lg:right-24 flex gap-3 items-center pointer-events-auto">
         <nav className="flex items-center gap-[2px] bg-white/20 backdrop-blur-md p-1 rounded-full">
           {sliderHero.map((slide, index) => {
             if (isThisSlide === index) {

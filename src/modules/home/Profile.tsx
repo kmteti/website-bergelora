@@ -88,23 +88,18 @@ export default function Profile() {
                   className="absolute inset-0 z-20 flex items-center justify-center rounded-[18px] opacity-0"
                   style={{ backgroundColor: 'rgba(255,255,255,0.45)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
                 >
-                  <div className="flex items-stretch justify-center w-full max-w-4xl mx-auto divide-x divide-gray-800/30 text-gray-900">
-                    <div className="flex-1 flex flex-col items-center justify-center px-4">
-                      <span className="text-[56px] font-serif leading-none mb-3">200</span>
-                      <span className="text-sm font-bold text-center max-w-[140px] leading-snug">Anggota<br/>Organisasi Aktif</span>
-                    </div>
-                    <div className="flex-1 flex flex-col items-center justify-center px-4">
-                      <span className="text-[56px] font-serif leading-none mb-3">8</span>
-                      <span className="text-sm font-bold text-center max-w-[140px] leading-snug">Divisi Beranggota<br/>Aktif</span>
-                    </div>
-                    <div className="flex-1 flex flex-col items-center justify-center px-4">
-                      <span className="text-[56px] font-serif leading-none mb-3">6</span>
-                      <span className="text-sm font-bold text-center max-w-[140px] leading-snug">Badan Semi<br/>Otonom</span>
-                    </div>
-                    <div className="flex-1 flex flex-col items-center justify-center px-4">
-                      <span className="text-[56px] font-serif leading-none mb-3">3</span>
-                      <span className="text-sm font-bold text-center max-w-[140px] leading-snug">Event Ternama<br/>Nasional</span>
-                    </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-gray-800/30 w-full max-w-4xl mx-auto text-gray-900">
+                    {[
+                      { value: '200', label: <>Anggota<br />Organisasi Aktif</> },
+                      { value: '8', label: <>Divisi Beranggota<br />Aktif</> },
+                      { value: '6', label: <>Badan Semi<br />Otonom</> },
+                      { value: '3', label: <>Event Ternama<br />Nasional</> },
+                    ].map((stat) => (
+                      <div key={stat.value} className="flex flex-col items-center justify-center px-2 py-3 md:px-4 md:py-0">
+                        <span className="text-[32px] md:text-[56px] font-serif leading-none mb-1 md:mb-3">{stat.value}</span>
+                        <span className="text-[11px] md:text-sm font-bold text-center max-w-[140px] leading-snug">{stat.label}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
