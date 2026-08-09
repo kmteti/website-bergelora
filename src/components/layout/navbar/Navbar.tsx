@@ -56,6 +56,7 @@ const mainLinks: NavLink[] = [{ label: 'Layanan', href: '/layanan' }]
 type NavbarTone = 'dark' | 'light'
 
 const DARK_BACKGROUND_LIGHTNESS_THRESHOLD = 40
+const HIDE_NAVBAR_AFTER_PX = 120
 
 function getLightnessFromColor(color: string) {
   const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/)
@@ -109,11 +110,24 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isDesktopTentangOpen, setIsDesktopTentangOpen] = useState(false)
   const [navbarTone, setNavbarTone] = useState<NavbarTone>('light')
+  const [isHidden, setIsHidden] = useState(false)
   const desktopTentangRef = useRef<HTMLDivElement>(null)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const updateNavbarState = () => {
-      setIsScrolled(window.scrollY > 12)
+      const scrollY = window.scrollY
+      const delta = scrollY - lastScrollY.current
+
+      setIsScrolled(scrollY > 12)
+
+      // Ignore sub-pixel jitter from smooth scrolling; keep the navbar visible
+      // near the top so it never hides on a short bounce.
+      if (Math.abs(delta) > 6) {
+        setIsHidden(delta > 0 && scrollY > HIDE_NAVBAR_AFTER_PX)
+        lastScrollY.current = scrollY
+      }
+
       setNavbarTone(getNavbarToneFromViewport())
     }
 
@@ -157,6 +171,7 @@ export function Navbar() {
         'fixed inset-x-0 top-0 z-[99] isolate transition-all duration-300',
         isDarkTone ? 'text-white' : 'text-neutral-950',
         isMobileMenuOpen && 'bg-white',
+        isHidden && !isMobileMenuOpen && '-translate-y-full opacity-0 pointer-events-none',
       )}
     >
       <div
