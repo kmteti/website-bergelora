@@ -31,6 +31,12 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    // The DATABASE_URI is shared across the team, so dev-mode auto-push had every
+    // `next dev` diffing its local code against everyone else's schema: it raced
+    // other devs' pushes and blocked on a y/N data-loss prompt (which hangs every
+    // request and surfaces in the browser as "Error: [object Event]").
+    // Schema changes now go through `payload migrate:create` + `payload migrate`.
+    push: false,
   }),
   plugins: [
     s3Storage({
