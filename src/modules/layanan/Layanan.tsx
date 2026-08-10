@@ -1,21 +1,6 @@
 'use client'
 
-import {
-  Award,
-  BarChart3,
-  BookOpen,
-  BookText,
-  CalendarDays,
-  ClipboardList,
-  FileCheck,
-  Files,
-  FolderOpen,
-  GraduationCap,
-  LayoutTemplate,
-  Mail,
-  MessageSquare,
-  Wallet,
-} from 'lucide-react'
+import * as LucideIcons from 'lucide-react'
 import React, { useState, useMemo } from 'react'
 import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
@@ -37,7 +22,7 @@ interface ServiceSection {
   items: ServiceCardProps[]
 }
 
-const serviceSections: ServiceSection[] = [
+const staticServiceSections: ServiceSection[] = [
   {
     title: 'Link Penting',
     items: [
@@ -45,25 +30,25 @@ const serviceSections: ServiceSection[] = [
         title: 'Akademik DTETI',
         description: 'Portal sistem informasi akademik program sarjana DTETI.',
         href: 'https://sarjana.jteti.ugm.ac.id/',
-        icon: GraduationCap,
+        icon: LucideIcons.GraduationCap,
       },
       {
         title: 'Persuratan FT',
         description: 'Sistem pengajuan dan pengelolaan surat di Fakultas Teknik UGM.',
         href: 'https://sms.ft.ugm.ac.id/persuratan/index.php/?nextUrl=%2Fpersuratan%2Findex.php%2Fp%2Fdashboard%2Fdocument',
-        icon: Mail,
+        icon: LucideIcons.Mail,
       },
       {
         title: 'Kegiatan Mahasiswa FT',
         description: 'Portal pengajuan proposal dan kegiatan mahasiswa Fakultas Teknik.',
         href: 'https://sms.ft.ugm.ac.id/kegiatan-mahasiswa/index.php/?nextUrl=%2Fkegiatan-mahasiswa%2Findex.php%2Fp%2Fproposal',
-        icon: CalendarDays,
+        icon: LucideIcons.CalendarDays,
       },
       {
         title: 'Data Prestasi',
         description: 'Dashboard rekap data prestasi mahasiswa DTETI.',
         href: 'https://datastudio.google.com/u/0/reporting/f0e83f84-41ec-4719-b116-cc1e445cd3dc/page/mfGHF',
-        icon: BarChart3,
+        icon: LucideIcons.BarChart3,
       },
     ],
   },
@@ -74,19 +59,19 @@ const serviceSections: ServiceSection[] = [
         title: 'Info Lomba & Beasiswa',
         description: 'Kumpulan informasi lomba dan beasiswa untuk mahasiswa.',
         href: 'https://s.id/ILBAdkesmaKMTETI',
-        icon: Award,
+        icon: LucideIcons.Award,
       },
       {
         title: 'Forwati',
         description: 'Arsip Forwati yang dapat diakses melalui Google Drive.',
         href: 'https://drive.google.com/drive/folders/1MyGcaAB7Nm4_yowgzL2n0EE0kWiYE55F?usp=drive_link',
-        icon: FolderOpen,
+        icon: LucideIcons.FolderOpen,
       },
       {
         title: 'Form Aspirasi',
         description: 'Sampaikan aspirasi, keluh, dan saranmu untuk KMTETI lewat Adkesma.',
         href: 'https://bit.ly/ASPIRASIADKESMA2026',
-        icon: MessageSquare,
+        icon: LucideIcons.MessageSquare,
       },
     ],
   },
@@ -97,19 +82,19 @@ const serviceSections: ServiceSection[] = [
         title: 'Buku Panduan Akademik',
         description: 'Buku panduan akademik program sarjana DTETI.',
         href: 'https://sarjana.jteti.ugm.ac.id/akademik/dokumen-akademik/',
-        icon: BookOpen,
+        icon: LucideIcons.BookOpen,
       },
       {
         title: 'Dokumen Akademik dan Kemahasiswaan',
         description: 'Kumpulan dokumen akademik dan kemahasiswaan resmi DTETI.',
         href: 'https://sarjana.jteti.ugm.ac.id/kemahasiswaan/dokumen-akademik-dan-kemahasiswaan/',
-        icon: Files,
+        icon: LucideIcons.Files,
       },
       {
         title: 'SOP',
         description: 'Standar operasional prosedur akademik DTETI.',
         href: 'https://sarjana.jteti.ugm.ac.id/akademik/sop/',
-        icon: ClipboardList,
+        icon: LucideIcons.ClipboardList,
       },
     ],
   },
@@ -120,33 +105,75 @@ const serviceSections: ServiceSection[] = [
         title: 'Manual Book Kesekretariatan',
         description: 'Panduan administrasi dan kesekretariatan organisasi.',
         href: 'https://bit.ly/ManualBookKSK2024',
-        icon: BookText,
+        icon: LucideIcons.BookText,
       },
       {
         title: 'Manual Book Kebendaharaan',
         description: 'Panduan pengelolaan keuangan dan kebendaharaan organisasi.',
         href: 'https://bit.ly/ManualBookKBN2024',
-        icon: Wallet,
+        icon: LucideIcons.Wallet,
       },
       {
         title: 'Kumpulan Template',
         description: 'Berbagai template dokumen dan surat siap pakai.',
         href: 'https://drive.google.com/drive/folders/0B2Rf2cDPuLplcEZKZzgydVdBc00?resourcekey=0-OBdwkd2BD64289B7TAhslg',
-        icon: LayoutTemplate,
+        icon: LucideIcons.LayoutTemplate,
       },
       {
         title: 'Form Verifikasi Persuratan',
         description: 'Formulir verifikasi persuratan organisasi.',
         href: 'https://docs.google.com/forms/d/e/1FAIpQLSfkfg5-YzcvAYnzYjozs25cPReXmBP7gE08aaUJcRqCdLJhZQ/viewform',
-        icon: FileCheck,
+        icon: LucideIcons.FileCheck,
       },
     ],
   },
 ]
 
-export default function Layanan() {
+function getIconComponent(iconName?: string): LucideIcons.LucideIcon | undefined {
+  if (!iconName) return undefined
+  return (LucideIcons[iconName as keyof typeof LucideIcons] as LucideIcons.LucideIcon) || LucideIcons.Link
+}
+
+interface LayananProps {
+  initialLayanan?: any[]
+}
+
+export default function Layanan({ initialLayanan }: LayananProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('Semua Layanan')
+
+  // Transform Payload CMS docs into ServiceSection format if available
+  const serviceSections: ServiceSection[] = useMemo(() => {
+    if (!initialLayanan || initialLayanan.length === 0) {
+      return staticServiceSections
+    }
+
+    // Group docs by kategori
+    const groups: { [key: string]: ServiceCardProps[] } = {}
+
+    for (const doc of initialLayanan) {
+      const cat = doc.kategori || 'Lainnya'
+      if (!groups[cat]) {
+        groups[cat] = []
+      }
+
+      groups[cat].push({
+        title: doc.title,
+        description: doc.description,
+        href: doc.href,
+        icon: getIconComponent(doc.icon),
+      })
+    }
+
+    return Object.keys(groups).map((catTitle) => ({
+      title: catTitle,
+      items: groups[catTitle],
+    }))
+  }, [initialLayanan])
+
+  const categories = useMemo(() => {
+    return ['Semua Layanan', ...serviceSections.map((sec) => sec.title)]
+  }, [serviceSections])
 
   const filteredSections = useMemo(() => {
     return serviceSections
@@ -166,9 +193,9 @@ export default function Layanan() {
 
         return { ...section, items: filteredItems }
       })
-      // Hanya biarkan section yang punya item (agar headernya ikut hilang jika kosong)
+      // Hanya biarkan section yang punya item
       .filter((section) => section.items.length > 0)
-  }, [searchQuery, categoryFilter])
+  }, [serviceSections, searchQuery, categoryFilter])
 
   return (
     <main className="relative w-full bg-neutral-100">
@@ -205,12 +232,9 @@ export default function Layanan() {
                         alignItemWithTrigger={false}
                         className="rounded-xl border-none shadow-xl bg-white p-2.5"
                       >
-                        <SelectItem value="Semua Layanan" className="rounded-lg hover:bg-neutral-100 py-2.5">
-                          Semua Layanan
-                        </SelectItem>
-                        {serviceSections.map((sec) => (
-                          <SelectItem key={sec.title} value={sec.title} className="rounded-lg hover:bg-neutral-100 py-2.5">
-                            {sec.title}
+                        {categories.map((catName) => (
+                          <SelectItem key={catName} value={catName} className="rounded-lg hover:bg-neutral-100 py-2.5">
+                            {catName}
                           </SelectItem>
                         ))}
                       </SelectContent>

@@ -6,6 +6,7 @@ import FolderCard from './FolderCard'
 
 export interface FolderData {
   name: string
+  slug?: string
   photo: string
   logo: string
   description?: string
@@ -75,7 +76,7 @@ const FolderCarousel = forwardRef<FolderCarouselRef, FolderCarouselProps>(({
               onMouseEnter={() => onActiveChange(index)}
               onClick={() => {
                 if (basePath) {
-                  router.push(`${basePath}/${item.name.toLowerCase().replace(/\s+/g, '-')}`)
+                  router.push(`${basePath}/${item.slug || item.name.toLowerCase().replace(/\s+/g, '-')}`)
                 }
               }}
             >
