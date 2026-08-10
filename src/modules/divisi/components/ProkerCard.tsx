@@ -1,9 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-
 import * as LucideIcons from 'lucide-react'
-import { H5, B5 } from '@/components/elements/Typography'
+import { B5 } from '@/components/elements/Typography'
 
 interface ProkerProps {
   nama: string
@@ -15,12 +14,14 @@ interface ProkerProps {
 export function ProkerCard({ proker }: { proker: ProkerProps }) {
   const [isFlipped, setIsFlipped] = useState(false)
 
-  // fallback to Trophy if icon not found
-  const LucideIcon = proker.icon ? (LucideIcons[proker.icon as keyof typeof LucideIcons] as React.ElementType) : LucideIcons.Trophy
+  // Safely resolve Lucide Icon or fallback to Trophy
+  const IconComponent = (proker.icon && LucideIcons[proker.icon as keyof typeof LucideIcons]) 
+    ? (LucideIcons[proker.icon as keyof typeof LucideIcons] as React.ElementType) 
+    : LucideIcons.Trophy
 
   return (
     <div 
-      className="group w-full h-[360px] cursor-pointer [perspective:1000px]"
+      className="group w-full h-[300px] sm:h-[350px] cursor-pointer [perspective:1000px]"
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <div 
@@ -28,38 +29,51 @@ export function ProkerCard({ proker }: { proker: ProkerProps }) {
       >
         
         {/* Front Side */}
-        <div className="absolute inset-0 [backface-visibility:hidden] bg-white rounded-[32px] shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-8 border border-gray-100/50 flex flex-col items-center text-center transition-all group-hover:-translate-y-2 group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
-          {LucideIcon ? <LucideIcon className="w-12 h-12 mb-4 text-[#abd03b]" /> : <div className="text-5xl mb-6">🏆</div>}
-          <H5 className="text-gray-800 mb-4">{proker.nama}</H5>
-          <B5 className="text-gray-500 mb-4 overflow-hidden">
+        <div className="absolute inset-0 [backface-visibility:hidden] bg-white rounded-[28px] sm:rounded-[32px] shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 sm:p-7 border border-gray-200/60 flex flex-col items-center text-center transition-all group-hover:-translate-y-1.5 group-hover:shadow-[0_10px_35px_rgba(0,0,0,0.09)]">
+          {/* Icon - Direct without pill container */}
+          <IconComponent className="w-11 h-11 sm:w-13 sm:h-13 mb-3 sm:mb-4 text-[#abd03b] shrink-0" />
+
+          {/* Title */}
+          <h4 className="text-base sm:text-xl font-bold text-gray-900 leading-snug mb-2 font-heading line-clamp-2 px-1">
+            {proker.nama}
+          </h4>
+
+          {/* Description */}
+          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans line-clamp-3 sm:line-clamp-4 px-1">
             {proker.deskripsi}
-          </B5>
-          <B5 className="mt-auto pt-4 border-t border-gray-100/80 w-full text-gray-400 font-medium tracking-wide flex items-center justify-center gap-1.5">
+          </p>
+
+          {/* Flip Footer */}
+          <B5 className="mt-auto pt-3 border-t border-gray-100/90 w-full text-[11px] sm:text-xs text-gray-400 font-medium tracking-wide flex items-center justify-center gap-1.5 shrink-0">
             Tekan untuk membalik <LucideIcons.RotateCcw className="w-3.5 h-3.5" />
           </B5>
         </div>
 
         {/* Back Side */}
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#ebebeb] text-neutral-800 rounded-[32px] shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-8 border border-gray-200/50 flex flex-col items-center text-center transition-all group-hover:-translate-y-2 group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
-          <H5 className="text-gray-800 mb-6">Anggota</H5>
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#ebebeb] text-neutral-800 rounded-[28px] sm:rounded-[32px] shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 sm:p-7 border border-gray-200/80 flex flex-col items-center text-center transition-all group-hover:-translate-y-1.5 group-hover:shadow-[0_10px_35px_rgba(0,0,0,0.09)]">
+          <h4 className="text-base sm:text-lg font-bold text-gray-800 mb-4 font-heading shrink-0">
+            Anggota Tim
+          </h4>
           
-          <div className="w-full flex-1 overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin' }}>
+          <div 
+            className="w-full flex-1 overflow-y-auto overflow-x-hidden px-1 pr-1.5 [scrollbar-width:thin] [scrollbar-color:rgba(100,116,139,0.5)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-400/50 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-500/80"
+          >
             {proker.anggota && proker.anggota.length > 0 ? (
-              <div className="flex flex-col items-center justify-center gap-1 text-center w-full">
+              <div className="flex flex-col items-center justify-center gap-1 text-center w-full py-1">
                 {proker.anggota.map((member, idx) => (
-                  <B5 key={idx} className="text-gray-600 tracking-wide">
+                  <B5 key={idx} className="text-xs sm:text-sm text-gray-700 tracking-wide font-medium">
                     {member}
                   </B5>
                 ))}
               </div>
             ) : (
               <div className="h-full flex flex-col items-center justify-center opacity-60">
-                <B5 className="text-gray-400 italic">Belum ada data anggota.</B5>
+                <B5 className="text-gray-400 text-xs sm:text-sm italic">Belum ada data anggota.</B5>
               </div>
             )}
           </div>
 
-          <B5 className="mt-auto pt-4 border-t border-gray-300/80 w-full text-gray-400 font-medium tracking-wide flex items-center justify-center gap-1.5">
+          <B5 className="mt-auto pt-3 border-t border-gray-300/80 w-full text-[11px] sm:text-xs text-gray-400 font-medium tracking-wide flex items-center justify-center gap-1.5 shrink-0">
             Tekan untuk membalik <LucideIcons.RotateCcw className="w-3.5 h-3.5" />
           </B5>
         </div>
