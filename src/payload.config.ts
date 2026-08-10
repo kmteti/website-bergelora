@@ -9,6 +9,12 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { News } from './collections/News'
 import { KontakSubmissions } from './collections/KontakSubmissions'
+import { Divisi } from './collections/Divisi'
+import { Bso } from './collections/Bso'
+import { Events } from './collections/Events'
+import { Layanan } from './collections/Layanan'
+import { Faq } from './collections/Faq'
+import { Narahubung } from './collections/Narahubung'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, News, KontakSubmissions],
+  collections: [Users, Media, News, KontakSubmissions, Divisi, Bso, Events, Layanan, Faq, Narahubung],
   editor: lexicalEditor(),
   sharp,
   secret: process.env.PAYLOAD_SECRET || '',
