@@ -21,6 +21,12 @@ const EVENT_EMOJI: Record<string, string> = {
   nesco: '⚡',
 }
 
+const EVENT_GRADIENTS: Record<string, { from: string; to: string }> = {
+  technocorner: { from: '#D92525', to: '#1E308E' }, // Merah + Biru
+  findit: { from: '#0B192C', to: '#0284C7' },       // Biru Tua + Biru Sedang (tua ke sedang)
+  nesco: { from: '#15803D', to: '#EAB308' },        // Hijau + Kuning
+}
+
 export default function Event() {
   const trackRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(Math.floor(eventData.length / 2))
@@ -114,7 +120,7 @@ export default function Event() {
             ref={trackRef}
             onScroll={handleScroll}
             style={{ '--card': 'min(700px,86vw)' } as React.CSSProperties}
-            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pb-[calc(var(--card)*0.1022+24px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pt-4 pb-[calc(var(--card)*0.1022+56px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {eventData.map((event, i) => {
               const isActive = i === active
@@ -147,6 +153,7 @@ export default function Event() {
                       description={event.deskripsi_tujuan}
                       emoji={EVENT_EMOJI[event.slug]}
                       website={event.website}
+                      gradient={EVENT_GRADIENTS[event.slug]}
                       className={cn(
                         // `translate`, bukan `transform` — Tailwind v4 pakai properti translate buat translate-y-*
                         'transition-[translate,filter] duration-500 ease-out motion-reduce:transition-none',
