@@ -2,7 +2,7 @@ export const divisi = [
     {
         id: 1,
         slug: "adkesma",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/adkesma.webp",
         logo: "/logo/divisi/adkesma.svg",
         nama: "Adkesma",
         detail: "Advokasi dan Kesejahteraan Mahasiswa",
@@ -128,7 +128,7 @@ export const divisi = [
     {
         id: 2,
         slug: "bpo",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/bpo.webp",
         logo: "/logo/divisi/bpo.svg",
         nama: "BPO",
         detail: "Biro Pengembangan Organisasi",
@@ -276,7 +276,7 @@ export const divisi = [
     {
         id: 3,
         slug: "electropreneur",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/ep.webp",
         logo: "/logo/divisi/ep.svg",
         nama: "EP",
         detail: "Electropreneur",
@@ -380,7 +380,7 @@ export const divisi = [
     {
         id: 4,
         slug: "humas",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/humas.webp",
         logo: "/logo/divisi/humas.svg",
         nama: "Humas",
         detail: "Hubungan Masyarakat",
@@ -451,7 +451,7 @@ export const divisi = [
     {
         id: 5,
         slug: "infokom",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/infokom.webp",
         logo: "/logo/divisi/infokom.svg",
         nama: "Infokom",
         detail: "Informasi dan Komunikasi",
@@ -632,7 +632,7 @@ export const divisi = [
     {
         id: 6,
         slug: "minat-dan-bakat",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/mikat.webp",
         logo: "/logo/divisi/mikat.svg",
         nama: "Mikat",
         detail: "Minat dan Bakat",
@@ -747,7 +747,7 @@ export const divisi = [
     {
         id: 7,
         slug: "sosmas",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/sosmas.webp",
         logo: "/logo/divisi/sosmas.svg",
         nama: "Sosmas",
         detail: "Sosial Masyarakat",
@@ -818,7 +818,7 @@ export const divisi = [
     {
         id: 8,
         slug: "workshop",
-        header: "/images/divisi/Adkesma1.webp",
+        header: "/images/divisi/ws.webp",
         logo: "/logo/divisi/ws.svg",
         nama: "WS",
         detail: "Workshop",

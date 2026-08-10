@@ -42,7 +42,7 @@ const megaMenuData = {
     { label: 'Bionce', href: '/bso/bionce', icon: '/logo/bso/beacon.svg' },
     { label: 'SKI', href: '/bso/ski', icon: '/logo/bso/ski-al-hannaan.svg' },
     { label: 'SKK', href: '/bso/skk', icon: '/logo/bso/skk-dteti.svg' },
-    { label: 'MPM', href: '/bso/mpm' },
+    { label: 'MPM', href: '/bso/mpm', icon: '/logo/bso/mpm.svg' },
   ],
   event: [
     { label: 'FindIT', href: '/event/findit' },

@@ -36,13 +36,18 @@ export function StepIndicator({
           {Array.from({ length: totalSteps }).map((_, idx) => {
             const stepNumber = idx + 1
             const isCurrent = currentStep === stepNumber
+            const isCompleted = currentStep > stepNumber
             return (
               <div key={idx} className="w-0 flex justify-center items-center overflow-visible">
                 <B5
                   weight="regular"
                   className={cn(
                     'text-center whitespace-nowrap transition-colors duration-200',
-                    isCurrent ? 'text-primary-300 font-normal' : 'text-neutral-400 font-normal'
+                    isCurrent
+                      ? 'text-primary-300 font-normal'
+                      : isCompleted
+                      ? 'text-primary-400 font-normal'
+                      : 'text-neutral-400 font-normal'
                   )}
                 >
                   {stepLabels[idx]}
@@ -61,7 +66,7 @@ export function StepIndicator({
           <div
             className="absolute top-1/2 left-8 h-[6px] bg-primary-300 rounded-full transition-all duration-300 -translate-y-1/2 z-0"
             style={{
-              width: `calc(${percentage}% - 12px)`,
+              width: `calc(${percentage}% - ${(64 * percentage) / 100}px)`,
               minWidth: currentStep > 1 ? '16px' : '0px',
             }}
           />
