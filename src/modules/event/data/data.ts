@@ -29,7 +29,7 @@ export const eventData: EventData[] = [
     nama: 'FindIT!',
     header: '/images/events/findit.webp',
     logo: '/logo/event/findit.svg',
-    detail: 'Ajang kompetisi di bidang teknologi informasi yang diselenggarakan oleh KMTETI FT UGM.',
+    detail: 'Future Innovation & Discovery Information Technology',
     tujuan: 'FindIT!',
     deskripsi_tujuan:
       'FIND IT (Future Innovation and Discovery Information Technology) merupakan acara tahunan yang diselenggarakan oleh KMTETI FT UGM. Event ini mencakup pameran IT Fest serta berbagai kompetisi menarik di bidang teknologi informasi guna menjadi wadah pengembangan minat dan potensi masyarakat.',
@@ -83,7 +83,7 @@ export const eventData: EventData[] = [
     nama: 'NESCO UGM',
     header: '/images/events/nesco.webp',
     logo: '/logo/event/nesco.svg',
-    detail: 'National Electrical Power System Competition yang berfokus pada ketenagalistrikan dan energi.',
+    detail: 'National Electrical Power System Competition',
     tujuan: 'NESCO UGM',
     deskripsi_tujuan:
       'NESCO merupakan sebuah kompetisi tingkat nasional dan seminar yang diselenggarakan oleh BSO Magatrika di bawah naungan Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (FT UGM). NESCO memiliki tujuan untuk meningkatkan perkembangan ketenagalistrikan di Indonesia.',
@@ -127,7 +127,7 @@ export const eventData: EventData[] = [
     nama: 'Technocorner',
     header: '/images/events/tc.webp',
     logo: '/logo/event/technocorner.webp',
-    detail: 'Ajang kompetisi tahunan yang berfokus pada bidang robotika, IoT, dan teknik elektro.',
+    detail: 'National Robotics, IoT & Electrical Competition',
     tujuan: 'Technocorner',
     deskripsi_tujuan:
       'Technocorner merupakan acara tahunan berbasis teknologi yang diselenggarakan oleh Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) Fakultas Teknik Universitas Gadjah Mada, yang bertujuan membina generasi penerus yang kreatif dan kompetitif.',
