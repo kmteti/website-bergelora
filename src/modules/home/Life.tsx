@@ -39,6 +39,7 @@ const PHOTO_GAP = 60
 
 export default function Life() {
   const sectionRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const thumbRef = useRef<HTMLDivElement>(null)
 
@@ -60,7 +61,20 @@ export default function Life() {
         pin: true,
         pinSpacing: true,
         scrub: 1,
-        start: 'bottom bottom',
+        // Section (927px) lebih tinggi dari layar, jadi yang ditengahin isinya (651px),
+        // bukan section-nya — padding atas & bawah beda jauh (180 vs 95), kalau pakai
+        // 'center center' isinya ke-geser ke bawah dan progress bar kepotong.
+        // Sisa padding yang kelewat di atas cuma ruang kosong yang numpuk di atas
+        // section Event, jadi header + timeline + progress bar kelihatan semua.
+        start: () => {
+          const sec = sectionRef.current
+          const content = contentRef.current
+          if (!sec || !content) return 'center center'
+          const offset = Math.round(
+            content.offsetTop + content.offsetHeight / 2 - sec.offsetHeight / 2,
+          )
+          return `center center-=${offset}`
+        },
         end: () => `+=${getScrollAmount()}`,
         invalidateOnRefresh: true,
         anticipatePin: 1,
@@ -109,7 +123,7 @@ export default function Life() {
         {/* Blue gradient background at bottom */}
         <div className="absolute inset-x-0 bottom-0 h-[240px] bg-gradient-to-t from-[#CFEAF4] to-transparent pointer-events-none z-0" />
 
-        <div className="relative z-10 w-full flex flex-col">
+        <div ref={contentRef} className="relative z-10 w-full flex flex-col">
           {/* Title */}
           <div className="container mx-auto px-4 md:px-8 max-w-6xl flex items-center justify-center mb-10 md:mb-14">
             <H2 className="text-primary-500 text-center">Life at KMTETI</H2>
