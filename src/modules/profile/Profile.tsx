@@ -34,21 +34,44 @@ export default function Profile() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
               <div>
                 <H2 className="mb-5 text-primary-500">Visi</H2>
-                <B2 className="leading-relaxed">
-                  At KMTETI, a spirit of optimism and possibility energizes our mission
-                  of discovery and learning. Here you&apos;ll find a place of intellectual
-                  expansiveness, wide-ranging perspectives, and freedom to explore
-                  new lines of thinking.
+                <B2 className="leading-relaxed text-gray-700">
+                  Mewujudkan KMTETI yang kolaboratif, berdampak, berorientasi pada pengembangan karier mahasiswa, serta menjunjung tinggi rasa kekeluargaan dan keterbukaan aspirasi melalui penguatan koneksi internal dan eksternal demi menciptakan lingkungan yang produktif, efisien, dan inklusif.
                 </B2>
               </div>
               <div>
                 <H2 className="mb-5 text-primary-500">Misi</H2>
-                <B2 className="leading-relaxed">
-                  At KMTETI, a spirit of optimism and possibility energizes our mission
-                  of discovery and learning. Here you&apos;ll find a place of intellectual
-                  expansiveness, wide-ranging perspectives, and freedom to explore
-                  new lines of thinking.
-                </B2>
+                <ol className="flex flex-col gap-3.5 list-decimal list-outside pl-5">
+                  <li className="leading-relaxed text-gray-700 pl-1">
+                    <B2 className="inline leading-relaxed text-gray-700">
+                      Membangun jaringan alumni dan pengembangan karier yang nyata untuk meningkatkan peluang dan kompetensi mahasiswa.
+                    </B2>
+                  </li>
+                  <li className="leading-relaxed text-gray-700 pl-1">
+                    <B2 className="inline leading-relaxed text-gray-700">
+                      Menumbuhkan rasa kekeluargaan dan rasa memiliki di dalam lingkungan KMTETI melalui kegiatan dan interaksi yang inklusif.
+                    </B2>
+                  </li>
+                  <li className="leading-relaxed text-gray-700 pl-1">
+                    <B2 className="inline leading-relaxed text-gray-700">
+                      Menegakkan komitmen dan profesionalisme dalam kepengurusan sebagai bentuk tanggung jawab organisasi.
+                    </B2>
+                  </li>
+                  <li className="leading-relaxed text-gray-700 pl-1">
+                    <B2 className="inline leading-relaxed text-gray-700">
+                      Meningkatkan efisiensi dan optimalisasi program kerja agar lebih tepat guna dan berkelanjutan.
+                    </B2>
+                  </li>
+                  <li className="leading-relaxed text-gray-700 pl-1">
+                    <B2 className="inline leading-relaxed text-gray-700">
+                      Mendorong kolaborasi antar divisi untuk menciptakan program kerja yang sinergis dan berdampak luas.
+                    </B2>
+                  </li>
+                  <li className="leading-relaxed text-gray-700 pl-1">
+                    <B2 className="inline leading-relaxed text-gray-700">
+                      Menjaring, mengelola, dan menyalurkan aspirasi mahasiswa DTETI secara aktif dan berkelanjutan sebagai dasar perumusan kebijakan serta arah gerak KMTETI.
+                    </B2>
+                  </li>
+                </ol>
               </div>
             </div>
           </DefaultLayout>
