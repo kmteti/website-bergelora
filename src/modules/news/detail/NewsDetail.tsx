@@ -26,18 +26,18 @@ export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] 
 
   return (
     <main className="w-full relative min-h-screen bg-neutral-100">
-      <div className="bg-gradient-to-b from-[#f6f6f6] from-[94%] to-[#c2dfff] min-h-[500px] w-full relative z-20 -mb-[24px] md:-mb-[32px] pb-12 rounded-b-[24px] md:rounded-b-[32px] overflow-hidden">
+      <div className="bg-gradient-to-b from-[#f6f6f6] from-[94%] to-[#c2dfff] min-h-[500px] w-full relative z-20 -mb-[24px] md:-mb-[32px] rounded-b-[24px] md:rounded-b-[32px] overflow-hidden">
         <DefaultLayout>
           <NavbarResolver />
 
           {/* Main Article Container */}
-          <div className="max-w-[960px] mx-auto w-full mt-6 md:mt-10">
+          <div className="w-full">
             {/* Back button */}
-            <Link href="/tentang/berita" className="inline-block mb-10">
-            <Button variant="black" leftIcon={<ArrowLeft className="w-5 h-5" />}>
-              Kembali
-            </Button>
-          </Link>
+            <Link href="/tentang/berita" className="inline-block mb-8">
+              <Button variant="black" leftIcon={<ArrowLeft className="w-5 h-5" />}>
+                Kembali
+              </Button>
+            </Link>
 
           {/* Title and Metadata */}
           <div className="mb-10 w-full">
