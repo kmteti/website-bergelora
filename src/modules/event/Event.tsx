@@ -33,7 +33,7 @@ export const Event = async ({ slug }: { slug: string }) => {
 
   const nama = doc?.nama || staticData?.nama || ''
   const detail = doc?.detail || staticData?.detail || ''
-  const header = doc?.header || staticData?.header || '/images/divisi/adkesma.webp'
+  const header = doc?.header || staticData?.header || '/images/events/findit/header-findit.webp'
   const logo = doc?.logo || staticData?.logo
   const tujuan = doc?.tujuan || staticData?.tujuan || ''
   const deskripsi_tujuan = doc?.deskripsi_tujuan || staticData?.deskripsi_tujuan || ''

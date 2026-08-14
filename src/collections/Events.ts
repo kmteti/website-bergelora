@@ -37,7 +37,7 @@ export const Events: CollectionConfig = {
       type: 'text',
       required: true,
       label: 'Gambar Header/Banner (Path)',
-      defaultValue: '/images/divisi/adkesma.webp',
+      defaultValue: '/images/events/findit/header-findit.webp',
     },
     {
       name: 'logo',

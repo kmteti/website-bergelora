@@ -50,7 +50,7 @@ export const Bso: CollectionConfig = {
       required: true,
       label: 'Gambar Header/Banner (Path)',
       admin: {
-        description: 'Contoh: /images/bso/magatrika-header.webp',
+        description: 'Contoh: /images/bso/magatrika/header-magatrika.webp',
       },
     },
     {

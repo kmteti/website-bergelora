@@ -50,7 +50,7 @@ export const Divisi: CollectionConfig = {
       required: true,
       label: 'Gambar Header/Banner (Path)',
       admin: {
-        description: 'Contoh: /images/divisi/adkesma.webp',
+        description: 'Contoh: /images/divisi/adkesma/header-adkesma.webp',
       },
     },
     {
