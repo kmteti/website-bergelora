@@ -3,7 +3,7 @@
 import { PageHeader } from "@/components/elements/PageHeader";
 import { PageOverlap } from "@/components/elements/PageOverlap";
 import DefaultLayout from "@/components/layout/DefaultLayout";
-import { H2, H4, B2, B3 } from "@/components/elements/Typography";
+import { H2, H4, B3 } from "@/components/elements/Typography";
 import Image from "next/image";
 import { struktur_kabinet } from "./data/data";
 import { useState } from "react";
@@ -31,47 +31,44 @@ export default function Profile() {
           
           <DefaultLayout className="relative z-10 pt-20 md:pt-28 pb-20 md:pb-28">
             {/* Visi & Misi Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
-              <div>
-                <H2 className="mb-5 text-primary-500">Visi</H2>
-                <B2 className="leading-relaxed text-gray-700">
-                  Mewujudkan KMTETI yang kolaboratif, berdampak, berorientasi pada pengembangan karier mahasiswa, serta menjunjung tinggi rasa kekeluargaan dan keterbukaan aspirasi melalui penguatan koneksi internal dan eksternal demi menciptakan lingkungan yang produktif, efisien, dan inklusif.
-                </B2>
+            <div className="flex flex-col gap-14 md:gap-20">
+              {/* Visi - Hero Centered */}
+              <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+                <H2 className="mb-4 md:mb-6 text-primary-500 font-heading">Visi</H2>
+                <div className="relative px-4 sm:px-8 py-2">
+                  <p className="text-base sm:text-lg md:text-xl font-medium text-slate-800 leading-relaxed md:leading-loose">
+                    &ldquo;Mewujudkan KMTETI yang kolaboratif, berdampak, berorientasi pada pengembangan karier mahasiswa, serta menjunjung tinggi rasa kekeluargaan dan keterbukaan aspirasi melalui penguatan koneksi internal dan eksternal demi menciptakan lingkungan yang produktif, efisien, dan inklusif.&rdquo;
+                  </p>
+                </div>
               </div>
-              <div>
-                <H2 className="mb-5 text-primary-500">Misi</H2>
-                <ol className="flex flex-col gap-3.5 list-decimal list-outside pl-5">
-                  <li className="leading-relaxed text-gray-700 pl-1">
-                    <B2 className="inline leading-relaxed text-gray-700">
-                      Membangun jaringan alumni dan pengembangan karier yang nyata untuk meningkatkan peluang dan kompetensi mahasiswa.
-                    </B2>
-                  </li>
-                  <li className="leading-relaxed text-gray-700 pl-1">
-                    <B2 className="inline leading-relaxed text-gray-700">
-                      Menumbuhkan rasa kekeluargaan dan rasa memiliki di dalam lingkungan KMTETI melalui kegiatan dan interaksi yang inklusif.
-                    </B2>
-                  </li>
-                  <li className="leading-relaxed text-gray-700 pl-1">
-                    <B2 className="inline leading-relaxed text-gray-700">
-                      Menegakkan komitmen dan profesionalisme dalam kepengurusan sebagai bentuk tanggung jawab organisasi.
-                    </B2>
-                  </li>
-                  <li className="leading-relaxed text-gray-700 pl-1">
-                    <B2 className="inline leading-relaxed text-gray-700">
-                      Meningkatkan efisiensi dan optimalisasi program kerja agar lebih tepat guna dan berkelanjutan.
-                    </B2>
-                  </li>
-                  <li className="leading-relaxed text-gray-700 pl-1">
-                    <B2 className="inline leading-relaxed text-gray-700">
-                      Mendorong kolaborasi antar divisi untuk menciptakan program kerja yang sinergis dan berdampak luas.
-                    </B2>
-                  </li>
-                  <li className="leading-relaxed text-gray-700 pl-1">
-                    <B2 className="inline leading-relaxed text-gray-700">
-                      Menjaring, mengelola, dan menyalurkan aspirasi mahasiswa DTETI secara aktif dan berkelanjutan sebagai dasar perumusan kebijakan serta arah gerak KMTETI.
-                    </B2>
-                  </li>
-                </ol>
+
+              {/* Misi - Balanced Grid */}
+              <div className="w-full">
+                <div className="text-center mb-8 md:mb-12">
+                  <H2 className="text-primary-500 font-heading">Misi</H2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                  {[
+                    "Membangun jaringan alumni dan pengembangan karier yang nyata untuk meningkatkan peluang dan kompetensi mahasiswa.",
+                    "Menumbuhkan rasa kekeluargaan dan rasa memiliki di dalam lingkungan KMTETI melalui kegiatan dan interaksi yang inklusif.",
+                    "Menegakkan komitmen dan profesionalisme dalam kepengurusan sebagai bentuk tanggung jawab organisasi.",
+                    "Meningkatkan efisiensi dan optimalisasi program kerja agar lebih tepat guna dan berkelanjutan.",
+                    "Mendorong kolaborasi antar divisi untuk menciptakan program kerja yang sinergis dan berdampak luas.",
+                    "Menjaring, mengelola, dan menyalurkan aspirasi mahasiswa DTETI secara aktif dan berkelanjutan sebagai dasar perumusan kebijakan serta arah gerak KMTETI."
+                  ].map((misi, idx) => (
+                    <div 
+                      key={idx}
+                      className="flex flex-col gap-2.5 p-6 rounded-2xl bg-white/80 backdrop-blur-xs border border-white/80 shadow-xs hover:-translate-y-1.5 hover:shadow-md transition-all duration-300"
+                    >
+                      <span className="font-heading font-bold text-2xl text-primary-500 select-none">
+                        {idx + 1}.
+                      </span>
+                      <B3 className="text-slate-700 leading-relaxed font-medium">
+                        {misi}
+                      </B3>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </DefaultLayout>
