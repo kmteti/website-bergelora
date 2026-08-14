@@ -41,6 +41,24 @@ export default function Event() {
     scrollToCard(Math.floor(eventData.length / 2), 'instant')
   }, [])
 
+  // Drag pakai mouse. Sentuhan nggak diikutkan — scroll native-nya sudah lebih enak.
+  // Snap dimatikan selama nyeret, kalau nggak tiap set scrollLeft langsung ditarik balik browser.
+  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null)
+  const [dragging, setDragging] = useState(false)
+
+  // Click nyala setelah pointerup, jadi hasil seretan disimpan biar kartunya nggak ikut ke-klik.
+  const justDragged = useRef(false)
+
+  const endDrag = () => {
+    if (!drag.current) return
+    justDragged.current = drag.current.moved
+    drag.current = null
+    scrollToCard(active)
+    // ponytail: snap dinyalain lagi setelah animasi smooth kira-kira kelar.
+    // Kalau dinyalain langsung, snap-nya motong animasi jadi lompat.
+    setTimeout(() => setDragging(false), 500)
+  }
+
   // Kartu aktif dibaca dari posisi scroll, bukan sebaliknya — biar swipe & tombol satu sumber kebenaran.
   const handleScroll = () => {
     const track = trackRef.current
@@ -113,7 +131,27 @@ export default function Event() {
           <div
             ref={trackRef}
             onScroll={handleScroll}
-            style={{ '--card': 'min(700px,86vw)' } as React.CSSProperties}
+            onPointerDown={(e) => {
+              if (e.pointerType === 'touch' || !trackRef.current) return
+              drag.current = { x: e.clientX, left: trackRef.current.scrollLeft, moved: false }
+              setDragging(true)
+            }}
+            onPointerMove={(e) => {
+              const d = drag.current
+              if (!d || !trackRef.current) return
+              const dx = e.clientX - d.x
+              if (Math.abs(dx) > 4) d.moved = true
+              trackRef.current.scrollLeft = d.left - dx
+            }}
+            onPointerUp={endDrag}
+            onPointerLeave={endDrag}
+            style={
+              {
+                '--card': 'min(700px,86vw)',
+                scrollSnapType: dragging ? 'none' : undefined,
+                cursor: dragging ? 'grabbing' : 'grab',
+              } as React.CSSProperties
+            }
             // pb = turunnya kartu samping + jangkauan shadow kartu (offset 20 + blur 30),
             // kalau kurang shadow-nya kepotong sama tepi bawah track.
             className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pb-[calc(var(--card)*0.1022+56px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -140,10 +178,15 @@ export default function Event() {
                         : `Tampilkan ${event.nama}`
                     }
                     aria-current={isActive || undefined}
-                    onClick={() =>
-                      isActive ? router.push(`/event/${event.slug}`) : scrollToCard(i)
-                    }
-                    className="w-full cursor-pointer text-left focus-visible:outline-3 focus-visible:outline-offset-8 focus-visible:outline-[#0a4c5a]"
+                    onClick={() => {
+                      if (justDragged.current) {
+                        justDragged.current = false
+                        return
+                      }
+                      if (isActive) router.push(`/event/${event.slug}`)
+                      else scrollToCard(i)
+                    }}
+                    className="w-full cursor-pointer select-none text-left focus-visible:outline-3 focus-visible:outline-offset-8 focus-visible:outline-[#0a4c5a]"
                   >
                     <EventBrowserCard
                       name={event.nama}
