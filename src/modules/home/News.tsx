@@ -1,6 +1,7 @@
 import { H2, B2 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 import { NewsCard } from '@/modules/news/components/NewsCard'
 import { NewsCardSkeleton } from '@/modules/news/components/NewsSkeleton'
 import { getPayload } from 'payload'
@@ -76,10 +77,16 @@ export default function News() {
 
         {/* Action Button */}
         <div className="flex justify-center mt-16">
-          <Button variant="secondary" size={"default"} className="rounded-xl px-6 py-6 shadow-md hover:shadow-lg transition-shadow">
-            <B2>KMTETI News</B2>
-            <ArrowUpRight className="ml-2 w-5 h-5" />
-          </Button>
+          <Link href="/tentang/berita">
+            <Button
+              variant="secondary"
+              size="default"
+              className="shadow-md hover:shadow-lg transition-shadow"
+            >
+              <span>KMTETI News</span>
+              <ArrowUpRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
