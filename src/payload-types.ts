@@ -270,7 +270,7 @@ export interface Divisi {
    */
   logo: string;
   /**
-   * Contoh: /images/divisi/adkesma.webp
+   * Contoh: /images/divisi/adkesma/header-adkesma.webp
    */
   header: string;
   /**
@@ -6164,7 +6164,7 @@ export interface Bso {
    */
   logo: string;
   /**
-   * Contoh: /images/bso/magatrika-header.webp
+   * Contoh: /images/bso/magatrika/header-magatrika.webp
    */
   header: string;
   /**
