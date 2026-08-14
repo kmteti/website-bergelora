@@ -43,7 +43,11 @@ export function PageHeader({
       {/* Wrapper Konten Teks */}
       <div className="absolute top-0 left-0 w-full h-full">
       
-        <div className="relative z-10 flex h-full flex-col justify-end pb-[210px] mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8 pointer-events-none">
+        {/* Padding disamain sama Hero home (Hero.tsx) biar judulnya sejajar antar halaman.
+            max-w yang di-center dilepas — itu yang bikin teksnya makin masuk ke dalam
+            di layar lebar, sementara hero-nya tetap nempel ke tepi. pb-nya beda sendiri
+            karena dipakai buat ruang overlap PageOverlap. */}
+        <div className="relative z-10 flex h-full flex-col justify-end pb-[210px] w-full px-6 sm:px-8 md:px-16 lg:px-24 pointer-events-none">
           <div className="flex items-end justify-between w-full pointer-events-auto">
             <div className="flex items-center gap-5 md:gap-6">
               {/* Render Icon */}
