@@ -114,7 +114,9 @@ export default function Event() {
             ref={trackRef}
             onScroll={handleScroll}
             style={{ '--card': 'min(700px,86vw)' } as React.CSSProperties}
-            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pb-[calc(var(--card)*0.1022+24px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            // pb = turunnya kartu samping + jangkauan shadow kartu (offset 20 + blur 30),
+            // kalau kurang shadow-nya kepotong sama tepi bawah track.
+            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pb-[calc(var(--card)*0.1022+56px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {eventData.map((event, i) => {
               const isActive = i === active
@@ -122,9 +124,10 @@ export default function Event() {
               return (
                 <div
                   key={event.slug}
+                  // Kiri di belakang, kanan di depan — jadi z-index naik ikut urutan, bukan ikut kartu aktif.
+                  style={{ zIndex: i + 1 }}
                   className={cn(
                     '@container relative w-[var(--card)] shrink-0 snap-center',
-                    isActive ? 'z-20' : 'z-10',
                     // Tumpang tindih 57px dari 773px, sesuai jarak 716px di Figma
                     i !== LAST && '-mr-[calc(var(--card)*0.0737)]',
                   )}
@@ -149,7 +152,7 @@ export default function Event() {
                       website={event.website}
                       className={cn(
                         // `translate`, bukan `transform` — Tailwind v4 pakai properti translate buat translate-y-*
-                        'transition-[translate,filter] duration-500 ease-out motion-reduce:transition-none',
+                        'transition-[translate,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
                         !isActive && 'translate-y-[10.22cqw] blur-[8px] hover:blur-none',
                       )}
                     />

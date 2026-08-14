@@ -63,7 +63,7 @@ export default function Profile() {
             </B2>
             
             {/* Button */}
-            <Button variant={'secondary'} size={"default"} className="rounded-xl px-6 py-6 mb-16 shadow-md hover:shadow-lg transition-shadow">
+            <Button variant="secondary" size="default" className="px-6 mb-16 shadow-md hover:shadow-lg transition-shadow">
               <B2>Profil KMTETI</B2>
               <ArrowUpRight className="ml-2 w-5 h-5" />
             </Button>

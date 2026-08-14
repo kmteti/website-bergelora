@@ -229,7 +229,7 @@ export function Navbar() {
             </Link>
           ))}
 
-          <Button variant="primary" size="sm" onClick={() => router.push('/kontak')}>
+          <Button variant="primary" size="default" onClick={() => router.push('/kontak')}>
             Hubungi Kami
           </Button>
 
@@ -463,7 +463,7 @@ r text-neutral-400"
             <Button
               variant="primary"
               size="lg"
-              className="mt-4 h-12 w-full rounded-[11px] text-base shadow-[0_8px_18px_rgba(0,111,151,0.3)]"
+              className="mt-4 h-11 w-full text-base shadow-[0_8px_18px_rgba(0,111,151,0.3)]"
               onClick={() => router.push('/kontak')}
             >
               Hubungi Kami
