@@ -8,7 +8,7 @@ interface FolderProps extends React.HTMLAttributes<HTMLDivElement> {
   endColor?: string;
 }
 
-export default function Folder({ children, className = '', startColor = '#FEDA80', endColor = '#F8C344', ...props }: FolderProps) {
+export default function Folder({ children, className = '', startColor = '#FFD97D', endColor = '#F1AD08', ...props }: FolderProps) {
   // useId() menghasilkan ID unik per instance, mencegah konflik filter SVG
   const uid = useId().replace(/:/g, '');
   const gradientId = `folderGrad-${uid}`;
@@ -45,10 +45,9 @@ export default function Folder({ children, className = '', startColor = '#FEDA80
         >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              {/* endColor lands at 55% — where the label flap starts — so the
-                  visible body matches the design and the flap tints evenly */}
+              {/* Figma (node 1079:2199): gradient spans the whole folder body */}
               <stop offset="0%" stopColor={startColor} />
-              <stop offset="55%" stopColor={endColor} />
+              <stop offset="100%" stopColor={endColor} />
             </linearGradient>
 
             {/* Inner shadow filter only */}

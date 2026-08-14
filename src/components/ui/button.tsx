@@ -18,10 +18,11 @@ const buttonVariants = cva(
           'btn--black bg-neutral-900 text-white hover:bg-neutral-700 active:bg-neutral-1000 focus-visible:outline-neutral-300',
       },
       size: {
-        sm: 'h-10 rounded-full px-3.5 py-0 text-sm leading-5 gap-1.5 [--btn-icon-size:14px]',
-        default: 'h-11 rounded-full px-4 py-0 text-base leading-6 gap-2 [--btn-icon-size:16px]',
-        lg: 'h-[52px] rounded-full px-5 py-0 text-base leading-6 gap-2.5 [--btn-icon-size:18px]',
-        icon: 'size-11 min-w-11 rounded-full p-0 [--btn-icon-size:18px]',
+        // Radius/smoothing lives in Button.css (.btn) so every size gets the Figma squircle.
+        sm: 'h-10 px-3.5 py-0 text-sm leading-5 gap-1.5 [--btn-icon-size:14px]',
+        default: 'h-11 px-4 py-0 text-base leading-6 gap-2 [--btn-icon-size:16px]',
+        lg: 'h-[52px] px-4 py-0 text-base leading-6 gap-2.5 [--btn-icon-size:18px]',
+        icon: 'size-11 min-w-11 p-0 [--btn-icon-size:18px]',
       },
     },
     defaultVariants: {
