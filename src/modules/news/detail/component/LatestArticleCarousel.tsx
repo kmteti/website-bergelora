@@ -48,7 +48,7 @@ export function LatestArticleCarousel({ data }: { data: React.ComponentProps<typ
   }, [emblaApi, selectedIndex])
 
   return (
-    <div className="-mx-6 sm:-mx-8">
+    <div className="-mx-4 sm:-mx-8">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y">
           {data.map((item, index) => (
@@ -56,8 +56,8 @@ export function LatestArticleCarousel({ data }: { data: React.ComponentProps<typ
               key={index} 
               className={cn(
                 "relative flex-[0_0_90%] sm:flex-[0_0_70%] min-w-0 pb-10",
-                index === 0 ? "pl-6 sm:pl-8" : "pl-4",
-                index === data.length - 1 ? "pr-6 sm:pr-8" : ""
+                index === 0 ? "pl-4 sm:pl-8" : "pl-4",
+                index === data.length - 1 ? "pr-4 sm:pr-8" : ""
               )}
             >
               <NewsCard {...item} />

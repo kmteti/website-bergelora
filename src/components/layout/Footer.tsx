@@ -143,8 +143,8 @@ export default function Footer() {
       <div className="absolute inset-0 z-10 bg-black/5" />
       <div className="absolute inset-x-0 bottom-0 z-20 h-[calc(100%-360px)] backdrop-blur-[24px] [mask-image:linear-gradient(to_bottom,transparent,black_15%,black)] sm:h-[58%] lg:h-[472px]" />
 
-      <div className="relative z-40 mx-auto flex min-h-[1120px] w-full max-w-[1440px] flex-col px-6 py-12 sm:min-h-[980px] sm:px-10 sm:py-14 lg:h-full lg:px-20 lg:py-0">
-        <div className="max-w-[626px] pt-4 sm:pt-16 lg:absolute lg:left-20 lg:top-[148px] lg:pt-0">
+      <div className="container relative z-40 mx-auto flex min-h-[1120px] w-full max-w-6xl flex-col px-4 py-12 sm:min-h-[980px] md:px-8 sm:py-14 lg:h-full lg:py-0">
+        <div className="max-w-[626px] pt-4 sm:pt-16 lg:absolute lg:left-8 lg:top-[148px] lg:pt-0">
           <H1 className="text-white">Connect with Us</H1>
           <B3 className="mt-4 max-w-[34ch] font-medium text-white sm:max-w-[58ch]">
             At KMTETI, a spirit of optimism and possibility energizes our mission of discovery and
@@ -213,7 +213,7 @@ export default function Footer() {
 
             <Accordion className="w-full">
               <nav
-                className="grid grid-cols-1 text-[#f1f1f1] sm:grid-cols-4 sm:gap-x-10 sm:gap-y-8 lg:gap-x-16"
+                className="grid grid-cols-1 text-[#f1f1f1] sm:grid-cols-4 sm:gap-x-8 sm:gap-y-8 lg:gap-x-10"
                 aria-label="Footer"
               >
                 <FooterColumn value="item-1" title="Fitur" links={featureLinks} />
@@ -228,9 +228,43 @@ export default function Footer() {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <B4 className="font-medium text-white ">KMTETI 2026 - All Rights Reserved</B4>
               <B5 className="max-w-2xl font-semibold text-white/92 md:text-right">
-                Dikembangkan oleh <span className="underline">Muhammad Khoirunas</span>,{' '}
-                <span className="underline">Aulia Nur Fajri Tri Anggoro</span>,{' '}
-                <span className="underline">Alfian Adicandra</span>, dan Divisi Infokom
+                Dikembangkan oleh{' '}
+                <a
+                  href="https://www.linkedin.com/in/khoirunas/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                >
+                  Muhammad Khoirunas
+                </a>
+                ,{' '}
+                <a
+                  href="https://www.linkedin.com/in/aulianurfajri/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                >
+                  Aulia Nur Fajri Tri Anggoro
+                </a>
+                ,{' '}
+                <a
+                  href="https://www.linkedin.com/in/alfianadicandra/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                >
+                  Alfian Adicandra
+                </a>
+                ,{' '}
+                <a
+                  href="https://www.linkedin.com/in/farrel-ag/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                >
+                  Muhammad Farrel A.G.
+                </a>
+                , dan Divisi Infokom
               </B5>
             </div>
           </div>

@@ -155,10 +155,10 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
       {/* Center Text */}
       <div 
         ref={textRef}
-        className="relative z-10 text-center max-w-2xl mx-auto px-4 flex flex-col items-center gap-6"
+        className="relative z-10 text-center max-w-3xl mx-auto px-4 flex flex-col items-center gap-6"
       >
         <div className="pointer-events-none">
-          <H3 className="line-clamp-2 text-primary-500 mb-4">{tujuan}</H3>
+          <H3 className="text-primary-500 mb-4">{tujuan}</H3>
           <B4>{deskripsi}</B4>
         </div>
         
