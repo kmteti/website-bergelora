@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { H2, B2 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
@@ -12,6 +13,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Profile() {
+  const router = useRouter()
   const wrapperRef = useRef<HTMLDivElement>(null)
   const pinTargetRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -63,18 +65,30 @@ export default function Profile() {
             </B2>
             
             {/* Button */}
-            <Button variant={'secondary'} size={"default"} className="rounded-xl px-6 py-6 mb-16 shadow-md hover:shadow-lg transition-shadow">
-              <B2>Profil KMTETI</B2>
+            <Button
+              variant="secondary"
+              size="default"
+              onClick={() => router.push('/tentang/profil')}
+              className="mb-16 shadow-md hover:shadow-lg transition-shadow"
+            >
+              <span>Profil KMTETI</span>
               <ArrowUpRight className="ml-2 w-5 h-5" />
             </Button>
 
-            {/* Image Section */}
+            {/* Image Section - 2 Stacked Photo Cards */}
             <div className="relative w-full max-w-[900px] aspect-[16/9] mx-auto">
-              {/* Back rotated layer */}
-              <div className="absolute inset-0 w-full h-full bg-white/70 rounded-[28px] shadow-sm transform -rotate-[3deg] scale-[1.01] border border-white/60 z-0"></div>
+              {/* Back Photo Card (Stacked underneath) */}
+              <div className="absolute inset-0 w-full h-full rounded-[24px] overflow-hidden shadow-xl border-[6px] border-white bg-gray-300 transform -rotate-[5deg] -translate-x-3 -translate-y-1 scale-[1.02] z-0 transition-transform duration-300">
+                <Image 
+                  src="/images/profile/foto-kabinet.webp" 
+                  alt="Group Photo KMTETI Back" 
+                  fill 
+                  className="object-cover object-[20%_center] brightness-90"
+                />
+              </div>
               
-              {/* Front Image */}
-              <div className="relative z-10 hover:rotate-[-1deg] rotate-[1deg] transition-transform duration-300 w-full h-full rounded-[24px] overflow-hidden shadow-xl border-[6px] border-white bg-gray-100">
+              {/* Front Photo Card (Stacked on top) */}
+              <div className="relative z-10 hover:rotate-[-1deg] rotate-[1.5deg] transition-transform duration-300 w-full h-full rounded-[24px] overflow-hidden shadow-2xl border-[6px] border-white bg-gray-100">
                 <Image 
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 

@@ -133,8 +133,7 @@ export default function Hero() {
                   <B2 className="text-white mt-4 drop-shadow-md">{slide.description}</B2>
 
                   <div className="mt-8 pointer-events-auto">
-                    <Button variant={'secondary'} size="sm">
-                      {' '}
+                    <Button variant="secondary" size="default">
                       <span>{slide.button}</span>
                       <ArrowUpRight className="ml-2 w-5 h-5" />
                     </Button>
@@ -179,11 +178,11 @@ export default function Hero() {
             onClick={() => {
               if (emblaApi) emblaApi.scrollNext()
             }}
-            variant={'black'}
-            size="default"
+            variant="black"
+            size="icon"
             aria-label="Next Slide"
           >
-            <ArrowRight className="w-8 h-8" />
+            <ArrowRight className="w-5 h-5" />
           </Button>
         </div>
       </div>

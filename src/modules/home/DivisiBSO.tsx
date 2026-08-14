@@ -102,7 +102,7 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
                 variant="black"
                 size="icon"
                 onClick={() => carouselRef.current?.scrollLeft()}
-                className="shadow-lg drop-shadow-sm rounded-xl w-10 h-10 flex items-center justify-center bg-black/60 hover:bg-black/85"
+                className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
                 aria-label="Scroll left"
               >
                 <ArrowLeft className="h-5 w-5 text-white" />
@@ -133,7 +133,7 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
                 variant="black"
                 size="icon"
                 onClick={() => carouselRef.current?.scrollRight()}
-                className="shadow-lg drop-shadow-sm rounded-xl w-10 h-10 flex items-center justify-center bg-black/60 hover:bg-black/85"
+                className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
                 aria-label="Scroll right"
               >
                 <ArrowRight className="h-5 w-5 text-white" />
