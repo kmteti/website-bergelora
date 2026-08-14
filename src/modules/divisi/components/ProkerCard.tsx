@@ -56,16 +56,17 @@ export function ProkerCard({ proker }: { proker: ProkerProps }) {
           </h4>
           
           <div 
-            className="w-full flex-1 overflow-y-auto overflow-x-hidden px-1 pr-1.5 [scrollbar-width:thin] [scrollbar-color:rgba(100,116,139,0.5)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-400/50 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-500/80"
+            className="w-full flex-1 overflow-y-auto overflow-x-hidden px-2 pr-2.5 [scrollbar-width:thin] [scrollbar-color:rgba(100,116,139,0.5)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-400/50 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-500/80"
           >
             {proker.anggota && proker.anggota.length > 0 ? (
-              <div className="flex flex-col items-center justify-center gap-1 text-center w-full py-1">
+              <ul className="flex flex-col gap-2 w-full max-w-[240px] mx-auto py-1 text-left">
                 {proker.anggota.map((member, idx) => (
-                  <B5 key={idx} className="text-xs sm:text-sm text-gray-700 tracking-wide font-medium">
-                    {member}
-                  </B5>
+                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700 font-medium leading-snug">
+                    <span className="size-1.5 rounded-full bg-[#abd03b] shrink-0 mt-1.5" />
+                    <span className="flex-1">{member}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             ) : (
               <div className="h-full flex flex-col items-center justify-center opacity-60">
                 <B5 className="text-gray-400 text-xs sm:text-sm italic">Belum ada data anggota.</B5>
