@@ -173,6 +173,7 @@ export const Kontak = () => {
                   key={topic.slug}
                   title={topic.title}
                   description={topic.description}
+                  icon={topic.icon}
                   href={`/kontak/panduan/${topic.slug}`}
                 />
               ))}
