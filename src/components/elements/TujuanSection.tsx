@@ -4,10 +4,13 @@ import React, { useRef } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { H3, B4 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface TujuanSectionProps {
   tujuan: string
@@ -26,15 +29,18 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
   const imageRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useGSAP(() => {
+    // ponytail: positions read viewport width once on mount; a rotate-to-landscape
+    // keeps the mobile layout until reload. Re-run inside a resize listener if that matters.
+    const spread = window.innerWidth < 768 ? 0.55 : 1
     const initialPositions = [
-      { x: -210, y: -70, rotation: -5 },
-      { x: -70, y: -70, rotation: 3 },
-      { x: 70, y: -70, rotation: -4 },
-      { x: 210, y: -70, rotation: 6 },
-      { x: -210, y: 70, rotation: 4 },
-      { x: -70, y: 70, rotation: -6 },
-      { x: 70, y: 70, rotation: 2 },
-      { x: 210, y: 70, rotation: -8 }
+      { x: -210 * spread, y: -70, rotation: -5 },
+      { x: -70 * spread, y: -70, rotation: 3 },
+      { x: 70 * spread, y: -70, rotation: -4 },
+      { x: 210 * spread, y: -70, rotation: 6 },
+      { x: -210 * spread, y: 70, rotation: 4 },
+      { x: -70 * spread, y: 70, rotation: -6 },
+      { x: 70 * spread, y: 70, rotation: 2 },
+      { x: 210 * spread, y: 70, rotation: -8 }
     ]
 
     // Set initial GSAP styles specifically to avoid flash
@@ -44,7 +50,17 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
       gsap.set(img, { x: init.x, y: init.y, rotation: init.rotation, scale: 0.85 })
     })
 
-    const tl = gsap.timeline({ paused: true })
+    // Timeline controlled by scrolling with pinning
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: '+=800',
+        scrub: 1.2,
+        pin: true,
+        anticipatePin: 1,
+      }
+    })
 
     // Animate text (unblur and scale up)
     tl.to(textRef.current, {
@@ -56,17 +72,30 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
     }, 0)
 
     // Calculate target positions for exactly 8 images
-    // 4 on top row, 4 on bottom row around the text
-    const targets = [
-      { x: -420, y: -90, rotation: -12 },  // 0: Far Left
-      { x: -180, y: -270, rotation: -4 },  // 1: Top Left
-      { x: 180, y: -270, rotation: 4 },    // 2: Top Right
-      { x: 420, y: -90, rotation: 12 },    // 3: Far Right
-      { x: -420, y: 90, rotation: 8 },     // 4: Bottom Left
-      { x: -180, y: 270, rotation: -2 },   // 5: Bottom Left Center
-      { x: 180, y: 270, rotation: 2 },     // 6: Bottom Right Center
-      { x: 420, y: 90, rotation: -8 }      // 7: Far Right Bottom
-    ]
+    // Desktop: ring around the text. Mobile: two rows above/below it,
+    // since there is no horizontal room to sit beside the paragraph.
+    const isNarrow = window.innerWidth < 768
+    const targets = isNarrow
+      ? [
+          { x: -115, y: -300, rotation: -10 },
+          { x: -40, y: -350, rotation: -3 },
+          { x: 40, y: -350, rotation: 4 },
+          { x: 115, y: -300, rotation: 10 },
+          { x: -115, y: 300, rotation: 8 },
+          { x: -40, y: 350, rotation: -3 },
+          { x: 40, y: 350, rotation: 3 },
+          { x: 115, y: 300, rotation: -8 },
+        ]
+      : [
+          { x: -420, y: -90, rotation: -12 },  // 0: Far Left
+          { x: -180, y: -270, rotation: -4 },  // 1: Top Left
+          { x: 180, y: -270, rotation: 4 },    // 2: Top Right
+          { x: 420, y: -90, rotation: 12 },    // 3: Far Right
+          { x: -420, y: 90, rotation: 8 },     // 4: Bottom Left
+          { x: -180, y: 270, rotation: -2 },   // 5: Bottom Left Center
+          { x: 180, y: 270, rotation: 2 },     // 6: Bottom Right Center
+          { x: 420, y: 90, rotation: -8 }      // 7: Far Right Bottom
+        ]
 
     imageRefs.current.forEach((img, i) => {
       if (!img) return
@@ -81,26 +110,12 @@ export function TujuanSection({ tujuan, deskripsi, gambar, nama, website, imageF
         ease: 'power2.inOut'
       }, 0)
     })
-
-    if (containerRef.current) {
-      // Create mouse event listeners to trigger the animation timeline
-      const playTimeline = () => tl.play()
-      const reverseTimeline = () => tl.reverse()
-
-      containerRef.current.addEventListener('mouseenter', playTimeline)
-      containerRef.current.addEventListener('mouseleave', reverseTimeline)
-
-      return () => {
-        containerRef.current?.removeEventListener('mouseenter', playTimeline)
-        containerRef.current?.removeEventListener('mouseleave', reverseTimeline)
-      }
-    }
   }, { scope: containerRef })
 
   return (
     <div 
       ref={containerRef} 
-      className="relative w-full min-h-[800px] flex items-center justify-center py-20 overflow-hidden cursor-default group"
+      className="relative w-full min-h-[900px] md:min-h-[800px] flex items-center justify-center py-20 overflow-hidden cursor-default group"
     >
       {/* Absolute centered images */}
       {gambar && gambar.length > 0 && (() => {

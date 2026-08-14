@@ -42,7 +42,7 @@ const megaMenuData = {
     { label: 'Bionce', href: '/bso/bionce', icon: '/logo/bso/beacon.svg' },
     { label: 'SKI', href: '/bso/ski', icon: '/logo/bso/ski-al-hannaan.svg' },
     { label: 'SKK', href: '/bso/skk', icon: '/logo/bso/skk-dteti.svg' },
-    { label: 'MPM', href: '/bso/mpm' },
+    { label: 'MPM', href: '/bso/mpm', icon: '/logo/bso/mpm.svg' },
   ],
   event: [
     { label: 'FindIT', href: '/event/findit' },
@@ -56,6 +56,7 @@ const mainLinks: NavLink[] = [{ label: 'Layanan', href: '/layanan' }]
 type NavbarTone = 'dark' | 'light'
 
 const DARK_BACKGROUND_LIGHTNESS_THRESHOLD = 40
+const HIDE_NAVBAR_AFTER_PX = 120
 
 function getLightnessFromColor(color: string) {
   const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/)
@@ -109,11 +110,24 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isDesktopTentangOpen, setIsDesktopTentangOpen] = useState(false)
   const [navbarTone, setNavbarTone] = useState<NavbarTone>('light')
+  const [isHidden, setIsHidden] = useState(false)
   const desktopTentangRef = useRef<HTMLDivElement>(null)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const updateNavbarState = () => {
-      setIsScrolled(window.scrollY > 12)
+      const scrollY = window.scrollY
+      const delta = scrollY - lastScrollY.current
+
+      setIsScrolled(scrollY > 12)
+
+      // Ignore sub-pixel jitter from smooth scrolling; keep the navbar visible
+      // near the top so it never hides on a short bounce.
+      if (Math.abs(delta) > 6) {
+        setIsHidden(delta > 0 && scrollY > HIDE_NAVBAR_AFTER_PX)
+        lastScrollY.current = scrollY
+      }
+
       setNavbarTone(getNavbarToneFromViewport())
     }
 
@@ -144,7 +158,7 @@ export function Navbar() {
 
   const isDarkTone = navbarTone === 'dark' && !isMobileMenuOpen
   const desktopNavTextClass = cn(
-    'text-sm font-medium leading-6 tracking-normal transition-all duration-200 focus-visible:outline-3 focus-visible:outline-offset-4',
+    'text-sm font-medium leading-6 tracking-normal transition-colors duration-500 ease-in-out focus-visible:outline-3 focus-visible:outline-offset-4',
     isDarkTone
       ? 'text-white hover:text-primary-200 focus-visible:outline-white/50'
       : 'text-black/70 hover:text-black/90 focus-visible:outline-primary-100',
@@ -154,34 +168,53 @@ export function Navbar() {
     <nav
       data-navbar-root
       className={cn(
-        'fixed inset-x-0 top-0 z-[99] isolate transition-all duration-300',
+        'fixed inset-x-0 top-0 z-[99] isolate transition-all duration-500 ease-in-out',
         isDarkTone ? 'text-white' : 'text-neutral-950',
         isMobileMenuOpen && 'bg-white',
+        isHidden && !isMobileMenuOpen && '-translate-y-full opacity-0 pointer-events-none',
       )}
     >
+      {/* Dark Backdrop Layer */}
       <div
         aria-hidden="true"
         className={cn(
-          'pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100px] transition-opacity duration-300 backdrop-blur-[5px] [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)]',
-          isDarkTone
-            ? 'bg-gradient-to-b from-black/22 via-black/8 to-transparent'
-            : 'bg-gradient-to-b from-white/72 via-white/26 to-transparent',
-          isScrolled && (isDarkTone ? 'from-black/40 via-black/16' : 'from-white/86 via-white/40'),
-          isMobileMenuOpen ? 'opacity-0' : 'opacity-100',
+          'pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100px] backdrop-blur-[5px] [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)] transition-opacity duration-500 ease-in-out',
+          isDarkTone && !isMobileMenuOpen ? 'opacity-100' : 'opacity-0',
+          isScrolled ? 'bg-gradient-to-b from-black/40 via-black/16 to-transparent' : 'bg-gradient-to-b from-black/22 via-black/8 to-transparent',
+        )}
+      />
+
+      {/* Light Backdrop Layer */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          'pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100px] backdrop-blur-[5px] [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)] transition-opacity duration-500 ease-in-out',
+          !isDarkTone && !isMobileMenuOpen ? 'opacity-100' : 'opacity-0',
+          isScrolled ? 'bg-gradient-to-b from-white/86 via-white/40 to-transparent' : 'bg-gradient-to-b from-white/72 via-white/26 to-transparent',
         )}
       />
 
       <div className="mx-auto flex h-[76px] w-full max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:h-[92px] lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="KMTETI FT UGM">
+        <Link href="/" className="relative flex shrink-0 items-center h-[34px] lg:h-[38px] w-[134px] lg:w-[150px]" aria-label="KMTETI FT UGM">
           <Image
-            src={
-              isDarkTone ? '/logo/kmteti/horizontal-white.svg' : '/logo/kmteti/horizontal-color.svg'
-            }
+            src="/logo/kmteti/horizontal-white.svg"
             alt="KMTETI FT UGM"
-            width={134}
-            height={38}
+            fill
             priority
-            className="h-[34px] w-auto drop-shadow-[0_3px_4px_rgba(0,0,0,0.22)] lg:h-[38px]"
+            className={cn(
+              'object-contain object-left drop-shadow-[0_3px_4px_rgba(0,0,0,0.22)] transition-opacity duration-500 ease-in-out',
+              isDarkTone ? 'opacity-100' : 'opacity-0 pointer-events-none',
+            )}
+          />
+          <Image
+            src="/logo/kmteti/horizontal-color.svg"
+            alt="KMTETI FT UGM"
+            fill
+            priority
+            className={cn(
+              'object-contain object-left drop-shadow-[0_3px_4px_rgba(0,0,0,0.22)] transition-opacity duration-500 ease-in-out',
+              isDarkTone ? 'opacity-0 pointer-events-none' : 'opacity-100',
+            )}
           />
           <span className="sr-only">KMTETI FT UGM</span>
         </Link>
@@ -192,14 +225,14 @@ export function Navbar() {
               type="button"
               onClick={() => setIsDesktopTentangOpen(!isDesktopTentangOpen)}
               className={cn(
-                'flex h-11 items-center cursor-pointer gap-2 rounded-2xl bg-transparent px-3 py-2 text-sm leading-6 transition-all duration-200',
+                'flex h-11 items-center cursor-pointer gap-2 rounded-2xl bg-transparent px-3 py-2 text-sm leading-6 transition-all duration-500 ease-in-out',
                 desktopNavTextClass,
                 isDesktopTentangOpen && (isDarkTone ? 'text-primary-200' : 'text-black/50'),
               )}
             >
               Tentang
               <ChevronDown
-                className={cn('size-4 transition-transform', isDesktopTentangOpen && 'rotate-180')}
+                className={cn('size-4 transition-transform duration-300 ease-in-out', isDesktopTentangOpen && 'rotate-180')}
               />
             </button>
           </div>
@@ -214,7 +247,7 @@ export function Navbar() {
             </Link>
           ))}
 
-          <Button variant="primary" size="sm" onClick={() => router.push('/kontak')}>
+          <Button variant="primary" size="default" onClick={() => router.push('/kontak')}>
             Hubungi Kami
           </Button>
 
@@ -448,7 +481,7 @@ r text-neutral-400"
             <Button
               variant="primary"
               size="lg"
-              className="mt-4 h-12 w-full rounded-[11px] text-base shadow-[0_8px_18px_rgba(0,111,151,0.3)]"
+              className="mt-4 h-11 w-full text-base shadow-[0_8px_18px_rgba(0,111,151,0.3)]"
               onClick={() => router.push('/kontak')}
             >
               Hubungi Kami

@@ -43,7 +43,11 @@ export function PageHeader({
       {/* Wrapper Konten Teks */}
       <div className="absolute top-0 left-0 w-full h-full">
       
-        <div className="relative z-10 flex h-full flex-col justify-end pb-[210px] container mx-auto px-3 md:px-4 max-w-6xl pointer-events-none">
+        {/* Padding disamain sama Hero home (Hero.tsx) biar judulnya sejajar antar halaman.
+            max-w yang di-center dilepas — itu yang bikin teksnya makin masuk ke dalam
+            di layar lebar, sementara hero-nya tetap nempel ke tepi. pb-nya beda sendiri
+            karena dipakai buat ruang overlap PageOverlap. */}
+        <div className="relative z-10 flex h-full flex-col justify-end pb-[210px] w-full px-6 sm:px-8 md:px-16 lg:px-24 pointer-events-none">
           <div className="flex items-end justify-between w-full pointer-events-auto">
             <div className="flex items-center gap-5 md:gap-6">
               {/* Render Icon */}
@@ -61,7 +65,7 @@ export function PageHeader({
               {/* Title & Description */}
               <div className="flex flex-col">
                 <H2 className="text-white drop-shadow-md">{title}</H2>
-                <B2 className="text-white/90 mt-1 md:mt-2 drop-shadow-sm">{description}</B2>
+                <B2 className="text-white/90 mt-[2px] drop-shadow-sm">{description}</B2>
               </div>
             </div>
             

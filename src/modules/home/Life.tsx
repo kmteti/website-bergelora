@@ -3,6 +3,13 @@
 import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import { H2, H5, B4 } from '@/components/elements/Typography'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 interface Milestone {
   period: string
@@ -19,35 +26,82 @@ const milestones: Milestone[] = [
   { period: 'Mei - Juni', activities: 'UTS, Open Recruitment', photo: '/images/home/about/about.webp' },
 ]
 
-// Timeline geometry (px). Even index = "top" group, odd = "bottom" group.
-// Spacing is tuned so the dashed line, pins, photos and labels never overlap:
-// top photos hang below the wave peaks, bottom photos sit above the troughs,
-// and the horizontal slot is wider than a photo so neighbours clear each other.
 const SLOT = 460
 const TRACK_H = 500
 const CENTER_Y = 285
 const AMP = 85
 const PHOTO_W = 190
-const PHOTO_H = 160 // Figma card is 189×158 (landscape), not square
-const PIN = 44 // 📍 emoji size — its tip lands on the wavy stitch
-const PEAK = CENTER_Y - AMP // 200 — top-group anchor
-const TROUGH = CENTER_Y + AMP // 370 — bottom-group anchor
-const PHOTO_GAP = 60 // gap between wave anchor and the nearest photo edge
+const PHOTO_H = 160
+const PIN = 44
+const PEAK = CENTER_Y - AMP
+const TROUGH = CENTER_Y + AMP
+const PHOTO_GAP = 60
 
 export default function Life() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [progress, setProgress] = useState(0) // 0..1 fraction of track filled
+  const sectionRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const thumbRef = useRef<HTMLDivElement>(null)
 
   const trackWidth = milestones.length * SLOT
 
-  const handleScroll = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const max = el.scrollWidth - el.clientWidth
-    setProgress(max > 0 ? el.scrollLeft / max : 0)
-  }
+  useGSAP(() => {
+    const track = trackRef.current
+    const thumb = thumbRef.current
+    if (!track) return
 
-  // Smooth wave through alternating anchors (horizontal tangents).
+    const padding = window.innerWidth < 768 ? 64 : 128
+    const getScrollAmount = () => {
+      return Math.max(0, trackWidth - window.innerWidth + padding)
+    }
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        pin: true,
+        pinSpacing: true,
+        scrub: 1,
+        // Section (927px) lebih tinggi dari layar, jadi yang ditengahin isinya (651px),
+        // bukan section-nya — padding atas & bawah beda jauh (180 vs 95), kalau pakai
+        // 'center center' isinya ke-geser ke bawah dan progress bar kepotong.
+        // Sisa padding yang kelewat di atas cuma ruang kosong yang numpuk di atas
+        // section Event, jadi header + timeline + progress bar kelihatan semua.
+        start: () => {
+          const sec = sectionRef.current
+          const content = contentRef.current
+          if (!sec || !content) return 'center center'
+          const offset = Math.round(
+            content.offsetTop + content.offsetHeight / 2 - sec.offsetHeight / 2,
+          )
+          return `center center-=${offset}`
+        },
+        end: () => `+=${getScrollAmount()}`,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+        refreshPriority: -2, // Calculate after Profile and DivisiBSO
+      }
+    })
+
+    // Animate timeline track horizontal scrolling
+    tl.to(track, {
+      x: () => -getScrollAmount(),
+      ease: 'none',
+    }, 0)
+
+    // Animate progress bar thumb horizontal movement smoothly
+    if (thumb) {
+      tl.to(thumb, {
+        x: () => {
+          const trackBarWidth = thumb.parentElement?.getBoundingClientRect().width || 400
+          const thumbWidth = trackBarWidth * 0.18
+          return trackBarWidth - thumbWidth
+        },
+        ease: 'none',
+      }, 0)
+    }
+  }, { scope: sectionRef })
+
+  // Wavy path calculation
   const anchorY = (i: number) => (i % 2 === 0 ? CENTER_Y - AMP : CENTER_Y + AMP)
   const anchorX = (i: number) => i * SLOT + SLOT / 2
   let path = `M 0 ${CENTER_Y} `
@@ -58,30 +112,30 @@ export default function Life() {
   }
   path += `C ${anchorX(milestones.length - 1) + SLOT / 4} ${anchorY(milestones.length - 1)} ${trackWidth - SLOT / 4} ${CENTER_Y} ${trackWidth} ${CENTER_Y}`
 
-  // z-10 < Event (z-20): Event overlaps Life; z-10 > footer: Life overlaps Connect with Us
   return (
     <div className="relative z-10 w-full -mt-[95px] -mb-[40px]">
       <section
+        ref={sectionRef}
         data-navbar-tone="light"
         id="life"
-        className="w-full flex flex-col bg-white pt-[150px] md:pt-[190px] pb-[95px] relative overflow-hidden rounded-b-[40px] border-b-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]"
+        className="w-full flex flex-col bg-white pt-[140px] md:pt-[180px] pb-[95px] relative overflow-hidden rounded-b-[40px] border-b-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]"
       >
-        {/* No full-section gradient — just a bit of blue at the bottom */}
+        {/* Blue gradient background at bottom */}
         <div className="absolute inset-x-0 bottom-0 h-[240px] bg-gradient-to-t from-[#CFEAF4] to-transparent pointer-events-none z-0" />
 
-        <div className="relative z-10 w-full flex flex-col">
+        <div ref={contentRef} className="relative z-10 w-full flex flex-col">
           {/* Title */}
           <div className="container mx-auto px-4 md:px-8 max-w-6xl flex items-center justify-center mb-10 md:mb-14">
             <H2 className="text-primary-500 text-center">Life at KMTETI</H2>
           </div>
 
-          {/* Horizontal scrollable timeline */}
-          <div
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className="w-full overflow-x-auto px-8 md:px-16 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-          >
-            <div className="relative mx-auto" style={{ width: trackWidth, height: TRACK_H }}>
+          {/* Overflow-hidden wrapper */}
+          <div className="w-full overflow-hidden px-8 md:px-16">
+            <div 
+              ref={trackRef}
+              className="relative will-change-transform" 
+              style={{ width: trackWidth, height: TRACK_H }}
+            >
               {/* Wavy dashed line */}
               <svg
                 className="absolute inset-0 pointer-events-none"
@@ -97,10 +151,8 @@ export default function Life() {
               {milestones.map((m, i) => {
                 const top = i % 2 === 0
                 const ax = anchorX(i)
-                // Top group: photo hangs below the peak, pin above it, label at the very top.
-                // Bottom group: photo sits above the trough, pin below it, label at the bottom.
                 const photoTop = top ? PEAK + PHOTO_GAP : TROUGH - PHOTO_GAP - PHOTO_H
-                const anchorY = top ? PEAK : TROUGH // the point on the wavy stitch
+                const anchorAnchorY = top ? PEAK : TROUGH
                 const labelTop = top ? 12 : TROUGH + 20
                 return (
                   <div key={i} className="absolute" style={{ left: ax, top: 0, transform: 'translateX(-50%)' }}>
@@ -113,15 +165,15 @@ export default function Life() {
                       <B4 className="text-neutral-800 mt-1">{m.activities}</B4>
                     </div>
 
-                    {/* 📍 pin — its tip sits right on the wavy stitch */}
+                    {/* 📍 pin */}
                     <span
                       className="absolute left-1/2 z-10 leading-none select-none pointer-events-none drop-shadow-[0_4px_5px_rgba(0,0,0,0.25)]"
-                      style={{ top: anchorY, fontSize: PIN, transform: 'translate(-50%, -100%)' }}
+                      style={{ top: anchorAnchorY, fontSize: PIN, transform: 'translate(-50%, -100%)' }}
                     >
                       📍
                     </span>
 
-                    {/* Photo — two stacked cards that split apart on hover (Figma prototype) */}
+                    {/* Photo — split stack hover cards */}
                     <div
                       className="group absolute left-1/2"
                       style={{ top: photoTop, width: PHOTO_W, height: PHOTO_H, transform: 'translateX(-50%)' }}
@@ -141,11 +193,12 @@ export default function Life() {
             </div>
           </div>
 
-          {/* Scroll progress bar (gray track + yellow thumb) */}
-          <div className="mx-auto mt-8 h-2 w-[280px] md:w-[400px] rounded-full bg-neutral-300/70">
+          {/* Scroll progress bar */}
+          <div className="mx-auto mt-6 h-2 w-[280px] md:w-[400px] rounded-full bg-neutral-300/70 relative">
             <div
-              className="h-full rounded-full bg-yellow-100 transition-[margin] duration-75"
-              style={{ width: '18%', marginLeft: `${progress * 82}%` }}
+              ref={thumbRef}
+              className="h-full rounded-full bg-yellow-100 absolute left-0 top-0 will-change-transform"
+              style={{ width: '18%' }}
             />
           </div>
         </div>

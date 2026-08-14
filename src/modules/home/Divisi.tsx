@@ -58,15 +58,13 @@ const divisiData = [
 ]
 
 export default function Divisi() {
-  const [containerNode, setContainerNode] = useState<HTMLElement | null>(null)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   return (
     <div className="relative z-20 w-full -mt-16">
       <section 
-        ref={setContainerNode}
         data-navbar-tone="light"
-        className="w-full min-h-screen flex flex-col overflow-hidden rounded-t-[40px] border-t-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_0_50px_rgba(0,0,0,0.05)] bg-gradient-to-b from-[#E1F3FA] from-[51%] to-[#C5E2ED] pt-[110px] relative"
+        className="w-full flex flex-col overflow-hidden rounded-t-[40px] border-t-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_0_50px_rgba(0,0,0,0.05)] bg-gradient-to-b from-[#E1F3FA] from-[51%] to-[#C5E2ED] pt-[110px] relative"
       >
         {/* Background Gradient Blobs */}
         <div className="absolute top-[50%] -translate-y-1/2 -left-[10%] md:left-[5%] w-[200px] md:w-[250px] aspect-square rounded-full bg-[#C7E07C] blur-[70px] md:blur-[90px] pointer-events-none z-0" />
@@ -86,7 +84,6 @@ export default function Divisi() {
               data={divisiData} 
               activeIndex={activeIndex}
               onActiveChange={setActiveIndex} 
-              containerNode={containerNode}
               basePath="/divisi"
             />
           </div>

@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     news: News;
+    'kontak-submissions': KontakSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    'kontak-submissions': KontakSubmissionsSelect<false> | KontakSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -204,6 +206,35 @@ export interface News {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Isian Formulir Komunikasi Eksternal dari halaman /kontak.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "kontak-submissions".
+ */
+export interface KontakSubmission {
+  id: number;
+  nama: string;
+  instansi: string;
+  jenisInstansi?: string | null;
+  kategori: string;
+  divisi?: string | null;
+  deskripsi: string;
+  proposal?: string | null;
+  whatsapp: string;
+  email?: string | null;
+  /**
+   * Nama narahubung yang diklik pengaju saat melanjutkan ke WhatsApp.
+   */
+  narahubung?: string | null;
+  /**
+   * Diisi otomatis setelah pengajuan diteruskan ke Google Sheet.
+   */
+  sheetStatus?: ('pending' | 'synced' | 'failed') | null;
+  sheetError?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -238,6 +269,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
+      } | null)
+    | ({
+        relationTo: 'kontak-submissions';
+        value: number | KontakSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -339,6 +374,26 @@ export interface NewsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "kontak-submissions_select".
+ */
+export interface KontakSubmissionsSelect<T extends boolean = true> {
+  nama?: T;
+  instansi?: T;
+  jenisInstansi?: T;
+  kategori?: T;
+  divisi?: T;
+  deskripsi?: T;
+  proposal?: T;
+  whatsapp?: T;
+  email?: T;
+  narahubung?: T;
+  sheetStatus?: T;
+  sheetError?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -24,50 +24,44 @@ export default function Profile() {
 
       {/* 2. Container Overlap (FULL WIDTH) */}
       <PageOverlap className="bg-white min-h-[500px] relative">
-        <DefaultLayout className="relative z-10 pt-16 md:pt-24 pb-20">
+        {/* Visi & Misi Section with Gradient and Glow */}
+        <div className="relative w-full overflow-hidden bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA]">
+          <div className="absolute bottom-[-80%] -left-[-10%] w-[40%] aspect-square rounded-full bg-[#C7E07C] opacity-60 blur-[120px] pointer-events-none z-0" />
+          <div className="absolute bottom-[-80%] -right-[-10%] w-[40%] aspect-square rounded-full bg-[#64CAEF] opacity-60 blur-[120px] pointer-events-none z-0" />
           
-          {/* Visi & Misi Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 mb-10">
-            <div>
+          <DefaultLayout className="relative z-10 pt-20 md:pt-28 pb-20 md:pb-28">
+            {/* Visi & Misi Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
+              <div>
                 <H2 className="mb-5 text-primary-500">Visi</H2>
-                              <B2 className="leading-relaxed">
-                At KMTETI, a spirit of optimism and possibility energizes our mission
-                of discovery and learning. Here you&apos;ll find a place of intellectual
-                expansiveness, wide-ranging perspectives, and freedom to explore
-                new lines of thinking.
-              </B2>
-            </div>
-            <div>
+                <B2 className="leading-relaxed">
+                  At KMTETI, a spirit of optimism and possibility energizes our mission
+                  of discovery and learning. Here you&apos;ll find a place of intellectual
+                  expansiveness, wide-ranging perspectives, and freedom to explore
+                  new lines of thinking.
+                </B2>
+              </div>
+              <div>
                 <H2 className="mb-5 text-primary-500">Misi</H2>
-                              <B2 className="leading-relaxed">
-                At KMTETI, a spirit of optimism and possibility energizes our mission
-                of discovery and learning. Here you&apos;ll find a place of intellectual
-                expansiveness, wide-ranging perspectives, and freedom to explore
-                new lines of thinking.
-              </B2>
+                <B2 className="leading-relaxed">
+                  At KMTETI, a spirit of optimism and possibility energizes our mission
+                  of discovery and learning. Here you&apos;ll find a place of intellectual
+                  expansiveness, wide-ranging perspectives, and freedom to explore
+                  new lines of thinking.
+                </B2>
+              </div>
             </div>
-          </div>
-
-        </DefaultLayout>
-        
-        {/* Glow Effects */}
-        <div className="absolute left-0 right-0 w-full flex justify-between z-0 pointer-events-none">
-          <div className="relative w-full aspect-square scale-125 md:scale-[2] -left-12 md:-left-[18.75rem] origin-left -translate-y-[15%] md:-translate-y-[50%]">
-            <Image src="/images/profile/biruglow.svg" alt="Biru Glow" fill className="object-cover md:object-contain object-left" />
-          </div>
-          <div className="relative w-full aspect-square scale-125 md:scale-[2] -right-12 md:-right-[18.75rem] origin-right -translate-y-[15%] md:-translate-y-[50%]">
-            <Image src="/images/profile/hijauglow.svg" alt="Hijau Glow" fill className="object-cover md:object-contain object-right" />
-          </div>
+          </DefaultLayout>
         </div>
-
-        {/* Full width group image section within overlap */}
-        <div className="w-full relative h-auto aspect-video mb-20 md:mb-32 z-10">
-           <Image 
-             src="/images/profile/foto-kabinet.webp" 
-             alt="KMTETI Group Photo" 
-             fill
-             className="object-contain"
-           />
+        {/* YouTube Video Section within overlap */}
+        <div className="w-full relative aspect-video mb-20 md:mb-32 z-10">
+          <iframe
+            src="https://www.youtube.com/embed/8dmi2DqeLDs"
+            title="KMTETI Profile Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full border-none"
+          ></iframe>
         </div>
 
         <DefaultLayout className="relative z-10 py-0 pb-32">

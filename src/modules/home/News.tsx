@@ -1,40 +1,66 @@
 import { H2, B2 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
-import Image from 'next/image'
+import Link from 'next/link'
+import { NewsCard } from '@/modules/news/components/NewsCard'
+import { NewsCardSkeleton } from '@/modules/news/components/NewsSkeleton'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
+import React, { Suspense } from 'react'
 
-export default function News() {
-  const newsData = [
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide1.webp'
+function NewsCardsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {Array.from({ length: 4 }).map((_, index) => (
+        <NewsCardSkeleton key={index} />
+      ))}
+    </div>
+  )
+}
+
+async function NewsGrid() {
+  const payload = await getPayload({ config })
+  
+  const { docs: newsDocs } = await payload.find({
+    collection: 'news',
+    where: {
+      _status: { equals: 'published' },
     },
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide2.webp'
-    },
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide3.webp'
-    },
-    {
-      category: 'Press Release',
-      title: 'Mahasiswa UGM Borong Dua Kemenangan',
-      date: '7 Juli 2026',
-      image: '/images/home/hero/slide1.webp'
-    }
-  ]
+    sort: '-date',
+    limit: 4,
+  })
+
+  const newsData = newsDocs.map((news) => ({
+    category: news.category,
+    title: news.title,
+    date: news.date ? format(new Date(news.date), 'dd MMMM yyyy', { locale: id }) : '-',
+    image: typeof news.image === 'object' && news.image?.url ? news.image.url : '/images/news/placeholder.webp',
+    slug: news.slug,
+  }))
 
   return (
-    <section className="relative w-full bg-[#FAFAFA] pt-[95px] pb-[160px]">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {newsData.map((news, index) => (
+        <NewsCard 
+          key={index} 
+          category={news.category}
+          title={news.title}
+          date={news.date}
+          image={news.image}
+          href={`/tentang/berita/${news.slug}`}
+        />
+      ))}
+    </div>
+  )
+}
+
+export default function News() {
+  return (
+    <section className="relative w-full bg-gradient-to-b from-[#f6f6f6] from-[94%] to-[#c2dfff] pt-[95px] pb-[160px]">
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-        {/* Header Section */}
+        {/* Header Section (Always static, loaded instantly) */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-14">
           <H2 className="text-[#0a4c5a] font-semibold md:w-1/3 text-left">
             KMTETI News
@@ -44,45 +70,23 @@ export default function News() {
           </B2>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {newsData.map((news, index) => (
-            <div 
-              key={index} 
-              className="flex flex-col bg-white rounded-[24px] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-shadow duration-300 border border-gray-100"
-            >
-              {/* Card Image */}
-              <div className="relative w-full aspect-[4/3]">
-                <Image 
-                  src={news.image} 
-                  alt={news.title} 
-                  fill 
-                  className="object-cover"
-                />
-              </div>
-              
-              {/* Card Content */}
-              <div className="p-6 flex flex-col flex-grow text-left">
-                <span className="text-[#5c98a3] text-sm font-medium mb-3">
-                  {news.category}
-                </span>
-                <h3 className="text-[#2D2D2D] font-semibold text-lg leading-snug mb-6">
-                  {news.title}
-                </h3>
-                <span className="text-[#A0A0A0] text-sm mt-auto">
-                  {news.date}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Cards Grid with inner Suspense */}
+        <Suspense fallback={<NewsCardsSkeleton />}>
+          <NewsGrid />
+        </Suspense>
 
         {/* Action Button */}
-        <div className="flex justify-center">
-          <Button variant="primary" className="rounded-xl px-6 py-6 shadow-md hover:shadow-lg transition-shadow">
-            <span className="font-semibold text-base">KMTETI News</span>
-            <ArrowUpRight className="ml-2 w-5 h-5" />
-          </Button>
+        <div className="flex justify-center mt-16">
+          <Link href="/tentang/berita">
+            <Button
+              variant="secondary"
+              size="default"
+              className="shadow-md hover:shadow-lg transition-shadow"
+            >
+              <span>KMTETI News</span>
+              <ArrowUpRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

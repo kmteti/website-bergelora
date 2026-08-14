@@ -1,15 +1,8 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useRef, useImperativeHandle, forwardRef } from 'react'
 import { useRouter } from 'next/navigation'
 import FolderCard from './FolderCard'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, useGSAP)
-}
 
 export interface FolderData {
   name: string
@@ -18,69 +11,51 @@ export interface FolderData {
   description?: string
 }
 
+export interface FolderCarouselRef {
+  scrollLeft: () => void
+  scrollRight: () => void
+}
+
 interface FolderCarouselProps {
   data: FolderData[]
   activeIndex?: number | null
   onActiveChange: (index: number | null) => void
-  containerNode: HTMLElement | null
+  containerNode?: HTMLElement | null
   basePath?: string
+  folderStartColor?: string
+  folderEndColor?: string
 }
 
-export default function FolderCarousel({ data, activeIndex = null, onActiveChange, containerNode, basePath = '' }: FolderCarouselProps) {
+const FolderCarousel = forwardRef<FolderCarouselRef, FolderCarouselProps>(({ 
+  data, 
+  activeIndex = null, 
+  onActiveChange, 
+  basePath = '',
+  folderStartColor,
+  folderEndColor
+}, ref) => {
   const carouselRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
-  useGSAP(() => {
-    const carousel = carouselRef.current
-
-    if (!containerNode || !carousel) return
-
-    const getScrollAmount = () => {
-      const cards = carousel.children
-      if (cards.length > 0) {
-        const lastCard = cards[cards.length - 1] as HTMLElement
-        const lastCardCenter = lastCard.offsetLeft + lastCard.offsetWidth / 2
-        return Math.max(0, lastCardCenter - window.innerWidth / 2)
+  useImperativeHandle(ref, () => ({
+    scrollLeft: () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollBy({ left: -360, behavior: 'smooth' })
       }
-      return carousel.scrollWidth - window.innerWidth + 100
+    },
+    scrollRight: () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollBy({ left: 360, behavior: 'smooth' })
+      }
     }
-    
-    // Di mobile, kita kalikan jarak scroll agar terasa lebih lambat (1 swipe = 1 card).
-    // Di desktop kita tambah multiplier jadi 2 agar tidak terlalu licin/cepat.
-    const scrollMultiplier = window.innerWidth < 768 ? 3 : 2
-
-      gsap.to(carousel, {
-        x: () => -getScrollAmount(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerNode,
-          pin: true,
-          scrub: 1,
-          end: () => `+=${getScrollAmount() * scrollMultiplier}`,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-          refreshPriority: 1, // Lower than Profile (10), calculated after Profile's pin
-          snap: {
-            snapTo: 1 / (data.length - 1),
-            duration: 0.3,
-            ease: "power1.inOut"
-          },
-          onUpdate: (self) => {
-            // Auto update active index on mobile & tablet (dibawah 1024px)
-            if (window.innerWidth < 1024) {
-              const activeIdx = Math.round(self.progress * (data.length - 1))
-              onActiveChange(activeIdx)
-            }
-          }
-        }
-      })
-  }, { scope: containerNode || undefined, dependencies: [containerNode, data] })
+  }))
 
   return (
-    <div className="overflow-hidden w-full px-4 md:px-11 lg:px-22 pt-24 -mt-24">
+    <div ref={scrollContainerRef} className="overflow-x-auto w-full px-4 md:px-11 lg:px-22 pt-24 -mt-24 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div 
         ref={carouselRef}
-        className="flex pb-10 w-max"
+        className="flex pb-10 w-max will-change-transform pl-4 pr-10"
         onMouseLeave={() => onActiveChange(null)}
       >
         {data.map((item, index) => {
@@ -99,7 +74,7 @@ export default function FolderCarousel({ data, activeIndex = null, onActiveChang
               }}
               onMouseEnter={() => onActiveChange(index)}
               onClick={() => {
-                if (basePath && window.innerWidth >= 1024) {
+                if (basePath) {
                   router.push(`${basePath}/${item.name.toLowerCase().replace(/\s+/g, '-')}`)
                 }
               }}
@@ -109,6 +84,8 @@ export default function FolderCarousel({ data, activeIndex = null, onActiveChang
                 photo={item.photo}
                 logo={item.logo}
                 className="w-full"
+                startColor={folderStartColor}
+                endColor={folderEndColor}
               />
             </div>
           )
@@ -116,4 +93,7 @@ export default function FolderCarousel({ data, activeIndex = null, onActiveChang
       </div>
     </div>
   )
-}
+})
+
+FolderCarousel.displayName = 'FolderCarousel'
+export default FolderCarousel
