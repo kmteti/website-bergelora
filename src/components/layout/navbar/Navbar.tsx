@@ -253,7 +253,7 @@ export function Navbar() {
 
           <div
             className={cn(
-              'absolute right-0 top-full z-[100] mt-4 grid w-[600px] cursor-default grid-cols-4 gap-6 rounded-[24px] border border-black/5 bg-white/95 p-6 text-neutral-950 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-200 origin-top-right',
+              'absolute right-0 top-full z-[100] mt-4 grid w-[720px] cursor-default grid-cols-4 gap-8 rounded-[24px] border border-black/5 bg-white/95 p-7 text-neutral-950 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-200 origin-top-right',
               isDesktopTentangOpen
                 ? 'opacity-100 visible scale-100 translate-y-0'
                 : 'opacity-0 invisible scale-95 -translate-y-2 pointer-events-none',
@@ -261,22 +261,19 @@ export function Navbar() {
           >
               {/* Information */}
               <div className="flex flex-col">
-                <h3
-                  className="mb-4 text-xs font-regular
-r text-neutral-400"
-                >
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">
                   Informasi
                 </h3>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3.5">
                   <Link
                     href="/tentang/profil"
-                    className="text-sm font-bold text-neutral-950 transition-colors hover:text-neutral-950"
+                    className="text-sm font-bold text-neutral-900 transition-colors hover:text-primary-500"
                   >
                     Profil KMTETI
                   </Link>
                   <Link
                     href="/tentang/berita"
-                    className="text-sm font-bold text-neutral-950 transition-colors hover:text-neutral-950"
+                    className="text-sm font-bold text-neutral-900 transition-colors hover:text-primary-500"
                   >
                     Berita KMTETI
                   </Link>
@@ -284,65 +281,65 @@ r text-neutral-400"
               </div>
               {/* Divisi */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">Divisi</h3>
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">Divisi</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.divisi.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                      className="group flex items-center gap-3 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
                       {'icon' in item && item.icon ? (
                         <Image
                           src={item.icon}
                           alt={item.label}
-                          width={18}
-                          height={18}
-                          className="size-[18px] object-contain"
+                          width={24}
+                          height={24}
+                          className="size-6 object-contain shrink-0"
                         />
                       ) : (
-                        <div className="size-[18px] shrink-0" />
+                        <div className="size-6 shrink-0" />
                       )}
-                      <span>{item.label}</span>
+                      <span className="font-medium">{item.label}</span>
                     </Link>
                   ))}
                 </div>
               </div>
               {/* BSO */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">BSO</h3>
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">BSO</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.bso.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                      className="group flex items-center gap-3 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
                       {'icon' in item && item.icon ? (
                         <Image
                           src={item.icon}
                           alt={item.label}
-                          width={18}
-                          height={18}
-                          className="size-[18px] object-contain"
+                          width={24}
+                          height={24}
+                          className="size-6 object-contain shrink-0"
                         />
                       ) : (
-                        <div className="size-[18px] shrink-0" />
+                        <div className="size-6 shrink-0" />
                       )}
-                      <span>{item.label}</span>
+                      <span className="font-medium">{item.label}</span>
                     </Link>
                   ))}
                 </div>
               </div>
               {/* Event */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">Event</h3>
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">Event</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.event.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                      className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-950"
                     >
                       {item.label}
                     </Link>

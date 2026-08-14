@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import Image from 'next/image'
 import { H2, H5, B4 } from '@/components/elements/Typography'
 import gsap from 'gsap'
@@ -41,13 +41,13 @@ export default function Life() {
   const sectionRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
-  const thumbRef = useRef<HTMLDivElement>(null)
+  const progressBarRef = useRef<HTMLDivElement>(null)
 
   const trackWidth = milestones.length * SLOT
 
   useGSAP(() => {
     const track = trackRef.current
-    const thumb = thumbRef.current
+    const progressBar = progressBarRef.current
     if (!track) return
 
     const padding = window.innerWidth < 768 ? 64 : 128
@@ -88,16 +88,14 @@ export default function Life() {
       ease: 'none',
     }, 0)
 
-    // Animate progress bar thumb horizontal movement smoothly
-    if (thumb) {
-      tl.to(thumb, {
-        x: () => {
-          const trackBarWidth = thumb.parentElement?.getBoundingClientRect().width || 400
-          const thumbWidth = trackBarWidth * 0.18
-          return trackBarWidth - thumbWidth
-        },
-        ease: 'none',
-      }, 0)
+    // Animate progress bar fill smoothly from 0% to 100%
+    if (progressBar) {
+      tl.fromTo(
+        progressBar,
+        { scaleX: 0 },
+        { scaleX: 1, ease: 'none', transformOrigin: 'left center' },
+        0
+      )
     }
   }, { scope: sectionRef })
 
@@ -193,12 +191,11 @@ export default function Life() {
             </div>
           </div>
 
-          {/* Scroll progress bar */}
-          <div className="mx-auto mt-6 h-2 w-[280px] md:w-[400px] rounded-full bg-neutral-300/70 relative">
+          {/* Real filling scroll progress bar */}
+          <div className="mx-auto mt-6 h-2.5 w-[280px] md:w-[400px] rounded-full bg-neutral-200/80 relative overflow-hidden">
             <div
-              ref={thumbRef}
-              className="h-full rounded-full bg-yellow-100 absolute left-0 top-0 will-change-transform"
-              style={{ width: '18%' }}
+              ref={progressBarRef}
+              className="h-full w-full rounded-full bg-yellow-100 origin-left will-change-transform"
             />
           </div>
         </div>

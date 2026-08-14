@@ -2,8 +2,19 @@ import News from '@/modules/news/News'
 import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { Metadata } from 'next'
 
 export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
+
+export const metadata: Metadata = {
+  title: 'Berita & Artikel',
+  description: 'Kumpulan berita, artikel, dan informasi terbaru seputar Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
+  openGraph: {
+    title: 'Berita & Artikel | KMTETI FT UGM',
+    description: 'Kumpulan berita, artikel, dan informasi terbaru seputar KMTETI FT UGM.',
+    url: '/tentang/berita',
+  },
+}
 
 export default async function Page() {
   const payload = await getPayload({ config })

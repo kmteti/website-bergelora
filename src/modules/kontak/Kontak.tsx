@@ -22,7 +22,23 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-export const Kontak = () => {
+interface KontakProps {
+  initialFaq?: any[]
+  initialNarahubung?: any[]
+}
+
+export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
+  const narahubungList: Narahubung[] = useMemo(() => {
+    if (initialNarahubung && initialNarahubung.length > 0) {
+      return initialNarahubung.map((doc: any, idx: number) => ({
+        id: doc.id || `cp-${idx}`,
+        nama: doc.nama,
+        keterangan: doc.keterangan || undefined,
+        whatsapp: doc.whatsapp,
+      }))
+    }
+    return NARAHUBUNG
+  }, [initialNarahubung])
   // Step/Tahap state (3 steps total)
   const [step, setStep] = useState(1)
   // Tiga tahap tampilan:
@@ -197,12 +213,15 @@ export const Kontak = () => {
               <BookOpen className="mt-0.5 size-5 shrink-0 text-primary-400" aria-hidden="true" />
               <B4 className="font-sans text-neutral-600">
                 Sebelum mengisi, silakan pilih salah satu{' '}
-                <a
-                  href="#panduan"
-                  className="font-semibold text-primary-500 underline underline-offset-2 hover:text-primary-400"
+                <button
+                  type="button"
+                  onClick={() => {
+                    document.getElementById('panduan')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                  className="font-semibold text-primary-500 underline underline-offset-2 hover:text-primary-400 cursor-pointer inline-baseline"
                 >
                   panduan di bagian atas halaman ini
-                </a>{' '}
+                </button>{' '}
                 dan baca bookletnya terlebih dahulu.
               </B4>
             </div>
@@ -357,12 +376,12 @@ export const Kontak = () => {
                             >
                               {[
                                 'Electropreneur',
-                                'HUMAS',
-                                'SOSMAS',
+                                'Humas',
+                                'Sosmas',
                                 'Workshop',
                                 'Minat & Bakat',
-                                'ADKESMA',
-                                'INFOKOM',
+                                'Adkesma',
+                                'Infokom',
                                 'BPO',
                               ].map((option) => (
                                 <SelectItem
@@ -524,7 +543,7 @@ export const Kontak = () => {
                   </B2>
 
                   <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-4">
-                    {NARAHUBUNG.map((contact) => (
+                    {narahubungList.map((contact) => (
                       <a
                         key={contact.id}
                         href={buildWaUrl(contact)}
@@ -596,7 +615,7 @@ export const Kontak = () => {
 
         {/* Section: FAQ */}
         <DefaultLayout className="pt-0 pb-24 md:pt-0 md:pb-32">
-          <Faq />
+          <Faq items={initialFaq} />
         </DefaultLayout>
       </PageOverlap>
     </main>

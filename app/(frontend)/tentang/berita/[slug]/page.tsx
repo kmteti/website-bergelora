@@ -3,8 +3,60 @@ import { NewsDetail } from '@/modules/news/detail/NewsDetail'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
 export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params
+  const payload = await getPayload({ config })
+  
+  const { docs: newsDocs } = await payload.find({
+    collection: 'news',
+    where: {
+      slug: { equals: resolvedParams.slug },
+      _status: { equals: 'published' }
+    },
+    limit: 1,
+  })
+
+  if (!newsDocs.length) {
+    return {}
+  }
+
+  const news = newsDocs[0]
+  
+  // Extract image URL from payload Media (assuming it's populated and has url)
+  let imageUrl = '/images/home/hero/hero-bg.webp'
+  if (news.image && typeof news.image === 'object' && 'url' in news.image) {
+    imageUrl = news.image.url as string
+  }
+
+  return {
+    title: news.title,
+    description: `Baca berita terbaru mengenai ${news.title}`,
+    openGraph: {
+      title: news.title,
+      description: `Baca berita terbaru mengenai ${news.title}`,
+      url: `/tentang/berita/${news.slug}`,
+      type: 'article',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: news.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: news.title,
+      description: `Baca berita terbaru mengenai ${news.title}`,
+      images: [imageUrl],
+    },
+  }
+}
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params
