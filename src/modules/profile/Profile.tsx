@@ -7,6 +7,13 @@ import { H2, H4, B3 } from "@/components/elements/Typography";
 import Image from "next/image";
 import { struktur_kabinet } from "./data/data";
 import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Profile() {
   const [selectedTahun, setSelectedTahun] = useState(struktur_kabinet[0].tahun);
@@ -18,7 +25,7 @@ export default function Profile() {
       {/* 1. Header Full Width */}
       <PageHeader
         title="Profil KMTETI"
-        description="Kabinet Namanya Apa Tahun 2025/2026"
+        description="Kabinet Navya Nirantara 2025/2026"
         imageSrc="/images/profile/profileheader.webp"
       />
 
@@ -88,37 +95,77 @@ export default function Profile() {
           {/* Struktur Organisasi Section */}
           <div className="flex flex-col items-center justify-center mb-12">
             <H2 className="mb-6 text-center text-primary-500 font-heading">Struktur Organisasi</H2>
-            <div className="relative">
-              <select
+            <div className="w-fit min-w-[200px]">
+              <Select
                 value={selectedTahun}
-                onChange={(e) => setSelectedTahun(e.target.value)}
-                className="appearance-none bg-white border border-neutral-300 text-neutral-700 py-2 pl-6 pr-12 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 font-sans cursor-pointer"
+                onValueChange={(val) => val && setSelectedTahun(val)}
               >
-                {struktur_kabinet.map((item) => (
-                  <option key={item.tahun} value={item.tahun}>
-                    Kabinet {item.tahun}
-                  </option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-500">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </div>
+                <SelectTrigger className="w-full h-11 bg-white hover:bg-neutral-50 border border-neutral-200/80 rounded-full px-6 text-neutral-700 font-medium shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-primary-500/30 gap-3">
+                  <SelectValue placeholder={`Kabinet ${selectedTahun}`}>
+                    {`Kabinet ${selectedTahun}`}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent
+                  alignItemWithTrigger={false}
+                  className="rounded-2xl border border-neutral-200/60 shadow-xl bg-white p-2 min-w-[200px]"
+                >
+                  {struktur_kabinet.map((item) => (
+                    <SelectItem
+                      key={item.tahun}
+                      value={item.tahun}
+                      className="rounded-xl hover:bg-primary-50 hover:text-primary-600 py-2.5 px-3 font-medium cursor-pointer transition-colors"
+                    >
+                      Kabinet {item.tahun}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 mb-50 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-6 md:gap-y-12">
-            {currentKabinet.member.map((member, index) => (
-              <div key={index} className="flex flex-col">
+          {/* 1. Ketua Pengurus Harian (Centered Card) */}
+          {currentKabinet.member.length > 0 && (
+            <div className="flex justify-center mb-14 md:mb-16">
+              <div className="flex flex-col items-center text-center group w-full max-w-[240px] sm:max-w-[260px]">
                 <div className="relative w-full aspect-[4/5] mb-4">
-                  {/* Background kotak melengkung (absolute, bentuk persegi / aspect-square, border radius 32px) */}
-                  <div className="absolute bottom-0 left-0 right-0 aspect-square bg-[#e3e3e3] rounded-[32px]"></div>
-                  {/* Gambar orang (absolute fill, object-cover, rounded bawah) */}
-                  <Image
-                    src={member.foto}
-                    alt={member.nama}
-                    fill
-                    className="object-cover object-bottom relative z-10 rounded-b-[32px]"
-                  />
+                  {/* Background kotak melengkung */}
+                  <div className="absolute bottom-0 left-0 right-0 aspect-square bg-[#E8EDF2] rounded-[28px] sm:rounded-[32px] shadow-xs group-hover:shadow-md transition-shadow duration-300"></div>
+                  {/* Gambar orang */}
+                  <div className="absolute inset-0 rounded-b-[28px] sm:rounded-b-[32px] overflow-hidden z-10">
+                    <Image
+                      src={currentKabinet.member[0].foto}
+                      alt={currentKabinet.member[0].nama}
+                      fill
+                      className="object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+                <H4 className="font-heading text-lg md:text-xl font-bold text-neutral-900 leading-tight mb-1 text-center">
+                  {currentKabinet.member[0].nama}
+                </H4>
+                <B3 className="font-sans text-sm md:text-base text-neutral-500 text-center">
+                  {currentKabinet.member[0].jabatan}
+                </B3>
+              </div>
+            </div>
+          )}
+          
+          {/* 2. Grid Anggota Lainnya */}
+          <div className="grid grid-cols-2 md:grid-cols-3 mb-50 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-6 md:gap-y-12">
+            {currentKabinet.member.slice(1).map((member, index) => (
+              <div key={index} className="flex flex-col group">
+                <div className="relative w-full aspect-[4/5] mb-4">
+                  {/* Background kotak melengkung (di belakang) */}
+                  <div className="absolute bottom-0 left-0 right-0 aspect-square bg-[#E8EDF2] rounded-[28px] sm:rounded-[32px] shadow-xs group-hover:shadow-md transition-shadow duration-300"></div>
+                  {/* Gambar orang (kepala menyembul di atas, badan masuk rapi di lengkungan bawah) */}
+                  <div className="absolute inset-0 rounded-b-[28px] sm:rounded-b-[32px] overflow-hidden z-10">
+                    <Image
+                      src={member.foto}
+                      alt={member.nama}
+                      fill
+                      className="object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
                 <H4 className="font-heading text-lg md:text-xl font-bold text-neutral-900 leading-tight mb-1">
                   {member.nama}
