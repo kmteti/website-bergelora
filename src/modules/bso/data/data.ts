@@ -40,15 +40,16 @@ export const bsoData: BSO[] = [
     detail: 'Night Login',
     tujuan: 'Menjadi wadah pengembangan skill IT mahasiswa.',
     deskripsi_tujuan: 'Night Login adalah Badan Semi Otonom (BSO) di DTETI FT UGM yang bergerak di bidang teknologi informasi, pemrograman, desain, dan keamanan siber.',
+    // 8 slot galeri di TujuanSection, foto NL baru ada 4 -> diulang
     gambar: [
-      'logo/divisi/adkesma.svg',
-      'logo/divisi/bpo.svg',
-      'logo/divisi/ep.svg',
-      'logo/divisi/humas.svg',
-      'logo/divisi/infokom.svg',
-      'logo/divisi/mikat.svg',
-      'logo/divisi/sosmas.svg',
-      'logo/divisi/ws.svg'
+      '/images/bso/night-login/NL1.webp',
+      '/images/bso/night-login/NL2.webp',
+      '/images/bso/night-login/NL3.webp',
+      '/images/bso/night-login/NL4.webp',
+      '/images/bso/night-login/NL1.webp',
+      '/images/bso/night-login/NL2.webp',
+      '/images/bso/night-login/NL3.webp',
+      '/images/bso/night-login/NL4.webp'
     ],
   },
   {

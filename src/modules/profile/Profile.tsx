@@ -136,7 +136,8 @@ export default function Profile() {
                       src={currentKabinet.member[0].foto}
                       alt={currentKabinet.member[0].nama}
                       fill
-                      className="object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
+                      style={{ transformOrigin: "40% 42%", transform: "scale(2.3)" }}
+                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 </div>
