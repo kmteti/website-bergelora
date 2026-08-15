@@ -27,7 +27,7 @@ async function seedEvents() {
     {
       nama: 'FindIT!',
       slug: 'findit',
-      header: '/images/divisi/adkesma.webp',
+      header: '/images/events/findit/header-findit.webp',
       logo: '/logo/event/findit.svg',
       detail: 'Ajang kompetisi di bidang teknologi informasi yang diselenggarakan oleh KMTETI FT UGM.',
       tujuan: 'FindIT!',
@@ -35,9 +35,14 @@ async function seedEvents() {
         'FIND IT (Future Innovation and Discovery Information Technology) merupakan acara tahunan yang diselenggarakan oleh KMTETI FT UGM. Event ini mencakup pameran IT Fest serta berbagai kompetisi menarik di bidang teknologi informasi guna menjadi wadah pengembangan minat dan potensi masyarakat.',
       website: 'https://find-it.id',
       gambar: [
-        { url: '/images/home/about/about.webp' },
-        { url: '/images/home/about/about.webp' },
-        { url: '/images/home/about/about.webp' },
+        { url: '/images/events/findit/1.webp' },
+        { url: '/images/events/findit/2.webp' },
+        { url: '/images/events/findit/3.webp' },
+        { url: '/images/events/findit/4.webp' },
+        { url: '/images/events/findit/5.webp' },
+        { url: '/images/events/findit/6.webp' },
+        { url: '/images/events/findit/7.webp' },
+        { url: '/images/events/findit/8.webp' },
       ],
       bidangLomba: [
         {
@@ -75,7 +80,7 @@ async function seedEvents() {
     {
       nama: 'NESCO UGM',
       slug: 'nesco',
-      header: '/images/divisi/Adkesma1.webp',
+      header: '/images/events/nesco/header-nesco.webp',
       logo: '/logo/event/nesco.svg',
       detail: 'National Electrical Power System Competition yang berfokus pada ketenagalistrikan dan energi.',
       tujuan: 'NESCO UGM',
@@ -83,9 +88,14 @@ async function seedEvents() {
         'NESCO merupakan sebuah kompetisi tingkat nasional dan seminar yang diselenggarakan oleh BSO Magatrika di bawah naungan Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (FT UGM). NESCO memiliki tujuan untuk meningkatkan perkembangan ketenagalistrikan di Indonesia.',
       website: 'https://nesco.id',
       gambar: [
-        { url: '/images/home/about/about.webp' },
-        { url: '/images/home/about/about.webp' },
-        { url: '/images/home/about/about.webp' },
+        { url: '/images/events/nesco/1.webp' },
+        { url: '/images/events/nesco/2.webp' },
+        { url: '/images/events/nesco/3.webp' },
+        { url: '/images/events/nesco/4.webp' },
+        { url: '/images/events/nesco/5.webp' },
+        { url: '/images/events/nesco/6.webp' },
+        { url: '/images/events/nesco/7.webp' },
+        { url: '/images/events/nesco/8.webp' },
       ],
       bidangLomba: [
         {
@@ -113,7 +123,7 @@ async function seedEvents() {
     {
       nama: 'Technocorner',
       slug: 'technocorner',
-      header: '/images/divisi/Adkesma1.webp',
+      header: '/images/events/technocorner/header-technocorner.webp',
       logo: '/logo/event/technocorner.webp',
       detail: 'Ajang kompetisi tahunan yang berfokus pada bidang robotika, IoT, dan teknik elektro.',
       tujuan: 'Technocorner',
@@ -121,9 +131,14 @@ async function seedEvents() {
         'Technocorner merupakan acara tahunan berbasis teknologi yang diselenggarakan oleh Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) Fakultas Teknik Universitas Gadjah Mada, yang bertujuan membina generasi penerus yang kreatif dan kompetitif.',
       website: 'https://technocorner.id',
       gambar: [
-        { url: '/images/home/about/about.webp' },
-        { url: '/images/home/about/about.webp' },
-        { url: '/images/home/about/about.webp' },
+        { url: '/images/events/technocorner/1.webp' },
+        { url: '/images/events/technocorner/2.webp' },
+        { url: '/images/events/technocorner/3.webp' },
+        { url: '/images/events/technocorner/4.webp' },
+        { url: '/images/events/technocorner/5.webp' },
+        { url: '/images/events/technocorner/6.webp' },
+        { url: '/images/events/technocorner/7.webp' },
+        { url: '/images/events/technocorner/8.webp' },
       ],
       bidangLomba: [
         {
