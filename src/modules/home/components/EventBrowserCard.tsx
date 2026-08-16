@@ -1,12 +1,13 @@
 import { ArrowUpRight } from 'lucide-react'
+import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
 
 export interface EventBrowserCardProps {
   name: string
   description: string
-  /** Emoji penanda event, dirender sebagai teks (Figma pakai emoji, bukan logo) */
-  emoji?: string
+  /** Path logo event dari data event, mis. /logo/event/findit.svg */
+  logo?: string
   website?: string
   gradient?: {
     from: string
@@ -25,7 +26,7 @@ export interface EventBrowserCardProps {
 export default function EventBrowserCard({
   name,
   description,
-  emoji,
+  logo,
   website,
   gradient = { from: '#334bb5', to: '#1e308e' },
   className,
@@ -68,14 +69,16 @@ export default function EventBrowserCard({
         {/* Konten — sengaja absolute supaya logo-nya menimpa pita warna persis kayak Figma */}
         <div className="absolute left-[18.11cqw] top-[15.01cqw] flex w-[64.55cqw] flex-col gap-[3.1cqw]">
           <div className="flex flex-col gap-[1.55cqw]">
-            {emoji ? (
-              <span
-                role="img"
-                aria-label={name}
-                className="block text-[max(24px,8.09cqw)] leading-none"
-              >
-                {emoji}
-              </span>
+            {logo ? (
+              // Tinggi dikunci, lebar ikut rasio — logo wordmark macam FindIT jadi
+              // setara besarnya dengan logo yang bentuknya kotak.
+              <Image
+                src={logo}
+                alt={name}
+                width={240}
+                height={80}
+                className="h-[max(24px,8.09cqw)] w-auto object-contain object-left"
+              />
             ) : null}
             <h3 className="font-heading text-[max(18px,5.82cqw)] font-semibold leading-[1.15] tracking-[-0.02em] text-black">
               {name}

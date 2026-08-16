@@ -13,18 +13,11 @@ import EventBrowserCard from './components/EventBrowserCard'
 
 const LAST = eventData.length - 1
 
-// Penanda event di kartu. Sengaja lokal di section ini — `logo` di data event masih
-// dipakai apa adanya buat header halaman detail.
-const EVENT_EMOJI: Record<string, string> = {
-  findit: '💻',
-  technocorner: '🤖',
-  nesco: '⚡',
-}
-
+// Versi pastel dari warna khas tiap event — logonya gelap, jadi pita terang tetap kontras.
 const EVENT_GRADIENTS: Record<string, { from: string; to: string }> = {
-  technocorner: { from: '#D92525', to: '#1E308E' }, // Merah + Biru
-  findit: { from: '#0B192C', to: '#0284C7' },       // Biru Tua + Biru Sedang (tua ke sedang)
-  nesco: { from: '#15803D', to: '#EAB308' },        // Hijau + Kuning
+  technocorner: { from: '#F3B0B0', to: '#B3BCE6' }, // Merah + Biru
+  findit: { from: '#BCC9DA', to: '#AFDCF5' },       // Biru Tua + Biru Sedang (tua ke sedang)
+  nesco: { from: '#AEDCC1', to: '#F5E7AC' },        // Hijau + Kuning
 }
 
 export default function Event() {
@@ -197,7 +190,7 @@ export default function Event() {
                     <EventBrowserCard
                       name={event.nama}
                       description={event.deskripsi_tujuan}
-                      emoji={EVENT_EMOJI[event.slug]}
+                      logo={event.logo}
                       website={event.website}
                       gradient={EVENT_GRADIENTS[event.slug]}
                       className={cn(

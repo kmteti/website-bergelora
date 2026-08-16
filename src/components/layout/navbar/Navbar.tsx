@@ -45,9 +45,9 @@ const megaMenuData = {
     { label: 'MPM', href: '/bso/mpm', icon: '/logo/bso/mpm.svg' },
   ],
   event: [
-    { label: 'FindIT', href: '/event/findit' },
-    { label: 'Nesco', href: '/event/nesco' },
-    { label: 'Technocorner', href: '/event/technocorner' },
+    { label: 'FindIT', href: '/event/findit', icon: '/logo/event/findit.svg' },
+    { label: 'Nesco', href: '/event/nesco', icon: '/logo/event/nesco.svg' },
+    { label: 'Technocorner', href: '/event/technocorner', icon: '/logo/event/technocorner.webp' },
   ],
 }
 
@@ -339,9 +339,20 @@ export function Navbar() {
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-950"
+                      className="group flex items-center gap-3 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
-                      {item.label}
+                      {'icon' in item && item.icon ? (
+                        <Image
+                          src={item.icon}
+                          alt={item.label}
+                          width={24}
+                          height={24}
+                          className="size-6 object-contain shrink-0"
+                        />
+                      ) : (
+                        <div className="size-6 shrink-0" />
+                      )}
+                      <span className="font-medium">{item.label}</span>
                     </Link>
                   ))}
                 </div>
@@ -448,14 +459,25 @@ export function Navbar() {
                     {/* Event */}
                     <div className="flex flex-col gap-3">
                       <span className="text-xs font-normal text-neutral-400">Event</span>
-                      <div className="flex flex-col gap-3">
+                      <div className="flex flex-col gap-4">
                         {megaMenuData.event.map((item) => (
                           <Link
                             key={item.label}
                             href={item.href}
-                            className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                            className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
                           >
-                            {item.label}
+                            {'icon' in item && item.icon ? (
+                              <Image
+                                src={item.icon}
+                                alt={item.label}
+                                width={18}
+                                height={18}
+                                className="size-[18px] object-contain"
+                              />
+                            ) : (
+                              <div className="size-[18px] shrink-0" />
+                            )}
+                            <span>{item.label}</span>
                           </Link>
                         ))}
                       </div>
