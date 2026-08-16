@@ -1,31 +1,13 @@
-import localFont from 'next/font/local'
+import { Montserrat, Source_Serif_4 } from 'next/font/google'
 
-export const montserrat = localFont({
-  src: [
-    {
-      path: './fonts/montserrat/Montserrat.ttf',
-      style: 'normal',
-    },
-    {
-      path: './fonts/montserrat/Montserrat-Italic.ttf',
-      style: 'italic',
-    },
-  ],
+export const montserrat = Montserrat({
+  subsets: ['latin'],
   variable: '--font-montserrat',
   display: 'swap',
 })
 
-export const sourceSerif4 = localFont({
-  src: [
-    {
-      path: './fonts/sourceserif4/SourceSerif4.ttf',
-      style: 'normal',
-    },
-    {
-      path: './fonts/sourceserif4/SourceSerif4-Italic.ttf',
-      style: 'italic',
-    },
-  ],
+export const sourceSerif4 = Source_Serif_4({
+  subsets: ['latin'],
   variable: '--font-source-serif-4',
   display: 'swap',
 })
