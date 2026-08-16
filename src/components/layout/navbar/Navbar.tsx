@@ -160,7 +160,7 @@ export function Navbar() {
   const desktopNavTextClass = cn(
     'text-sm font-medium leading-6 tracking-normal transition-colors duration-500 ease-in-out focus-visible:outline-3 focus-visible:outline-offset-4',
     isDarkTone
-      ? 'text-white hover:text-primary-200 focus-visible:outline-white/50'
+      ? 'text-white hover:text-white/80 focus-visible:outline-white/50'
       : 'text-black/70 hover:text-black/90 focus-visible:outline-primary-100',
   )
 
@@ -227,7 +227,7 @@ export function Navbar() {
               className={cn(
                 'flex h-11 items-center cursor-pointer gap-2 rounded-2xl bg-transparent px-3 py-2 text-sm leading-6 transition-all duration-500 ease-in-out',
                 desktopNavTextClass,
-                isDesktopTentangOpen && (isDarkTone ? 'text-primary-200' : 'text-black/50'),
+                isDesktopTentangOpen && (isDarkTone ? 'text-white' : 'text-black/50'),
               )}
             >
               Tentang
