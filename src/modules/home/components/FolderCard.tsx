@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import { H5 } from '@/components/elements/Typography'
 import Folder from './Folder'
 
 interface FolderCardProps {
@@ -24,13 +23,13 @@ export default function FolderCard({ name, photo, logo, className = '', startCol
         <div className="relative flex items-center justify-center w-[220px] h-[180px]">
           {/* Photo with White Border and Shadow (Tilted -3deg) */}
           <div className="absolute top-10 -left-5 w-[182px] h-[152px] rounded-[28px] border-[3px] border-white shadow-[0_8px_25px_rgba(0,0,0,0.12)] overflow-hidden -rotate-[3deg] z-10 bg-gray-100 transition-transform duration-500 group-hover:-translate-y-[30px] group-hover:-translate-x-[5px]">
-            <Image src={photo} alt={name} fill className="object-cover" />
+            <Image src={photo} alt={name} fill sizes="182px" className="object-cover" />
           </div>
 
           {/* Icon (Tilted 3deg) */}
           <div className="absolute rounded-3xl -right-8 top-15 w-[100px] h-[100px] rotate-[3deg] z-20 transition-transform duration-500 group-hover:-translate-y-[30px] group-hover:translate-x-[5px]">
             <div className="relative w-full h-full drop-shadow-[0_8px_15px_rgba(0,0,0,0.15)]">
-              <Image src={logo} alt={`${name} Logo`} fill className="object-contain" />
+              <Image src={logo} alt={`${name} Logo`} fill sizes="100px" className="object-contain" />
             </div>
           </div>
         </div>
@@ -43,7 +42,7 @@ export default function FolderCard({ name, photo, logo, className = '', startCol
 
         {/* Content inside Frosted Glass */}
         <div className="relative z-10 p-6 pt-8 flex items-start h-full pointer-events-none">
-          <H5 className="text-black/50">{name}</H5>
+          <h3 className="font-heading text-balance text-[clamp(14px,1.7vw,20px)] leading-[clamp(21px,2.2vw,28px)] font-semibold text-black/50">{name}</h3>
         </div>
       </div>
     </Folder>

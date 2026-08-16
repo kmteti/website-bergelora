@@ -83,6 +83,7 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI Back" 
                   fill 
+                  sizes="(max-width: 1024px) 100vw, 900px"
                   className="object-cover object-[20%_center] brightness-90"
                 />
               </div>
@@ -93,6 +94,7 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 
                   fill 
+                  sizes="(max-width: 1024px) 100vw, 900px"
                   className="object-cover"
                 />
                 
