@@ -116,6 +116,7 @@ export default function Hero() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
+                sizes="100vw"
                 className="object-cover object-center absolute"
               />
 
@@ -156,18 +157,22 @@ export default function Hero() {
                   <button
                     key={index}
                     onClick={() => handleThisSlide(index)}
-                    className="w-12 h-5 rounded-full bg-white shadow-sm transition-all"
+                    className="h-6 flex items-center justify-center px-0.5 cursor-pointer"
                     aria-label={`Go to ${slide.alt}`}
-                  />
+                  >
+                    <span className="w-12 h-5 rounded-full bg-white shadow-sm transition-all" />
+                  </button>
                 )
               } else {
                 return (
                   <button
                     key={index}
                     onClick={() => handleThisSlide(index)}
-                    className="w-5 h-5 rounded-full bg-white/50 hover:bg-white/75 transition-all"
+                    className="w-6 h-6 flex items-center justify-center cursor-pointer"
                     aria-label={`Go to ${slide.alt}`}
-                  />
+                  >
+                    <span className="w-5 h-5 rounded-full bg-white/50 hover:bg-white/75 transition-all" />
+                  </button>
                 )
               }
             })}

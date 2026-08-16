@@ -21,16 +21,21 @@ function NewsCardsSkeleton() {
 }
 
 async function NewsGrid() {
-  const payload = await getPayload({ config })
-  
-  const { docs: newsDocs } = await payload.find({
-    collection: 'news',
-    where: {
-      _status: { equals: 'published' },
-    },
-    sort: '-date',
-    limit: 4,
-  })
+  let newsDocs: any[] = []
+  try {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      collection: 'news',
+      where: {
+        _status: { equals: 'published' },
+      },
+      sort: '-date',
+      limit: 4,
+    })
+    newsDocs = res.docs
+  } catch (error) {
+    console.error('Error fetching news for Home:', error)
+  }
 
   const newsData = newsDocs.map((news) => ({
     category: news.category,
@@ -39,6 +44,10 @@ async function NewsGrid() {
     image: typeof news.image === 'object' && news.image?.url ? news.image.url : '/images/news/placeholder.webp',
     slug: news.slug,
   }))
+
+  if (newsData.length === 0) {
+    return null
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -66,7 +75,7 @@ export default function News() {
             KMTETI News
           </H2>
           <B2 className="text-gray-600 md:w-1/2 text-left leading-relaxed">
-            At KMTETI, a spirit of optimism and possibility energizes our mission of discovery and learning. Here you&apos;ll find a place of intellectual expansiveness, wide-ranging perspectives, and freedom to explore new lines of thinking.
+            Pusat kabar dan informasi terkini seputar kegiatan, inovasi, serta dinamika kehidupan mahasiswa di lingkungan KMTETI FT UGM.
           </B2>
         </div>
 
