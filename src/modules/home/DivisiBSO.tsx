@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useMemo, useRef } from 'react'
 import { B3, H2, H4 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -11,6 +11,27 @@ type Tab = 'divisi' | 'bso'
 
 export interface DivisiBSOProps {
   initialDivisiData: FolderData[]
+}
+
+// Copy hover folder homepage, disadur dari script Video Profil KMTETI 2026.
+// Sengaja terpisah dari `tujuan`/`deskripsi_tujuan` di CMS yang dipakai halaman divisi.
+const divisiDescriptions: Record<string, string> = {
+  adkesma:
+    'Menjadi jembatan aspirasi warga DTETI sekaligus menjaga kesejahteraan mahasiswa, mulai dari isu akademik, fasilitas, kesehatan mental, hingga penanganan berbagai bentuk kekerasan.',
+  bpo:
+    'Biro yang menangani pengembangan organisasi dan kaderisasi guna menjaga kualitas kepengurusan serta memastikan KMTETI terus berkembang dari tahun ke tahun.',
+  electropreneur:
+    'Wadah pengembangan jiwa kewirausahaan melalui program dan project bisnis, mulai dari penyusunan ide, pengelolaan usaha, hingga pelaksanaannya secara langsung.',
+  humas:
+    'Menghubungkan DTETI dengan berbagai pihak di luar kampus melalui program Kunjungan, Open House, Public Speaking Training, dan Sharing Alumni untuk memperluas jaringan.',
+  infokom:
+    'Pengelola seluruh kebutuhan media dan informasi KMTETI melalui empat sub divisi: Videografi, Desain, Jurnalistik, dan Media Sosial.',
+  'minat-dan-bakat':
+    'Mewadahi minat, bakat, dan prestasi non-akademik melalui tiga sub divisi: Olahraga, Seni, serta SUTET yang mengkoordinasikan supporter DTETI.',
+  sosmas:
+    'Menjalankan pengabdian kepada masyarakat melalui program berkelanjutan Desa Binaan serta penyaluran bantuan dan berbagai aksi kemanusiaan.',
+  workshop:
+    'Menyelenggarakan pelatihan teknis dan proyek pengembangan seperti Technocorner, ELNINO, Summer School, dan Manajerial Lomba bagi anggota DTETI.',
 }
 
 const bsoData: FolderData[] = [
@@ -56,7 +77,16 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<Tab>('divisi')
 
-  const currentData = activeTab === 'divisi' ? initialDivisiData : bsoData
+  const divisiData = useMemo(
+    () =>
+      initialDivisiData.map((item) => ({
+        ...item,
+        description: (item.slug && divisiDescriptions[item.slug]) || item.description,
+      })),
+    [initialDivisiData],
+  )
+
+  const currentData = activeTab === 'divisi' ? divisiData : bsoData
   const basePath = activeTab === 'divisi' ? '/divisi' : '/bso'
   const buttonLabel = activeTab === 'divisi' ? 'Lihat Divisi' : 'Lihat BSO'
   const emptyText =
