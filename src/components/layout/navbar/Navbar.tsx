@@ -198,7 +198,7 @@ export function Navbar() {
         <Link href="/" className="relative flex shrink-0 items-center h-[34px] lg:h-[38px] w-[134px] lg:w-[150px]" aria-label="KMTETI FT UGM">
           <Image
             src="/logo/kmteti/horizontal-white.svg"
-            alt="KMTETI FT UGM"
+            alt=""
             fill
             priority
             className={cn(
@@ -208,7 +208,7 @@ export function Navbar() {
           />
           <Image
             src="/logo/kmteti/horizontal-color.svg"
-            alt="KMTETI FT UGM"
+            alt=""
             fill
             priority
             className={cn(
