@@ -78,6 +78,36 @@ export const struktur_kabinet: StrukturKabinet[] = [
         jabatan: "Ketua Workshop",
         foto: "/images/profile/struktur/20252026/kadiv-ws.webp",
       },
+      {
+        nama: "Christian Bo Constantine",
+        jabatan: "Ketua BSO MPM",
+        foto: "/images/profile/struktur/20252026/ketua-mpm.webp",
+      },
+      {
+        nama: "M. Basel Fawaz Sigit",
+        jabatan: "Ketua BSO Magatrika",
+        foto: "/images/profile/struktur/20252026/ketua-magatrika.webp",
+      },
+      {
+        nama: "Calvin",
+        jabatan: "Ketua BSO Night Login",
+        foto: "/images/profile/struktur/20252026/ketua-nl.webp",
+      },
+      {
+        nama: "Zahra Pinctadella",
+        jabatan: "Ketua BSO Bionce",
+        foto: "/images/profile/struktur/20252026/ketua-bionce.webp",
+      },
+      {
+        nama: "Adam Abdillah Hanafi",
+        jabatan: "Ketua BSO SKI Al-Hannan",
+        foto: "/images/profile/struktur/20252026/ketua-ski.webp",
+      },
+      {
+        nama: "Banu Ranu Basuhjiwa",
+        jabatan: "Ketua BSO SKK DTETI",
+        foto: "/images/profile/struktur/20252026/ketua-skk.webp",
+      },
     ],
   },
 ];
