@@ -20,15 +20,16 @@ export const bsoData: BSO[] = [
     detail: 'Mahasiswa Gadjah Mada Pencinta Listrika',
     tujuan: 'Mengembangkan minat dan bakat di bidang tenaga listrik.',
     deskripsi_tujuan: 'Badan Semi Otonom (BSO) Magatrika (Mahasiswa Gadjah Mada Pencinta Listrika) merupakan wadah bagi mahasiswa DTETI FT UGM untuk mengembangkan minat, bakat, dan kemampuan di bidang keilmuan dan praktik terkait ketenagalistrikan.',
+    // TujuanSection punya 8 slot; MGT9.webp sengaja tidak dipakai
     gambar: [
-      'logo/divisi/adkesma.svg',
-      'logo/divisi/bpo.svg',
-      'logo/divisi/ep.svg',
-      'logo/divisi/humas.svg',
-      'logo/divisi/infokom.svg',
-      'logo/divisi/mikat.svg',
-      'logo/divisi/sosmas.svg',
-      'logo/divisi/ws.svg'
+      '/images/bso/magatrika/MGT1.webp',
+      '/images/bso/magatrika/MGT2.webp',
+      '/images/bso/magatrika/MGT3.webp',
+      '/images/bso/magatrika/MGT4.webp',
+      '/images/bso/magatrika/MGT5.webp',
+      '/images/bso/magatrika/MGT6.webp',
+      '/images/bso/magatrika/MGT7.webp',
+      '/images/bso/magatrika/MGT8.webp'
     ],
   },
   {
