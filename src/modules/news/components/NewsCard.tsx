@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { H6 } from '@/components/elements/Typography'
 
 export interface NewsCardProps {
   category: string
@@ -49,7 +50,7 @@ export function NewsCard({ category, title, date, image, href = '#', className, 
       </div>
       <div className="flex flex-col flex-grow p-5 md:p-6 text-left">
         <span className="mb-3 text-xs md:text-sm font-medium text-primary-400">{category}</span>
-        <h3 className="font-heading text-balance text-[clamp(14px,1.7vw,20px)] leading-[clamp(21px,2.2vw,28px)] font-semibold mb-6 text-[#2D2D2D] transition-colors group-hover:text-primary line-clamp-3">{renderTitle()}</h3>
+        <H6 className="mb-6 text-[#2D2D2D] transition-colors group-hover:text-primary line-clamp-3">{renderTitle()}</H6>
         <span className="mt-auto text-xs md:text-sm text-[#A0A0A0]">{date}</span>
       </div>
     </Link>

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { H4, H5 } from '@/components/elements/Typography'
+import { H4, H6 } from '@/components/elements/Typography'
 
 export interface SpotlightCardProps {
   category: string
@@ -39,7 +39,7 @@ export function SpotlightCard({ category, title, date, image, href = '#', isLarg
         {isLarge ? (
           <H4 className="text-white drop-shadow-md line-clamp-3">{title}</H4>
         ) : (
-          <H5 className="text-white drop-shadow-md line-clamp-3">{title}</H5>
+          <H6 className="text-white drop-shadow-md line-clamp-3">{title}</H6>
         )}
         <div className={cn(
           "mt-2 flex items-center gap-2 font-medium text-white/80 drop-shadow-sm",

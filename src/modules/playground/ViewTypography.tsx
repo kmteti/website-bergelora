@@ -1,4 +1,4 @@
-import { B1, B2, B3, B4, B5, H1, H2, H3, H4, H5 } from '@/components/elements/Typography'
+import { B1, B2, B3, B4, B5, H1, H2, H3, H4, H5, H6 } from '@/components/elements/Typography'
 
 export default function Typography() {
   return (
@@ -41,10 +41,13 @@ export default function Typography() {
           </div>
 
           <div className="border-b border-neutral-100 pb-3">
-            <B5 className="mb-1 uppercase tracking-wider text-neutral-400">
-              H5 - 18/24 to 24/32
-            </B5>
+            <B5 className="mb-1 uppercase tracking-wider text-neutral-400">H5 - 24/32</B5>
             <H5>The quick brown fox jumps over the lazy dog</H5>
+          </div>
+
+          <div className="border-b border-neutral-100 pb-3">
+            <B5 className="mb-1 uppercase tracking-wider text-neutral-400">H6 - 18/24</B5>
+            <H6>The quick brown fox jumps over the lazy dog</H6>
           </div>
         </div>
       </div>

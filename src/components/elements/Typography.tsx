@@ -70,7 +70,7 @@ const H4 = ({ className, children, weight = 'semibold', ...props }: TypographyPr
 const H5 = ({ className, children, weight = 'semibold', ...props }: TypographyProps) => (
   <h5
     className={cn(
-      'font-heading text-balance text-[clamp(14px,1.7vw,20px)] leading-[clamp(21px,2.2vw,28px)]',
+      'font-heading text-balance text-[24px] leading-[32px]',
       weightClasses[weight],
       className,
     )}
@@ -78,6 +78,19 @@ const H5 = ({ className, children, weight = 'semibold', ...props }: TypographyPr
   >
     {children}
   </h5>
+)
+
+const H6 = ({ className, children, weight = 'semibold', ...props }: TypographyProps) => (
+  <h6
+    className={cn(
+      'font-heading text-balance text-[18px] leading-[24px]',
+      weightClasses[weight],
+      className,
+    )}
+    {...props}
+  >
+    {children}
+  </h6>
 )
 
 const B1 = ({ className, weight = 'regular', ...props }: TypographyProps) => (
@@ -135,4 +148,4 @@ const B5 = ({ className, weight = 'regular', ...props }: TypographyProps) => (
   />
 )
 
-export { H1, H2, H3, H4, H5, B1, B2, B3, B4, B5 }
+export { H1, H2, H3, H4, H5, H6, B1, B2, B3, B4, B5 }
