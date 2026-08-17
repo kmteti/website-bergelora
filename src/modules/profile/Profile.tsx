@@ -83,7 +83,7 @@ export default function Profile() {
         {/* YouTube Video Section within overlap */}
         <div className="w-full relative aspect-video mb-20 md:mb-32 z-10">
           <iframe
-            src="https://www.youtube.com/embed/8dmi2DqeLDs"
+            src="https://www.youtube.com/embed/GLklKUK0PBw"
             title="KMTETI Profile Video"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
