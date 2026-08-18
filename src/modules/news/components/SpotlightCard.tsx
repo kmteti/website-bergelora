@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { H4, H6 } from '@/components/elements/Typography'
+import { H3 } from '@/components/elements/Typography'
 
 export interface SpotlightCardProps {
   category: string
@@ -59,9 +59,9 @@ export function SpotlightCard({ category, title, date, image, href = '#', isLarg
         isLarge ? "p-6 md:p-8" : "p-5 md:p-6"
       )}>
         {isLarge ? (
-          <H4 className="text-white drop-shadow-md line-clamp-3">{title}</H4>
+          <H3 className="text-white drop-shadow-md line-clamp-3 text-[22px] md:text-[28px] leading-tight font-semibold">{title}</H3>
         ) : (
-          <H6 className="text-white drop-shadow-md line-clamp-3">{title}</H6>
+          <H3 className="text-white drop-shadow-md line-clamp-3 text-[18px] md:text-[20px] leading-tight font-semibold">{title}</H3>
         )}
         <div className={cn(
           "mt-2 flex items-center gap-2 font-medium text-white/80 drop-shadow-sm",

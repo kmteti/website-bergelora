@@ -39,7 +39,7 @@ const megaMenuData = {
   bso: [
     { label: 'Magatrika', href: '/bso/magatrika', icon: '/logo/bso/magatrika.svg' },
     { label: 'Night Login', href: '/bso/night-login', icon: '/logo/bso/night-login.svg' },
-    { label: 'Bionce', href: '/bso/bionce', icon: '/logo/bso/beacon.svg' },
+    { label: 'Bionce', href: '/bso/bionce', icon: '/logo/bso/bionce.svg' },
     { label: 'SKI', href: '/bso/ski', icon: '/logo/bso/ski-al-hannaan.svg' },
     { label: 'SKK', href: '/bso/skk', icon: '/logo/bso/skk-dteti.svg' },
     { label: 'MPM', href: '/bso/mpm', icon: '/logo/bso/mpm.svg' },

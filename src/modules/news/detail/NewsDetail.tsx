@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { H2 } from '@/components/elements/Typography'
 import DefaultLayout from '@/components/layout/DefaultLayout'
 import { NavbarResolver } from '@/components/layout/NavbarResolver'
@@ -15,10 +15,19 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import { cn } from '@/lib/utils'
 
 export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] }) {
+  const router = useRouter()
   const [isImageLoaded, setIsImageLoaded] = useState(false)
   const [hasImageError, setHasImageError] = useState(false)
   const imageUrl = typeof news.image === 'object' && news.image?.url ? news.image.url : '/images/news/placeholder.webp'
   const formattedDate = news.date ? format(new Date(news.date), 'dd MMMM yyyy', { locale: id }) : '-'
+
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back()
+    } else {
+      router.push('/tentang/berita')
+    }
+  }
 
   const mappedLatestNews = (latestNews || []).map((item) => ({
     title: item.title,
@@ -38,11 +47,15 @@ export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] 
           {/* Main Article Container */}
           <div className="w-full">
             {/* Back button */}
-            <Link href="/tentang/berita" className="inline-block mb-8">
-              <Button variant="black" leftIcon={<ArrowLeft className="w-5 h-5" />}>
+            <div className="inline-block mb-8">
+              <Button 
+                variant="black" 
+                leftIcon={<ArrowLeft className="w-5 h-5" />}
+                onClick={handleBack}
+              >
                 Kembali
               </Button>
-            </Link>
+            </div>
 
           {/* Title and Metadata */}
           <div className="mb-10 w-full">
