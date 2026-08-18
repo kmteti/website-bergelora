@@ -4,15 +4,16 @@ import Footer from '@/components/layout/Footer'
 import './styles.css'
 import { Navbar } from '@/components/layout/navbar/Navbar'
 import LenisProvider from '@/providers/LenisProvider'
+import AOSProvider from '@/providers/AOSProvider'
 
 import type { Metadata, Viewport } from 'next'
 import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://website-bergelora.vercel.app'), // TODO: Change to real production domain later
+  metadataBase: new URL('https://website-bergelora.vercel.app'),
   title: {
-    default: 'KMTETI | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi FT UGM',
-    template: '%s | KMTETI FT UGM',
+    default: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    template: '%s | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
   },
   description:
     'Situs web resmi Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (KMTETI FT UGM). Temukan profil, berita terbaru, layanan, dan informasi akademik.',
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'id_ID',
     url: '/',
-    title: 'KMTETI FT UGM',
+    title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
     description: 'Situs web resmi Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada.',
     siteName: 'KMTETI FT UGM',
     images: [{
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KMTETI FT UGM',
+    title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
     description: 'Situs web resmi KMTETI FT UGM.',
     images: ['/images/home/hero/hero-bg.webp'],
   },
@@ -59,11 +60,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="id" className={cn(montserrat.variable, sourceSerif4.variable, 'font-sans')}>
       <body className="font-sans antialiased text-neutral-1000 flex flex-col min-h-screen overflow-x-hidden">
         <LenisProvider>
-          <main className="flex-1 flex flex-col">
-            <Navbar />
-            {children}
-            <Footer />
-          </main>
+          <AOSProvider>
+            <main className="flex-1 flex flex-col">
+              <Navbar />
+              {children}
+              <Footer />
+            </main>
+          </AOSProvider>
         </LenisProvider>
       </body>
     </html>

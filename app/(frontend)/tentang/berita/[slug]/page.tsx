@@ -26,17 +26,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const news = newsDocs[0]
   
-  // Extract image URL from payload Media (assuming it's populated and has url)
   let imageUrl = '/images/home/hero/hero-bg.webp'
   if (news.image && typeof news.image === 'object' && 'url' in news.image) {
     imageUrl = news.image.url as string
   }
 
+  const fullTitle = `${news.title} | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi`
+
   return {
-    title: news.title,
+    title: fullTitle,
     description: `Baca berita terbaru mengenai ${news.title}`,
     openGraph: {
-      title: news.title,
+      title: fullTitle,
       description: `Baca berita terbaru mengenai ${news.title}`,
       url: `/tentang/berita/${news.slug}`,
       type: 'article',
@@ -51,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary_large_image',
-      title: news.title,
+      title: fullTitle,
       description: `Baca berita terbaru mengenai ${news.title}`,
       images: [imageUrl],
     },

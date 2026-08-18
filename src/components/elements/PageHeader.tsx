@@ -42,8 +42,8 @@ export function PageHeader({
 
       {/* Wrapper Konten Teks */}
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="relative z-10 flex h-full flex-col justify-end pb-[145px] sm:pb-[175px] md:pb-[205px] lg:pb-[220px] w-full px-5 sm:px-8 md:px-16 lg:px-24 pointer-events-none">
-          <div className="flex items-center justify-between w-full pointer-events-auto gap-4">
+        <div className="relative z-10 flex h-full flex-col justify-end pb-[145px] sm:pb-[175px] md:pb-[205px] lg:pb-[220px] w-full px-6 sm:px-12 md:px-20 lg:px-28 pointer-events-none">
+          <div className="flex items-center justify-between w-full pointer-events-auto gap-4 max-w-7xl mx-auto">
             <div className="flex items-center gap-3.5 sm:gap-5 md:gap-6 min-w-0 flex-1">
               {/* Render Icon */}
               {iconSrc && (
@@ -59,10 +59,10 @@ export function PageHeader({
               
               {/* Title & Description */}
               <div className="flex flex-col min-w-0">
-                <H2 className="text-white drop-shadow-md text-xl sm:text-2xl md:text-4xl font-bold truncate leading-tight">
+                <H2 className="text-white drop-shadow-md font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] truncate leading-tight tracking-tight">
                   {title}
                 </H2>
-                <p className="text-white/90 text-xs sm:text-sm md:text-base mt-1 drop-shadow-sm font-sans line-clamp-2 max-w-xl leading-relaxed">
+                <p className="text-white/90 text-sm sm:text-base md:text-lg mt-1.5 drop-shadow-sm font-sans font-medium line-clamp-2 max-w-xl leading-relaxed">
                   {description}
                 </p>
               </div>

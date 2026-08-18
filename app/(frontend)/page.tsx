@@ -12,10 +12,10 @@ import config from '@payload-config'
 import { FolderData } from '@/modules/home/components/FolderCarousel'
 
 export const metadata: Metadata = {
-  title: 'Beranda',
+  title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
   description: 'Selamat datang di situs resmi KMTETI FT UGM. Jelajahi profil, divisi, badan semi otonom, berita terkini, dan kehidupan mahasiswa di lingkungan KMTETI.',
   openGraph: {
-    title: 'Beranda | KMTETI FT UGM',
+    title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
     description: 'Selamat datang di situs resmi KMTETI FT UGM. Jelajahi profil, divisi, badan semi otonom, berita terkini, dan kehidupan mahasiswa di lingkungan KMTETI.',
     url: '/',
   },

@@ -7,10 +7,10 @@ import { Metadata } from 'next'
 export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
 
 export const metadata: Metadata = {
-  title: 'Berita & Artikel',
+  title: 'Berita & Artikel | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
   description: 'Kumpulan berita, artikel, dan informasi terbaru seputar Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
   openGraph: {
-    title: 'Berita & Artikel | KMTETI FT UGM',
+    title: 'Berita & Artikel | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
     description: 'Kumpulan berita, artikel, dan informasi terbaru seputar KMTETI FT UGM.',
     url: '/tentang/berita',
   },
