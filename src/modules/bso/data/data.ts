@@ -58,7 +58,7 @@ export const bsoData: BSO[] = [
     slug: 'bionce',
     nama: 'Bionce',
     header: '/images/bso/bionce/header-bionce.webp',
-    logo: '/logo/bso/beacon.svg',
+    logo: '/logo/bso/bionce.svg',
     detail: 'Biomedical Engineering Club',
     tujuan: 'Mengakomodasi minat di bidang teknik biomedis.',
     deskripsi_tujuan: 'Bionce (Biomedical Engineering Club) adalah komunitas bagi mahasiswa yang tertarik dengan perkembangan dan riset di bidang teknik biomedis.',

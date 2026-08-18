@@ -36,11 +36,11 @@ const divisiDescriptions: Record<string, string> = {
 
 const bsoData: FolderData[] = [
   {
-    name: 'Beacon',
+    name: 'Bionce',
     photo: '/images/home/about/about.webp',
-    logo: '/logo/bso/beacon.svg',
+    logo: '/logo/bso/bionce.svg',
     description:
-      'Wadah eksplorasi riset teknologi cerdas dan kompetisi inovasi digital bagi mahasiswa yang antusias terhadap perkembangan sistem masa depan.',
+      'Komunitas bagi mahasiswa yang tertarik dengan perkembangan, inovasi, dan riset di bidang teknik biomedis.',
   },
   {
     name: 'Magatrika',
