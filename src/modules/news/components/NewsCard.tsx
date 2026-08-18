@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -14,6 +17,9 @@ export interface NewsCardProps {
 }
 
 export function NewsCard({ category, title, date, image, href = '#', className, searchQuery }: NewsCardProps) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [hasError, setHasError] = useState(false)
+
   const renderTitle = () => {
     if (!searchQuery || searchQuery.trim() === '') return title
     
@@ -39,13 +45,28 @@ export function NewsCard({ category, title, date, image, href = '#', className, 
         className,
       )}
     >
-      <div className="relative w-full aspect-[4/3] overflow-hidden">
+      <div className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-100">
+        {/* Standalone Image Shimmer Loader */}
+        {!isLoaded && (
+          <div className="absolute inset-0 z-0 bg-neutral-200 overflow-hidden">
+            <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+          </div>
+        )}
+
         <Image 
-          src={image} 
+          src={hasError ? '/images/news/placeholder.webp' : image} 
           alt={title} 
           fill 
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105" 
+          onLoad={() => setIsLoaded(true)}
+          onError={() => {
+            setHasError(true)
+            setIsLoaded(true)
+          }}
+          className={cn(
+            "object-cover transition-all duration-500 group-hover:scale-105",
+            isLoaded ? "opacity-100" : "opacity-0"
+          )} 
         />
       </div>
       <div className="flex flex-col flex-grow p-5 md:p-6 text-left">
