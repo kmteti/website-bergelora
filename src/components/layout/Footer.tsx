@@ -141,7 +141,7 @@ export default function Footer() {
       />
 
       <div className="absolute inset-0 z-10 bg-black/5" />
-      <div className="absolute inset-x-0 bottom-0 z-20 h-[calc(100%-360px)] backdrop-blur-[24px] sm:h-[58%] lg:h-[472px]" />
+      <div className="absolute inset-x-0 bottom-0 z-20 h-[calc(100%-280px)] backdrop-blur-[24px] [mask-image:linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,0.35)_10%,rgba(0,0,0,0.8)_20%,black_28%)] sm:h-[64%] lg:h-[560px]" />
 
       <div className="container relative z-40 mx-auto flex min-h-[1120px] w-full max-w-6xl flex-col px-4 py-12 sm:min-h-[980px] md:px-8 sm:py-14 lg:h-full lg:py-0">
         <div className="max-w-[626px] pt-4 sm:pt-16 lg:absolute lg:left-8 lg:top-[148px] lg:pt-0">
