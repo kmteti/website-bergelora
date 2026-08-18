@@ -171,11 +171,6 @@ export default function Event() {
                 >
                   <button
                     type="button"
-                    aria-label={
-                      isActive
-                        ? `${event.nama} - Pelajari lebih lanjut`
-                        : `${event.nama} - Tampilkan event`
-                    }
                     aria-current={isActive || undefined}
                     onClick={() => {
                       if (justDragged.current) {
