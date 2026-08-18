@@ -4,6 +4,7 @@ import { H1, B2 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 
 import { useState, useCallback, useEffect } from 'react'
@@ -16,6 +17,7 @@ const sliderHero = [
     description:
       'Wadah kolaborasi, pengembangan potensi, dan pengabdian mahasiswa Teknik Elektro, Teknologi Informasi, dan Teknik Biomedis dalam lingkungan akademik dan profesional',
     button: 'Profil KMTETI',
+    href: '/tentang/profil',
   },
   {
     src: '/images/home/hero/slide2.webp',
@@ -24,6 +26,7 @@ const sliderHero = [
     description:
       'Wadah kolaborasi, pengembangan potensi, dan pengabdian mahasiswa Teknik Elektro, Teknologi Informasi, dan Teknik Biomedis dalam lingkungan akademik dan profesional',
     button: 'Layanan KMTETI',
+    href: '/layanan',
   },
   {
     src: '/images/home/hero/slide3.webp',
@@ -32,6 +35,7 @@ const sliderHero = [
     description:
       'Wadah kolaborasi, pengembangan potensi, dan pengabdian mahasiswa Teknik Elektro, Teknologi Informasi, dan Teknik Biomedis dalam lingkungan akademik dan profesional',
     button: 'Hubungi KMTETI',
+    href: '/kontak',
   },
 ]
 
@@ -43,22 +47,25 @@ export default function Hero() {
 
   const handleThisSlide = useCallback(
     (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index)
+      if (!emblaApi) return
+      emblaApi.scrollTo(index)
+      setIsThisSlide(index)
     },
-    [emblaApi],
+    [emblaApi]
   )
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setIsThisSlide(emblaApi.selectedScrollSnap())
-  }, [emblaApi])
 
   useEffect(() => {
     if (!emblaApi) return
-    onSelect()
+
+    const onSelect = () => {
+      setIsThisSlide(emblaApi.selectedScrollSnap())
+    }
+
     emblaApi.on('select', onSelect)
-    emblaApi.on('reInit', onSelect)
-  }, [emblaApi, onSelect])
+    return () => {
+      emblaApi.off('select', onSelect)
+    }
+  }, [emblaApi])
 
   // Autoplay interval
   useEffect(() => {
@@ -116,6 +123,8 @@ export default function Hero() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
+                quality={index === 0 ? 80 : 70}
+                loading={index === 0 ? 'eager' : 'lazy'}
                 sizes="100vw"
                 className="object-cover object-center absolute"
               />
@@ -134,10 +143,12 @@ export default function Hero() {
                   <B2 className="text-white mt-4 drop-shadow-md">{slide.description}</B2>
 
                   <div className="mt-8 pointer-events-auto">
-                    <Button variant="secondary" size="default">
-                      <span>{slide.button}</span>
-                      <ArrowUpRight className="ml-2 w-5 h-5" />
-                    </Button>
+                    <Link href={slide.href}>
+                      <Button variant="secondary" size="default">
+                        <span>{slide.button}</span>
+                        <ArrowUpRight className="ml-2 w-5 h-5" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </div>

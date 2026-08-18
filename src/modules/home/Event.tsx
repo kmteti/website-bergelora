@@ -173,8 +173,8 @@ export default function Event() {
                     type="button"
                     aria-label={
                       isActive
-                        ? `Pelajari lebih lanjut tentang ${event.nama}`
-                        : `Tampilkan ${event.nama}`
+                        ? `${event.nama} - Pelajari lebih lanjut`
+                        : `${event.nama} - Tampilkan event`
                     }
                     aria-current={isActive || undefined}
                     onClick={() => {

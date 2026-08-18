@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Folder from './Folder'
-import { H5 } from '@/components/elements/Typography'
+import { H3 } from '@/components/elements/Typography'
 
 interface FolderCardProps {
   /** Nama/label yang ditampilkan di bagian bawah folder */
@@ -43,7 +43,7 @@ export default function FolderCard({ name, photo, logo, className = '', startCol
 
         {/* Content inside Frosted Glass */}
         <div className="relative z-10 p-6 pt-8 flex items-start h-full pointer-events-none">
-          <H5 className="text-black/50">{name}</H5>
+          <H3 className="text-black/50 text-[18px] md:text-[22px] leading-tight font-semibold">{name}</H3>
         </div>
       </div>
     </Folder>

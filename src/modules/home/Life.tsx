@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react'
 import Image from 'next/image'
-import { H2, H6, B4 } from '@/components/elements/Typography'
+import { H2, H3, B4 } from '@/components/elements/Typography'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -159,7 +159,7 @@ export default function Life() {
                       className="absolute left-1/2 -translate-x-1/2 w-[220px] text-center"
                       style={{ top: labelTop }}
                     >
-                      <H6 className="text-primary-500 whitespace-nowrap">{m.period}</H6>
+                      <H3 className="text-primary-500 whitespace-nowrap text-base font-semibold">{m.period}</H3>
                       <B4 className="text-neutral-800 mt-1">{m.activities}</B4>
                     </div>
 
