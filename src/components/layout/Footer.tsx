@@ -147,8 +147,7 @@ export default function Footer() {
         <div className="max-w-[626px] pt-4 sm:pt-16 lg:absolute lg:left-8 lg:top-[148px] lg:pt-0">
           <H1 className="text-white">Connect with Us</H1>
           <B3 className="mt-4 max-w-[34ch] font-medium text-white sm:max-w-[58ch]">
-            At KMTETI, a spirit of optimism and possibility energizes our mission of discovery and
-            learning.
+            KMTETI senantiasa terbuka untuk menjalin kolaborasi dan bertukar gagasan. Mari bersama melangkah, berinovasi, dan hadirkan dampak positif bagi lingkungan sekitar.
           </B3>
 
           <Link
