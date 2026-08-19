@@ -90,7 +90,7 @@ export default function Life() {
         ref={sectionRef}
         data-navbar-tone="light"
         id="life"
-        className="w-full flex flex-col justify-between min-h-[620px] md:min-h-[720px] bg-[#F7FAFC] pt-[120px] md:pt-[150px] pb-0 relative overflow-hidden rounded-b-[40px] border-b-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]"
+        className="w-full flex flex-col justify-between min-h-[min(620px,100svh)] md:min-h-[min(720px,100svh)] bg-[#F7FAFC] pt-[104px] md:pt-[118px] pb-0 relative overflow-hidden rounded-b-[40px] border-b-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]"
       >
         {/* Soft blue gradient background at bottom */}
         <div className="absolute inset-x-0 bottom-0 h-[280px] bg-gradient-to-t from-[#D6EEF8]/60 to-transparent pointer-events-none z-0" />
@@ -102,14 +102,15 @@ export default function Life() {
               Life at KMTETI
             </H2>
             <B2 className="text-gray-600 md:w-1/2 text-left leading-relaxed">
-              At KMTETI, a spirit of optimism and possibility energizes our mission of discovery and learning. Here you&apos;ll find a place of intellectual expansiveness, wide-ranging perspectives, and freedom to explore new lines of thinking.
+              KMTETI adalah ruang untuk tumbuh, bereksplorasi, dan menciptakan sesuatu bersama. Temukan beragam perspektif, ide-ide baru, dan pengalaman yang mendorongmu untuk terus belajar dan berkembang.
+.
             </B2>
           </div>
         </div>
 
         {/* Envelope Graphic Area - Shorter envelope height, bottom-anchored */}
         <div className="w-full max-w-[1240px] mx-auto px-2 sm:px-6 relative mt-auto mb-0 select-none">
-          <div className="relative w-full max-w-[1160px] mx-auto flex items-end justify-center aspect-[16/7.5]">
+          <div className="relative w-full mx-auto flex items-end justify-center aspect-[16/7.5] max-w-[min(1160px,max(320px,calc((100svh_-_372px)*2.1333)))] md:max-w-[min(1160px,max(320px,calc((100svh_-_351px)*2.1333)))] lg:max-w-[min(1160px,max(320px,calc((100svh_-_292px)*2.1333)))]">
             
             {/* Layer 1: Envelope Back */}
             <div className="absolute inset-0 w-full h-full pointer-events-none z-0 flex items-end justify-center">

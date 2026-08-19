@@ -22,7 +22,8 @@ type NavLink = {
 
 const tentangLinks: NavLink[] = [
   { label: 'Profil KMTETI', href: '/tentang/profil' },
-  { label: 'KMTETI News', href: '/tentang/berita' },
+  { label: 'Berita KMTETI', href: '/tentang/berita' },
+  { label: 'Agenda Bulanan', href: '/kalender' },
 ]
 
 const megaMenuData = {
@@ -265,18 +266,15 @@ export function Navbar() {
                   Informasi
                 </h3>
                 <div className="flex flex-col gap-3.5">
-                  <Link
-                    href="/tentang/profil"
-                    className="text-sm font-bold text-neutral-900 transition-colors hover:text-primary-500"
-                  >
-                    Profil KMTETI
-                  </Link>
-                  <Link
-                    href="/tentang/berita"
-                    className="text-sm font-bold text-neutral-900 transition-colors hover:text-primary-500"
-                  >
-                    Berita KMTETI
-                  </Link>
+                  {tentangLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="text-sm font-bold text-neutral-900 transition-colors hover:text-primary-500"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               </div>
               {/* Divisi */}

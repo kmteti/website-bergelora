@@ -8,6 +8,7 @@ export interface PageHeaderProps {
   imageSrc: string
   iconSrc?: string
   className?: string
+  imageClassName?: string
   leftButton?: React.ReactNode
   rightButton?: React.ReactNode
 }
@@ -18,6 +19,7 @@ export function PageHeader({
   imageSrc,
   iconSrc,
   className,
+  imageClassName,
   leftButton,
   rightButton
 }: PageHeaderProps) {
@@ -32,7 +34,7 @@ export function PageHeader({
         alt={title}
         fill
         priority
-        className="object-cover object-center absolute"
+        className={cn("object-cover object-center absolute", imageClassName)}
       />
       
       <div className="absolute inset-0 bg-black/25 pointer-events-none"></div>

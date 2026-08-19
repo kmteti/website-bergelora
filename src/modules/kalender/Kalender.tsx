@@ -205,7 +205,8 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
       <PageHeader
         title="Agenda Bulanan"
         description="Kegiatan Rutin KMTETI"
-        imageSrc="/images/news/news-header.webp"
+        imageSrc="/images/kalender/Header.jpeg"
+        imageClassName="object-bottom"
       />
 
       {/* 2. Overlap Container with E1F3FA background */}
@@ -278,9 +279,9 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                       data-aos-delay="150"
                       className="photo-stack w-full md:w-[48%] flex items-center justify-center"
                     >
-                      <div className="group relative w-[200px] sm:w-[230px] md:w-[260px] aspect-[4/3] transform-gpu">
+                      <div className="group relative w-[200px] sm:w-[230px] md:w-[180px] lg:w-[260px] aspect-[4/3] transform-gpu">
                         {/* Back Card (Rotates Left & Moves Left on Hover) */}
-                        <div className="absolute inset-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 rotate-[-4deg] transition-transform duration-500 ease-out will-change-transform group-hover:-translate-x-[42%] group-hover:-rotate-[10deg]">
+                        <div className="absolute inset-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 rotate-[-4deg] transition-transform duration-500 ease-out will-change-transform group-hover:-translate-x-[42%] md:group-hover:-translate-x-[34%] group-hover:-rotate-[10deg]">
                           <Image
                             src={data.photos[0]}
                             alt={`${data.month} 1`}
@@ -290,7 +291,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                           />
                         </div>
                         {/* Front Card (Rotates Right & Moves Right on Hover) */}
-                        <div className="absolute inset-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 rotate-[4deg] transition-transform duration-500 ease-out will-change-transform group-hover:translate-x-[42%] group-hover:rotate-[10deg]">
+                        <div className="absolute inset-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 rotate-[4deg] transition-transform duration-500 ease-out will-change-transform group-hover:translate-x-[42%] md:group-hover:translate-x-[34%] group-hover:rotate-[10deg]">
                           <Image
                             src={data.photos[1]}
                             alt={`${data.month} 2`}
