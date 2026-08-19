@@ -201,7 +201,9 @@ export default function Event() {
           </div>
 
           {/* Kartu samping cuma nongol sedikit di layar kecil, jadi dot-nya yang jadi kontrol */}
-          <div className="mt-8 flex items-center justify-center gap-2 md:hidden">
+          {/* -mt-12: naik ke ruang kosong sisa padding track, biar duduk di tengah antara kartu
+              dan batas bawah section (yang ketiban overlap section Life). */}
+          <div className="-mt-12 flex items-center justify-center gap-2 md:hidden">
             {eventData.map((event, i) => (
               <button
                 key={event.slug}

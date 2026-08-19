@@ -85,7 +85,7 @@ export default function Life() {
   )
 
   return (
-    <div className="relative z-10 w-full -mt-[95px] -mb-[40px]">
+    <div className="relative z-30 w-full -mt-[95px] -mb-[40px]">
       <section
         ref={sectionRef}
         data-navbar-tone="light"
@@ -97,19 +97,18 @@ export default function Life() {
 
         <div className="relative z-10 w-full flex flex-col items-center">
           {/* Header Section matching KMTETI News typography & layout */}
-          <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-start gap-8 mb-4 md:mb-6">
+          <div className="container mx-auto px-6 sm:px-8 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-start gap-8 mb-4 md:mb-6">
             <H2 className="text-[#0a4c5a] font-semibold md:w-1/3 text-left">
               Life at KMTETI
             </H2>
             <B2 className="text-gray-600 md:w-1/2 text-left leading-relaxed">
               KMTETI adalah ruang untuk tumbuh, bereksplorasi, dan menciptakan sesuatu bersama. Temukan beragam perspektif, ide-ide baru, dan pengalaman yang mendorongmu untuk terus belajar dan berkembang.
-.
             </B2>
           </div>
         </div>
 
         {/* Envelope Graphic Area - Shorter envelope height, bottom-anchored */}
-        <div className="w-full max-w-[1240px] mx-auto px-2 sm:px-6 relative mt-auto mb-0 select-none">
+        <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-6 relative mt-auto mb-0 select-none">
           <div className="relative w-full mx-auto flex items-end justify-center aspect-[16/7.5] max-w-[min(1160px,max(320px,calc((100svh_-_372px)*2.1333)))] md:max-w-[min(1160px,max(320px,calc((100svh_-_351px)*2.1333)))] lg:max-w-[min(1160px,max(320px,calc((100svh_-_292px)*2.1333)))]">
             
             {/* Layer 1: Envelope Back */}

@@ -196,7 +196,12 @@ export function Navbar() {
       />
 
       <div className="mx-auto flex h-[76px] w-full max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:h-[92px] lg:px-8">
-        <Link href="/" className="relative flex shrink-0 items-center h-[34px] lg:h-[38px] w-[134px] lg:w-[150px]" aria-label="KMTETI FT UGM">
+        <Link
+          href="/"
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="relative flex shrink-0 items-center h-[34px] lg:h-[38px] w-[134px] lg:w-[150px]"
+          aria-label="KMTETI FT UGM"
+        >
           <Image
             src="/logo/kmteti/horizontal-white.svg"
             alt=""
