@@ -13,12 +13,13 @@ import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { cn } from '@/lib/utils'
+import { getMediaUrl } from '@/lib/media'
 
 export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] }) {
   const router = useRouter()
   const [isImageLoaded, setIsImageLoaded] = useState(false)
   const [hasImageError, setHasImageError] = useState(false)
-  const imageUrl = typeof news.image === 'object' && news.image?.url ? news.image.url : '/images/news/placeholder.webp'
+  const imageUrl = getMediaUrl(news.image)
   const formattedDate = news.date ? format(new Date(news.date), 'dd MMMM yyyy', { locale: id }) : '-'
 
   const handleBack = () => {
@@ -34,7 +35,7 @@ export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] 
     slug: item.slug,
     category: item.category,
     date: item.date ? format(new Date(item.date), 'dd MMMM yyyy', { locale: id }) : '-',
-    image: typeof item.image === 'object' && item.image?.url ? item.image.url : '/images/news/placeholder.webp',
+    image: getMediaUrl(item.image),
     content: '',
   }))
 

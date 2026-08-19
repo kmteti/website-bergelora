@@ -46,7 +46,7 @@ export function SpotlightCard({ category, title, date, image, href = '#', isLarg
           setIsLoaded(true)
         }}
         className={cn(
-          "object-cover transition-all duration-700 group-hover:scale-105",
+          "object-cover text-transparent select-none transition-all duration-700 group-hover:scale-105",
           isLoaded ? "opacity-100" : "opacity-0"
         )} 
       />

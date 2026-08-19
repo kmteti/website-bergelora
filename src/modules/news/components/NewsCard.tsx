@@ -72,7 +72,7 @@ export const NewsCard = ({
           </div>
         )}
         <Image 
-          src={hasError ? '/images/placeholder.webp' : image} 
+          src={hasError ? '/images/news/placeholder.webp' : image} 
           alt={title.replace(/<[^>]*>?/gm, '')} 
           fill 
           priority={priority}
@@ -83,7 +83,7 @@ export const NewsCard = ({
             setIsLoaded(true)
           }}
           className={cn(
-            "object-cover transition-all duration-500 group-hover:scale-105",
+            "object-cover text-transparent select-none transition-all duration-500 group-hover:scale-105",
             isLoaded ? "opacity-100" : "opacity-0"
           )} 
         />

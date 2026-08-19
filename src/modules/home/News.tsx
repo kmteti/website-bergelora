@@ -8,6 +8,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { getMediaUrl } from '@/lib/media'
 import React, { Suspense } from 'react'
 
 function NewsCardsSkeleton() {
@@ -41,7 +42,7 @@ async function NewsGrid() {
     category: news.category,
     title: news.title,
     date: news.date ? format(new Date(news.date), 'dd MMMM yyyy', { locale: id }) : '-',
-    image: typeof news.image === 'object' && news.image?.url ? news.image.url : '/images/news/placeholder.webp',
+    image: getMediaUrl(news.image),
     slug: news.slug,
   }))
 
