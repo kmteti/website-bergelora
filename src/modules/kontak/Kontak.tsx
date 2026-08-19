@@ -64,6 +64,7 @@ export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
     proposal: '',
     whatsapp: '',
     email: '',
+    _hp: '', // Honeypot antispam field
   })
 
   // Form input handler
@@ -155,6 +156,7 @@ export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
       proposal: '',
       whatsapp: '',
       email: '',
+      _hp: '',
     })
     setStep(1)
     setStage('form')
@@ -232,6 +234,18 @@ export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
             <div className="w-full bg-white rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] border border-white/60 p-6 md:p-8 flex flex-col">
               {stage === 'form' ? (
                 <form onSubmit={step === 3 ? handleSubmit : (e) => e.preventDefault()}>
+                  {/* Honeypot field (tersembunyi dari user biasa, bot otomatis akan mengisinya) */}
+                  <div className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden opacity-0 pointer-events-none" aria-hidden="true">
+                    <input
+                      type="text"
+                      name="_hp_address"
+                      value={formData._hp}
+                      onChange={(e) => handleInputChange('_hp', e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   {/* Reusable StepIndicator Component */}
                   <StepIndicator
                     currentStep={step}

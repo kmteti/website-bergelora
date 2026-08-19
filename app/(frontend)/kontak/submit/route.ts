@@ -73,13 +73,81 @@ const parseForm = (body: unknown): { data: ParsedForm } | { error: string } => {
   return { data }
 }
 
+// ─── Anti-Spam: In-Memory Sliding Window Rate Limiter ───────────────────────
+// Batasi maksimal 5 submit per 10 menit per IP address untuk mencegah spam bot
+// dan melindungi kuota eksekusi harian Google Apps Script.
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000 // 10 menit
+const MAX_SUBMISSIONS_PER_WINDOW = 5
+
+const ipSubmissionLog = new Map<string, number[]>()
+
+function getClientIp(req: Request): string {
+  const forwardedFor = req.headers.get('x-forwarded-for')
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim()
+  }
+  const realIp = req.headers.get('x-real-ip')
+  if (realIp) {
+    return realIp.trim()
+  }
+  return '127.0.0.1'
+}
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now()
+  const timestamps = ipSubmissionLog.get(ip) || []
+
+  // Ambil hanya riwayat request dalam window aktif (10 menit terakhir)
+  const activeTimestamps = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS)
+
+  if (activeTimestamps.length >= MAX_SUBMISSIONS_PER_WINDOW) {
+    return true // Rate limited!
+  }
+
+  activeTimestamps.push(now)
+  ipSubmissionLog.set(ip, activeTimestamps)
+
+  // Bersihkan IP yang sudah kadaluarsa secara berkala agar memory tetap ramping
+  if (ipSubmissionLog.size > 1000) {
+    for (const [key, list] of ipSubmissionLog.entries()) {
+      const valid = list.filter((t) => now - t < RATE_LIMIT_WINDOW_MS)
+      if (valid.length === 0) {
+        ipSubmissionLog.delete(key)
+      } else {
+        ipSubmissionLog.set(key, valid)
+      }
+    }
+  }
+
+  return false
+}
+
 export const POST = async (req: Request) => {
+  const clientIp = getClientIp(req)
+
+  // 1. Cek Rate Limit
+  if (checkRateLimit(clientIp)) {
+    return Response.json(
+      { ok: false, error: 'Terlalu banyak permintaan pengajuan kontak. Silakan tunggu beberapa saat lagi.' },
+      { status: 429 },
+    )
+  }
+
   let body: unknown
 
   try {
     body = await req.json()
   } catch {
     return Response.json({ ok: false, error: 'JSON tidak valid' }, { status: 400 })
+  }
+
+  // 2. Cek Honeypot (Jika bot mengisi field tak kasat mata _hp, buang diam-diam)
+  if (typeof body === 'object' && body !== null) {
+    const raw = body as Record<string, unknown>
+    if (typeof raw._hp === 'string' && raw._hp.trim() !== '') {
+      // Return sukses palsu agar bot mengira berhasil tanpa mengeksekusi database/sheet
+      return Response.json({ ok: true, id: -1, sheetSynced: false })
+    }
   }
 
   const parsed = parseForm(body)
