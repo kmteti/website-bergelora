@@ -169,10 +169,10 @@ export function Navbar() {
     <nav
       data-navbar-root
       className={cn(
-        'fixed inset-x-0 top-0 z-[99] isolate transition-[transform,opacity] duration-300 ease-in-out',
+        'fixed inset-x-0 top-0 z-[99] isolate will-change-transform transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
         isDarkTone ? 'text-white' : 'text-neutral-950',
         isMobileMenuOpen && 'bg-white',
-        isHidden && !isMobileMenuOpen && '-translate-y-full opacity-0 pointer-events-none',
+        isHidden && !isMobileMenuOpen ? '-translate-y-full pointer-events-none' : 'translate-y-0',
       )}
     >
       {/* Dark Backdrop Layer */}
