@@ -17,152 +17,140 @@ if (typeof window !== 'undefined') {
 interface MonthlyAgenda {
   month: string
   items: string[]
-  photos: [string, string]
 }
+
+const IMGS = [
+  '/images/home/life/envelope-image/1.webp',
+  '/images/home/life/envelope-image/2.webp',
+  '/images/home/life/envelope-image/3.webp',
+]
+const pics = (i: number) => [IMGS[i % 3], IMGS[(i + 1) % 3], IMGS[(i + 2) % 3]]
 
 const staticAgendaData: MonthlyAgenda[] = [
   {
     month: 'Maret',
     items: [
-      'WS – Pelatihan Genap (mulai 1 Mar, bar-nya memanjang sampai Mei)',
-      'AD – Aspirasi Umum & Aspirasi Akademis (1 Mar)',
-      'IN – Kalender Bulanan (1 Mar)',
-      'EP – EP CLASS (mulai 6 Mar)',
-      'PI – Pelatihan Kesekretariatan & Kebendaharaan (14-15 Mar)',
-      'AD – Info Lomba dan Beasiswa (14 Mar)',
-      'MK – Porseniteti (mulai 23 Mar, durasi 10 hari + lanjut ke awal April)',
+      'Pelatihan Kesekretariatan dan Kebendaharaan',
+      'Sertijab',
+      'KMTETI Berbagi',
+      'Porseniteti',
+      'Pelatihan Genap',
+      'EP CLASS',
     ],
-    photos: ['/images/home/life/envelope-image/1.webp', '/images/home/life/envelope-image/2.webp'],
   },
   {
     month: 'April',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Apr)',
-      'AD – Bank Materi (1 Apr)',
-      'IN – Kalender Bulanan (1 Apr)',
-      'AD – Info Lomba dan Beasiswa (14 Apr)',
-      'IN – Foto Kabinet & Rilis Pengurus (22 Apr)',
+      'Porseniteti',
+      'Bank Materi',
+      'Pelatihan Genap',
+      'EP CLASS',
+      'Foto Kabinet & Rilis Pengurus',
+      'Makrab',
+      'Masterclass x PST',
     ],
-    photos: ['/images/home/life/envelope-image/2.webp', '/images/home/life/envelope-image/3.webp'],
   },
   {
     month: 'Mei',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Mei)',
-      'IN – Kalender Bulanan (1 Mei)',
-      'EP – Kaftet (4 Mei)',
-      'EP – Jaket KMTETI – open PO (7 Mei)',
-      'EP – EP Merch – open PO (7 Mei)',
-      'IN – Elektropos (7 Mei)',
-      'HM – Konten KMTETI (11 Mei)',
-      'AD – Info Lomba dan Beasiswa (14 Mei)',
-      'IN – Video Profil (17 & 28 Mei — target jadi sebelum 30 Mei)',
-      'SM – KMTETI Beramal (22 Mei)',
-      'IN – Voltanews (menyesuaikan jadwal wisuda Mei)',
+      'Pelatihan Genap',
+      'KMTETI Beramal',
+      'EP CLASS',
+      'Jaket KMTETI (Open PO Batch 1)',
+      'Elektropos',
+      'Video Profil',
     ],
-    photos: ['/images/home/life/envelope-image/3.webp', '/images/home/life/envelope-image/1.webp'],
   },
   {
     month: 'Juni',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Jun)',
-      'AD – Bank Materi (1 Jun)',
-      'WS – Bootcamp (mulai 1 Jun)',
-      'HM – Konten KMTETI (1 Jun)',
-      'EP – Kaftet (1 Jun)',
-      'AD – Sosialisasi Kerja Praktik (5 Jun)',
-      'IN – Kalender Bulanan (12 Jun)',
-      'AD – Info Lomba dan Beasiswa (14 Jun)',
-      'SM – KMTETI Mengabdi (20 Jun)',
+      'Bank Materi',
+      'Sosialisasi Kerja Praktik',
+      'Bootcamp',
+      'ETT',
+      'Technocorner',
     ],
-    photos: ['/images/home/life/envelope-image/1.webp', '/images/home/life/envelope-image/2.webp'],
   },
   {
     month: 'Juli',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Jul)',
-      'IN – Kalender Bulanan (1 Jul)',
-      'AD – Info Lomba dan Beasiswa (14 Jul)',
-      'AD – Tracer Study Alumni DTETI (21 Jul)',
-      'EP – Kaftet (22 Jul)',
-      'AD – Forum Warga TETI (28 Jul)',
-      'IN – TETI-on-the-Wall (28 Jul)',
+      'Forum Warga TETI',
+      'Tracer Study Alumni DTETI',
+      'Bootcamp',
+      'KMTETI Mengabdi',
+      'Latihan Rutin',
+      'TETI-on-the-Wall',
     ],
-    photos: ['/images/home/life/envelope-image/2.webp', '/images/home/life/envelope-image/3.webp'],
   },
   {
     month: 'Agustus',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Agu)',
-      'IN – Kalender Bulanan (1 Agu)',
-      'EP – Kaftet (1 Agu)',
-      'IN – Elektropos (7 Agu)',
-      'EP – Bank Sponsor (10 Agu)',
-      'AD – Info Lomba dan Beasiswa (14 Agu)',
-      'WS – Pelatihan Ganjil (17 Agu)',
-      'HM – Konten KMTETI (17 Agu)',
-      'HM – Public Speaking Training (24 Agu)',
-      'IN – Voltanews (menyesuaikan wisuda Agustus)',
+      'Pelatihan Ganjil',
+      'TLS',
+      'Elektropos',
+      'Voltanews (waktu tergantung wisuda)',
     ],
-    photos: ['/images/home/life/envelope-image/3.webp', '/images/home/life/envelope-image/1.webp'],
   },
   {
     month: 'September',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Sep)',
-      'IN – Kalender Bulanan (1 Sep)',
-      'WS – Pelatihan Ganjil (1 Sep)',
-      'EP – Kaftet (1 Sep)',
-      'HM – Kunjungan (5 & 19 Sep, @2 hari)',
-      'EP – EP Day (11 Sep, collab Kewirausahaan Farmasi)',
-      'HM – Konten KMTETI (14 Sep)',
-      'WS – TETI Programming Week (21 Sep)',
-      'IN – MelDEA (24 Sep, masih tentatif)',
+      'Pelatihan Ganjil',
+      'TETI Programming Week',
+      'Public Speaking Training',
+      'Jaket KMTETI dan EP Merch (Open PO Batch 2)',
+      'EP Day',
+      'MeIDEA',
     ],
-    photos: ['/images/home/life/envelope-image/1.webp', '/images/home/life/envelope-image/2.webp'],
   },
   {
     month: 'Oktober',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Okt)',
-      'IN – Kalender Bulanan (1 Okt)',
-      'HM – Konten KMTETI (12 Okt)',
-      'AD – Info Lomba dan Beasiswa (14 Okt)',
-      'AD – Kunjungan Industri (25 Okt, 3–4 hari)',
+      'Kunjungan Industri',
+      'Pelatihan Ganjil',
+      'TETI Programming Week',
+      'Jaket KMTETI dan EP Merch',
     ],
-    photos: ['/images/home/life/envelope-image/2.webp', '/images/home/life/envelope-image/3.webp'],
   },
   {
     month: 'November',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Nov)',
-      'IN – Kalender Bulanan (1 Nov)',
-      'IN – Elektropos (7 Nov)',
-      'AD – Info Lomba dan Beasiswa (14 Nov)',
-      'HM – Konten KMTETI (16 Nov)',
-      'HM – OPH & Capstone (21 Nov, 2 hari)',
-      'IN – Voltamagz (21 Nov)',
-      'IN – Voltanews (menyesuaikan wisuda November)',
+      'Pelatihan Ganjil',
+      'TETI Programming Week',
+      'OPH & Capstone',
+      'BBB',
+      'Voltamagz',
+      'Elektropos',
     ],
-    photos: ['/images/home/life/envelope-image/3.webp', '/images/home/life/envelope-image/1.webp'],
   },
   {
     month: 'Desember',
     items: [
-      'AD – Aspirasi Umum & Akademis (1 Des)',
-      'HM – Konten KMTETI (4 Des)',
-      'EP – Jaket KMTETI – pembagian (10 Des)',
-      'EP – EP Merch – bundling dengan jaket (10 Des)',
-      'IN – After Movie (12 Des)',
-      'AD – Info Lomba dan Beasiswa (14 Des)',
+      'Jaket KMTETI (Pembagian jaket)',
+      'EP Merch',
+      'After Movie',
     ],
-    photos: ['/images/home/life/envelope-image/1.webp', '/images/home/life/envelope-image/2.webp'],
+  },
+  {
+    month: 'Tentatif / Sepanjang Tahun',
+    items: [
+      'Info Lomba, Beasiswa dan Magang',
+      'Aspirasi Umum dan Akademis',
+      'Konten KMTETI',
+      'Kaftet',
+      'Kalender Bulanan',
+      'Kunjungan',
+      'Capstone Resource Sharing Program',
+      'Media Adkesma',
+      'El Nino (tanggal menyesuaikan TLS)',
+      'Bank Sponsor',
+    ],
   },
 ]
 
 export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const pathRef = useRef<SVGPathElement>(null)
+  const [timeline, setTimeline] = React.useState({ d: '', w: 0, h: 0 })
 
   const agendaData = React.useMemo(() => {
     if (initialEvents && initialEvents.length > 0) {
@@ -171,13 +159,48 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
     return staticAgendaData
   }, [initialEvents])
 
+  // Path digenerate dari posisi card asli: mulai di titik tengah card bulan pertama, berakhir di
+  // titik tengah card terakhir, lewat titik tengah tiap .event-card. Diukur ulang tiap layout
+  // berubah (font/gambar selesai load, resize) lewat ResizeObserver.
+  React.useEffect(() => {
+    const box = containerRef.current
+    if (!box) return
+
+    const measure = () => {
+      const cards = Array.from(box.querySelectorAll<HTMLElement>('.event-card'))
+      if (cards.length < 2) return
+      const base = box.getBoundingClientRect()
+      const pts = cards.map((card) => {
+        const r = card.getBoundingClientRect()
+        return {
+          x: Math.round(r.left - base.left + r.width / 2),
+          y: Math.round(r.top - base.top + r.height / 2),
+        }
+      })
+      // Cubic bezier dengan control point vertikal di tengah dua titik → liukan halus.
+      const d = pts.slice(1).reduce((acc, p, i) => {
+        const prev = pts[i]
+        const mid = Math.round((prev.y + p.y) / 2)
+        return `${acc} C ${prev.x} ${mid}, ${p.x} ${mid}, ${p.x} ${p.y}`
+      }, `M ${pts[0].x} ${pts[0].y}`)
+      setTimeline((prev) =>
+        prev.d === d ? prev : { d, w: Math.round(base.width), h: Math.round(base.height) },
+      )
+    }
+
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(box)
+    box.querySelectorAll('.event-card').forEach((card) => ro.observe(card))
+    return () => ro.disconnect()
+  }, [agendaData])
+
   useGSAP(
     () => {
-      if (!containerRef.current) return
-
-      // SVG Wavy Path Scroll Animation (Progressive Line Draw on Scroll)
+      // Progressive line draw on scroll — panjangnya diambil ulang tiap path berubah.
       const path = pathRef.current
-      if (path) {
+      const cards = containerRef.current?.querySelectorAll<HTMLElement>('.event-card')
+      if (path && timeline.d && cards?.length) {
         const pathLength = path.getTotalLength()
         gsap.set(path, {
           strokeDasharray: pathLength,
@@ -188,15 +211,21 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
           strokeDashoffset: 0,
           ease: 'none',
           scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 70%',
-            end: 'bottom 85%',
-            scrub: 0.5,
+            // Mulai ngisi setelah card bulan pertama kelihatan utuh, penuh pas card terakhir
+            // kelihatan utuh. ponytail: ini rentang terpanjang yang muat di halaman (±4,5 dash
+            // per 1x scroll); kalau mau lebih pelan, section-nya harus di-pin dulu.
+            trigger: cards[0],
+            start: 'bottom bottom',
+            endTrigger: cards[cards.length - 1],
+            end: 'bottom bottom',
+            scrub: 2,
+            invalidateOnRefresh: true,
           },
         })
+        ScrollTrigger.refresh()
       }
     },
-    { scope: containerRef },
+    { scope: containerRef, dependencies: [timeline.d], revertOnUpdate: true },
   )
 
   return (
@@ -219,25 +248,34 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
         <div className="relative z-10 w-full">
           <DefaultLayout className="pt-8 md:pt-12 pb-24 md:pb-36">
-            <div ref={containerRef} className="relative w-full max-w-5xl mx-auto flex flex-col gap-16 md:gap-24 overflow-hidden">
+            <p className="max-w-5xl mx-auto mb-10 md:mb-14 rounded-2xl bg-white/70 border border-white px-5 py-4 font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed">
+              <span className="font-semibold text-[#0D627C]">Disclaimer:</span> timeline program
+              kerja di halaman ini bersifat perencanaan dan bisa berbeda dengan pelaksanaan di
+              lapangan.
+            </p>
+            <div ref={containerRef} className="relative w-full max-w-5xl mx-auto flex flex-col gap-16 md:gap-24">
               
-              {/* Vertical Wavy Path Line for Desktop */}
+              {/* Vertical Wavy Path Line for Desktop — d-nya digenerate dari posisi card (lihat effect di atas) */}
               <div className="hidden md:block absolute inset-0 pointer-events-none z-0">
-                <svg className="w-full h-full" viewBox="0 0 800 4000" fill="none" preserveAspectRatio="none">
+                <svg
+                  className="w-full h-full"
+                  viewBox={`0 0 ${timeline.w} ${timeline.h}`}
+                  fill="none"
+                >
                   {/* Static background path guide */}
                   <path
-                    d="M 400 0 C 250 200 250 400 400 600 C 550 800 550 1000 400 1200 C 250 1400 250 1600 400 1800 C 550 2000 550 2200 400 2400 C 250 2600 250 2800 400 3000 C 550 3200 550 3400 400 3600 C 250 3800 250 3900 400 4000"
+                    d={timeline.d}
                     stroke="#c5deea"
-                    strokeWidth="6"
-                    strokeDasharray="14 16"
+                    strokeWidth="8"
+                    strokeDasharray="18 20"
                     strokeLinecap="round"
                   />
                   {/* Animated path revealing as user scrolls */}
                   <path
                     ref={pathRef}
-                    d="M 400 0 C 250 200 250 400 400 600 C 550 800 550 1000 400 1200 C 250 1400 250 1600 400 1800 C 550 2000 550 2200 400 2400 C 250 2600 250 2800 400 3000 C 550 3200 550 3400 400 3600 C 250 3800 250 3900 400 4000"
+                    d={timeline.d}
                     stroke="#0D627C"
-                    strokeWidth="6"
+                    strokeWidth="8"
                     strokeLinecap="round"
                   />
                 </svg>
@@ -245,6 +283,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
               {agendaData.map((data, idx) => {
                 const isEven = idx % 2 === 0 // Even index: Card on left, photo on right. Odd index: photo on left, Card on right.
+                const photos = pics(idx)
 
                 return (
                   <div
@@ -257,7 +296,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                     <div
                       data-aos="fade-up"
                       data-aos-duration="700"
-                      className="event-card w-full md:w-[48%] bg-white/95 rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_14px_35px_rgba(0,0,0,0.05)] border border-white transition-all duration-300 hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)]"
+                      className="event-card w-full md:w-[48%] bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_14px_35px_rgba(0,0,0,0.05)] border border-white transition-all duration-300 hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)]"
                     >
                       <H3 className="text-[#0D627C] font-heading font-semibold text-2xl sm:text-3xl mb-4">
                         {data.month}
@@ -279,22 +318,34 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                       data-aos-delay="150"
                       className="photo-stack w-full md:w-[48%] flex items-center justify-center"
                     >
-                      <div className="group relative w-[200px] sm:w-[230px] md:w-[180px] lg:w-[260px] aspect-[4/3] transform-gpu">
-                        {/* Back Card (Rotates Left & Moves Left on Hover) */}
-                        <div className="absolute inset-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 rotate-[-4deg] transition-transform duration-500 ease-out will-change-transform group-hover:-translate-x-[42%] md:group-hover:-translate-x-[34%] group-hover:-rotate-[10deg]">
+                      {/* Figma node 1003:3071 — default: 3 kartu menyebar; hover: menyatu jadi satu tumpukan.
+                          Easing overshoot (cubic-bezier 1.56) = efek bouncy. */}
+                      <div className="group relative w-[200px] sm:w-[230px] md:w-[180px] lg:w-[260px] aspect-[207.53/173.87] transform-gpu">
+                        {/* Kartu kanan-atas (paling bawah) */}
+                        <div className="absolute w-[91.1%] h-[90.9%] left-[2.6%] top-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.2)] overflow-hidden bg-gray-100 rotate-[5deg] transition-transform duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform group-hover:translate-x-[45%] group-hover:-translate-y-[58%] group-hover:rotate-[4deg]">
                           <Image
-                            src={data.photos[0]}
+                            src={photos[0]}
                             alt={`${data.month} 1`}
                             fill
                             className="object-cover"
                             sizes="260px"
                           />
                         </div>
-                        {/* Front Card (Rotates Right & Moves Right on Hover) */}
-                        <div className="absolute inset-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 rotate-[4deg] transition-transform duration-500 ease-out will-change-transform group-hover:translate-x-[42%] md:group-hover:translate-x-[34%] group-hover:rotate-[10deg]">
+                        {/* Kartu kiri-atas */}
+                        <div className="absolute w-[91.1%] h-[90.9%] left-[-5.3%] top-[2.9%] rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.2)] overflow-hidden bg-gray-100 -rotate-[5deg] transition-transform duration-[600ms] delay-[40ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform group-hover:-translate-x-[45%] group-hover:-translate-y-[46%] group-hover:-rotate-[4deg]">
                           <Image
-                            src={data.photos[1]}
+                            src={photos[1]}
                             alt={`${data.month} 2`}
+                            fill
+                            className="object-cover"
+                            sizes="260px"
+                          />
+                        </div>
+                        {/* Kartu bawah-tengah (paling atas) */}
+                        <div className="absolute w-[91.1%] h-[90.9%] left-[1.9%] top-[4.6%] rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.2)] overflow-hidden bg-gray-100 transition-transform duration-[600ms] delay-[80ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform group-hover:translate-x-[5%] group-hover:translate-y-[20%] group-hover:rotate-[1deg]">
+                          <Image
+                            src={photos[2]}
+                            alt={`${data.month} 3`}
                             fill
                             className="object-cover"
                             sizes="260px"
