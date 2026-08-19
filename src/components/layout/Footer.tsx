@@ -77,11 +77,11 @@ const LinkedinIcon = (props: React.ComponentProps<'svg'>) => (
 )
 
 const socialLinks = [
-  { label: 'YouTube', href: 'https://youtube.com', icon: YoutubeIcon },
-  { label: 'TikTok', href: 'https://tiktok.com', icon: TiktokIcon },
-  { label: 'Instagram', href: 'https://instagram.com', icon: InstagramIcon },
-  { label: 'X', href: 'https://twitter.com', icon: XIcon },
-  { label: 'LinkedIn', href: 'https://linkedin.com', icon: LinkedinIcon },
+  { label: 'YouTube', href: 'https://www.youtube.com/@kmteti', icon: YoutubeIcon },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@kmteti', icon: TiktokIcon },
+  { label: 'Instagram', href: 'https://www.instagram.com/kmteti/', icon: InstagramIcon },
+  { label: 'X', href: 'https://x.com/KMTETI', icon: XIcon },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/kmteti-ft-ugm', icon: LinkedinIcon },
 ]
 
 function FooterColumn({ title, links, value }: { title: string; links: { label: string; href: string }[]; value: string }) {
