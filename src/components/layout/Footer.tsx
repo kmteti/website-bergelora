@@ -224,47 +224,64 @@ export default function Footer() {
           </div>
 
           <div className="mt-9 border-t border-white/35 pt-6 sm:pt-7 lg:mt-8">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <B4 className="font-medium text-white ">KMTETI 2026 - All Rights Reserved</B4>
-              <B5 className="max-w-2xl font-semibold text-white/92 md:text-right">
-                Dikembangkan oleh{' '}
-                <a
-                  href="https://www.linkedin.com/in/khoirunas/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
-                >
-                  Muhammad Khoirunas
-                </a>
-                ,{' '}
-                <a
-                  href="https://www.linkedin.com/in/aulianurfajri/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
-                >
-                  Aulia Nur Fajri Tri Anggoro
-                </a>
-                ,{' '}
-                <a
-                  href="https://www.linkedin.com/in/alfianadicandra/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
-                >
-                  Alfian Adicandra
-                </a>
-                ,{' '}
-                <a
-                  href="https://www.linkedin.com/in/farrel-ag/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
-                >
-                  Muhammad Farrel A.G.
-                </a>
-                , dan Divisi Infokom
-              </B5>
+            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col gap-1 text-left">
+                <B5 className="max-w-3xl font-medium text-white/90 leading-relaxed">
+                  Dikembangkan oleh{' '}
+                  <a
+                    href="https://www.linkedin.com/in/khoirunas/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Muhammad Khoirunas
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://www.linkedin.com/in/aulianurfajri/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Aulia Nur Fajri Tri Anggoro
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://www.linkedin.com/in/alfianadicandra/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Alfian Adicandra
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://www.linkedin.com/in/farrel-ag/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Muhammad Farrel A.G.
+                  </a>
+                  , dan Divisi Infokom.
+                </B5>
+                <span className="text-[12px] font-normal text-white/60 leading-normal">
+                  Dimohon untuk tidak mengubah desain website tanpa seizin tim pengembang.
+                </span>
+              </div>
+
+              <Link
+                href="https://forms.gle/p2yM4uWVCiDiQmM69"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: 'black', size: 'default' }),
+                  'shrink-0 self-start md:self-center gap-2',
+                )}
+              >
+                <span>Nilai Website</span>
+                <ArrowUpRight className="size-4" />
+              </Link>
             </div>
           </div>
         </div>
