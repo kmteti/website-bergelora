@@ -24,39 +24,62 @@ export default function Life() {
     () => {
       if (!sectionRef.current) return
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          pinSpacing: true,
-          scrub: 1,
-          start: 'bottom bottom',
-          end: '+=100%',
-          invalidateOnRefresh: true,
-        },
+      const mm = gsap.matchMedia()
+
+      mm.add('(min-width: 768px)', () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            pin: true,
+            pinSpacing: true,
+            scrub: 1,
+            start: 'bottom bottom',
+            end: '+=100%',
+            invalidateOnRefresh: true,
+          },
+        })
+
+        tl.fromTo(
+          photo1Ref.current,
+          { y: 150, rotate: -6 },
+          { y: -45, rotate: -8, ease: 'none' },
+          0,
+        )
+
+        tl.fromTo(
+          photo2Ref.current,
+          { y: 150, rotate: 0 },
+          { y: -75, rotate: 0, ease: 'none' },
+          0,
+        )
+
+        tl.fromTo(
+          photo3Ref.current,
+          { y: 150, rotate: 6 },
+          { y: -45, rotate: 8, ease: 'none' },
+          0,
+        )
       })
 
-      // Perfect symmetrical vertical motion for all 3 photos
-      tl.fromTo(
-        photo1Ref.current,
-        { y: 150, rotate: -6 },
-        { y: -45, rotate: -8, ease: 'none' },
-        0,
-      )
+      mm.add('(max-width: 767px)', () => {
+        gsap.fromTo(
+          photo1Ref.current,
+          { y: 60, rotate: -6 },
+          { y: -20, rotate: -8, scrollTrigger: { trigger: sectionRef.current, start: 'top 70%', end: 'bottom 30%', scrub: 1 } },
+        )
 
-      tl.fromTo(
-        photo2Ref.current,
-        { y: 150, rotate: 0 },
-        { y: -75, rotate: 0, ease: 'none' },
-        0,
-      )
+        gsap.fromTo(
+          photo2Ref.current,
+          { y: 60, rotate: 0 },
+          { y: -35, rotate: 0, scrollTrigger: { trigger: sectionRef.current, start: 'top 70%', end: 'bottom 30%', scrub: 1 } },
+        )
 
-      tl.fromTo(
-        photo3Ref.current,
-        { y: 150, rotate: 6 },
-        { y: -45, rotate: 8, ease: 'none' },
-        0,
-      )
+        gsap.fromTo(
+          photo3Ref.current,
+          { y: 60, rotate: 6 },
+          { y: -20, rotate: 8, scrollTrigger: { trigger: sectionRef.current, start: 'top 70%', end: 'bottom 30%', scrub: 1 } },
+        )
+      })
     },
     { scope: sectionRef },
   )
@@ -95,6 +118,7 @@ export default function Life() {
                 alt="Envelope Back"
                 width={1160}
                 height={540}
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 85vw, 1160px"
                 className="w-full h-full object-contain object-bottom block"
                 priority
               />
@@ -152,6 +176,7 @@ export default function Life() {
                 alt="Envelope Front"
                 width={1160}
                 height={540}
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 85vw, 1160px"
                 className="w-full h-full object-contain object-bottom block"
                 priority
               />

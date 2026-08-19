@@ -99,16 +99,16 @@ export default function Hero() {
     >
       <style>{`
         @keyframes slide-progress {
-          from { width: 0%; }
-          to { width: 100%; }
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
         }
       `}</style>
 
       {/* Progress Bar di paling atas */}
-      <div className="absolute top-0 inset-x-0 h-[2px] bg-black/20 z-50">
+      <div className="absolute top-0 inset-x-0 h-[2px] bg-black/20 z-50 overflow-hidden">
         <div
           key={isThisSlide}
-          className="h-full bg-white/80"
+          className="h-full w-full bg-white/80 origin-left transform-gpu"
           style={{ animation: `slide-progress ${AUTOPLAY_DELAY_MS}ms linear forwards` }}
         />
       </div>
@@ -123,9 +123,10 @@ export default function Hero() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
-                quality={index === 0 ? 80 : 70}
+                fetchPriority={index === 0 ? 'high' : 'auto'}
+                quality={index === 0 ? 70 : 55}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                sizes="100vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
                 className="object-cover object-center absolute"
               />
 
@@ -171,7 +172,7 @@ export default function Hero() {
                     className="h-6 flex items-center justify-center px-0.5 cursor-pointer"
                     aria-label={`Go to ${slide.alt}`}
                   >
-                    <span className="w-12 h-5 rounded-full bg-white shadow-sm transition-all" />
+                    <span className="w-12 h-5 rounded-full bg-white shadow-sm transition-transform duration-300" />
                   </button>
                 )
               } else {
@@ -182,7 +183,7 @@ export default function Hero() {
                     className="w-6 h-6 flex items-center justify-center cursor-pointer"
                     aria-label={`Go to ${slide.alt}`}
                   >
-                    <span className="w-5 h-5 rounded-full bg-white/50 hover:bg-white/75 transition-all" />
+                    <span className="w-5 h-5 rounded-full bg-white/50 hover:bg-white/75 transition-opacity duration-300" />
                   </button>
                 )
               }

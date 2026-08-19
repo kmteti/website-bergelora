@@ -91,7 +91,7 @@ export const NewsCard = ({
       <div className="flex flex-col flex-grow p-5 md:p-6 text-left">
         <span className="mb-3 text-xs md:text-sm font-semibold text-primary-600">{category}</span>
         <H3 className="mb-6 text-[#2D2D2D] transition-colors group-hover:text-primary line-clamp-3 text-[18px] leading-[24px] font-semibold">{renderTitle()}</H3>
-        <span className="mt-auto text-xs md:text-sm text-neutral-500">{date}</span>
+        <span className="mt-auto text-xs md:text-sm text-neutral-600 font-medium">{date}</span>
       </div>
     </Link>
   )

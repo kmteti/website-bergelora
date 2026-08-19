@@ -168,7 +168,7 @@ export function Navbar() {
     <nav
       data-navbar-root
       className={cn(
-        'fixed inset-x-0 top-0 z-[99] isolate transition-all duration-500 ease-in-out',
+        'fixed inset-x-0 top-0 z-[99] isolate transition-[transform,opacity] duration-300 ease-in-out',
         isDarkTone ? 'text-white' : 'text-neutral-950',
         isMobileMenuOpen && 'bg-white',
         isHidden && !isMobileMenuOpen && '-translate-y-full opacity-0 pointer-events-none',
@@ -364,7 +364,7 @@ export function Navbar() {
           type="button"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           className={cn(
-            'inline-flex size-11 items-center justify-center rounded-lg border shadow-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-4 lg:hidden',
+            'inline-flex size-11 items-center justify-center rounded-lg border shadow-sm transition-opacity focus-visible:outline-3 focus-visible:outline-offset-4 lg:hidden',
             isDarkTone
               ? 'border-white/15 bg-black/15 text-white backdrop-blur-md hover:bg-black/25 focus-visible:outline-white/50'
               : 'border-neutral-200 bg-white/80 text-neutral-950 backdrop-blur-md hover:bg-white focus-visible:outline-primary-100',

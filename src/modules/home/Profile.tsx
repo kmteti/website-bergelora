@@ -19,25 +19,45 @@ export default function Profile() {
   const overlayRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pinTargetRef.current,
-        start: 'bottom bottom',
-        end: '+=50%',
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-        anticipatePin: 1,
-        refreshPriority: 10, // Higher priority = calculated first, before Divisi's pin
-        invalidateOnRefresh: true,
-      },
+    const mm = gsap.matchMedia()
+
+    mm.add('(min-width: 768px)', () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinTargetRef.current,
+          start: 'bottom bottom',
+          end: '+=50%',
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+          refreshPriority: 10, // Higher priority = calculated first, before Divisi's pin
+          invalidateOnRefresh: true,
+        },
+      })
+
+      tl.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1 }
+      )
     })
 
-    tl.fromTo(
-      overlayRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 1 }
-    )
+    mm.add('(max-width: 767px)', () => {
+      gsap.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          scrollTrigger: {
+            trigger: pinTargetRef.current,
+            start: 'top 60%',
+            end: 'center 40%',
+            scrub: 1,
+          },
+        }
+      )
+    })
   }, { scope: wrapperRef })
 
   return (
@@ -83,8 +103,8 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI Back" 
                   fill 
-                  quality={75}
-                  sizes="(max-width: 768px) 92vw, (max-width: 1200px) 70vw, 900px"
+                  quality={70}
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
                   className="object-cover object-[20%_center] brightness-90"
                 />
               </div>
@@ -95,8 +115,8 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 
                   fill 
-                  quality={75}
-                  sizes="(max-width: 768px) 92vw, (max-width: 1200px) 70vw, 900px"
+                  quality={70}
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
                   className="object-cover"
                 />
                 
