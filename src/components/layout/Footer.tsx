@@ -224,11 +224,11 @@ export default function Footer() {
           </div>
 
           <div className="mt-9 border-t border-white/35 pt-6 sm:pt-7 lg:mt-8">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
               <B4 className="font-medium text-white shrink-0">KMTETI 2026 - All Rights Reserved</B4>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
-                <B5 className="max-w-2xl font-medium text-white/90 leading-relaxed text-left sm:text-right">
+                <B5 className="max-w-[440px] font-medium text-white/90 leading-relaxed text-left sm:text-right">
                   Dikembangkan oleh{' '}
                   <a
                     href="https://www.linkedin.com/in/khoirunas/"
