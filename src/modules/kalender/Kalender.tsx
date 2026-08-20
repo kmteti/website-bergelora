@@ -195,14 +195,12 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
     return () => ro.disconnect()
   }, [agendaData])
 
-  // Fade-up masuk viewport. Dulu ini pakai AOS, tapi opsi `disable: 'mobile'` bikin AOS
-  // removeAttribute('data-aos') di DOM yang masih dipegang React → hydration mismatch, dan
-  // elemennya nyangkut opacity:0 permanen. GSAP nggak nyentuh atribut, jadi aman.
-  // gsap.set jalan di useLayoutEffect (sebelum paint), jadi nggak ada kedip.
+  // 1. GSAP Scroll Animations
   useGSAP(
     () => {
       const mm = gsap.matchMedia()
-      // Dimatikan di mobile, sama seperti setelan AOS sebelumnya.
+
+      // Desktop: Fade-up animation
       mm.add('(min-width: 768px)', () => {
         const els = gsap.utils.toArray<HTMLElement>('.event-card, .photo-stack')
         gsap.set(els, { opacity: 0, y: 24 })
@@ -217,6 +215,23 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
           })
         })
       })
+
+      // Mobile: Scroll-Triggered Auto Open Photo Stack saat masuk layar HP
+      mm.add('(max-width: 767px)', () => {
+        const items = gsap.utils.toArray<HTMLElement>('.month-timeline-item')
+        items.forEach((item) => {
+          const photoStack = item.querySelector<HTMLElement>('.photo-stack-container')
+          if (!photoStack) return
+
+          ScrollTrigger.create({
+            trigger: item,
+            start: 'top 75%',
+            end: 'bottom 20%',
+            toggleClass: { targets: photoStack, className: 'is-open' },
+          })
+        })
+      })
+
       return () => mm.revert()
     },
     { scope: containerRef },
@@ -224,7 +239,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
   useGSAP(
     () => {
-      // Progressive line draw on scroll — panjangnya diambil ulang tiap path berubah.
+      // Desktop: Progressive wavy line draw on scroll
       const path = pathRef.current
       const cards = containerRef.current?.querySelectorAll<HTMLElement>('.event-card')
       if (path && timeline.d && cards?.length) {
@@ -238,9 +253,6 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
           strokeDashoffset: 0,
           ease: 'none',
           scrollTrigger: {
-            // Mulai ngisi setelah card bulan pertama kelihatan utuh, penuh pas card terakhir
-            // kelihatan utuh. ponytail: ini rentang terpanjang yang muat di halaman (±4,5 dash
-            // per 1x scroll); kalau mau lebih pelan, section-nya harus di-pin dulu.
             trigger: cards[0],
             start: 'bottom bottom',
             endTrigger: cards[cards.length - 1],
@@ -257,6 +269,21 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
   return (
     <main className="w-full relative min-h-screen bg-white">
+      {/* Inline styles for mobile horizontal card spread when in view */}
+      <style jsx global>{`
+        @media (max-width: 767px) {
+          .photo-stack-container.is-open .photo-layer-left {
+            transform: translate(-34%, -2%) rotate(-9deg) scale(0.96) !important;
+          }
+          .photo-stack-container.is-open .photo-layer-center {
+            transform: translate(0%, -6%) rotate(0deg) scale(1.02) !important;
+          }
+          .photo-stack-container.is-open .photo-layer-right {
+            transform: translate(34%, -2%) rotate(9deg) scale(0.96) !important;
+          }
+        }
+      `}</style>
+
       {/* 1. Page Header matching News header image */}
       <PageHeader
         title="Agenda Bulanan"
@@ -280,8 +307,14 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
               kerja di halaman ini bersifat perencanaan dan bisa berbeda dengan pelaksanaan di
               lapangan.
             </p>
-            <div ref={containerRef} className="relative w-full max-w-5xl mx-auto flex flex-col gap-16 md:gap-24">
+            <div ref={containerRef} className="relative w-full max-w-5xl mx-auto flex flex-col gap-14 md:gap-24">
               
+              {/* Mobile Timeline Spine (Garis Vertikal di Kiri khusus Mobile) */}
+              <div
+                className="md:hidden absolute left-4 sm:left-6 top-7 bottom-7 w-[2px] bg-gradient-to-b from-[#0D627C] via-[#94cde3] to-[#0D627C]/30 pointer-events-none z-0"
+                aria-hidden="true"
+              />
+
               {/* Vertical Wavy Path Line for Desktop — d-nya digenerate dari posisi card (lihat effect di atas) */}
               <div className="hidden md:block absolute inset-0 pointer-events-none z-0">
                 <svg
@@ -315,13 +348,19 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                 return (
                   <div
                     key={data.month}
-                    className={`month-timeline-item relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 ${
+                    className={`month-timeline-item relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-16 pl-8 sm:pl-12 md:pl-0 ${
                       isEven ? 'md:flex-row' : 'md:flex-row-reverse'
                     }`}
                   >
+                    {/* Mobile Timeline Node Dot */}
+                    <div
+                      className="md:hidden absolute left-4 sm:left-6 top-7 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#0D627C] border-2 border-white shadow-sm ring-4 ring-[#0D627C]/20 z-20"
+                      aria-hidden="true"
+                    />
+
                     {/* Event List Card */}
                     <div
-                      className="event-card w-full md:w-[48%] bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_14px_35px_rgba(0,0,0,0.05)] border border-white transition-all duration-300 hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)]"
+                      className="event-card w-full md:w-[48%] bg-white rounded-[24px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_12px_35px_rgba(0,0,0,0.05)] border border-white transition-all duration-300 hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)]"
                     >
                       <H3 className="text-[#0D627C] font-heading font-semibold text-2xl sm:text-3xl mb-4">
                         {data.month}
@@ -336,41 +375,40 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                       </ul>
                     </div>
 
-                    {/* Stacked Hover Photo Component */}
+                    {/* Stacked Photo Component */}
                     <div
-                      className="photo-stack w-full md:w-[48%] flex items-center justify-center"
+                      className="photo-stack w-full md:w-[48%] flex items-center justify-center pt-2 pb-4 md:py-0"
                     >
-                      {/* Figma node 1003:3071 — default: 3 kartu menyebar; hover: menyatu jadi satu tumpukan.
-                          Easing overshoot (cubic-bezier 1.56) = efek bouncy. */}
-                      <div className="group relative w-[200px] sm:w-[230px] md:w-[180px] lg:w-[260px] aspect-[207.53/173.87] transform-gpu">
-                        {/* Kartu kanan-atas (paling bawah) */}
-                        <div className="absolute w-[91.1%] h-[90.9%] left-[2.6%] top-0 rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.2)] overflow-hidden bg-gray-100 rotate-[5deg] transition-transform duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform group-hover:translate-x-[45%] group-hover:-translate-y-[58%] group-hover:rotate-[4deg]">
+                      {/* Container dengan transisi bouncy spring overshoot */}
+                      <div className="photo-stack-container group relative w-[180px] sm:w-[210px] md:w-[180px] lg:w-[260px] aspect-[207.53/173.87] transform-gpu">
+                        {/* Kartu kanan (layer 1) */}
+                        <div className="photo-layer-right absolute w-[91.1%] h-[90.9%] left-[2.6%] top-0 rounded-[24px] sm:rounded-[36px] md:rounded-[40px] border-3 sm:border-4 border-white shadow-[0px_8px_25px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 rotate-[5deg] transition-transform duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform md:group-hover:translate-x-[45%] md:group-hover:-translate-y-[58%] md:group-hover:rotate-[4deg]">
                           <Image
                             src={photos[0]}
                             alt={`${data.month} 1`}
                             fill
                             className="object-cover"
-                            sizes="260px"
+                            sizes="(max-width: 768px) 210px, 260px"
                           />
                         </div>
-                        {/* Kartu kiri-atas */}
-                        <div className="absolute w-[91.1%] h-[90.9%] left-[-5.3%] top-[2.9%] rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.2)] overflow-hidden bg-gray-100 -rotate-[5deg] transition-transform duration-[600ms] delay-[40ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform group-hover:-translate-x-[45%] group-hover:-translate-y-[46%] group-hover:-rotate-[4deg]">
+                        {/* Kartu kiri (layer 2) */}
+                        <div className="photo-layer-left absolute w-[91.1%] h-[90.9%] left-[-5.3%] top-[2.9%] rounded-[24px] sm:rounded-[36px] md:rounded-[40px] border-3 sm:border-4 border-white shadow-[0px_8px_25px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 -rotate-[5deg] transition-transform duration-[600ms] delay-[40ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform md:group-hover:-translate-x-[45%] md:group-hover:-translate-y-[46%] md:group-hover:-rotate-[4deg]">
                           <Image
                             src={photos[1]}
                             alt={`${data.month} 2`}
                             fill
                             className="object-cover"
-                            sizes="260px"
+                            sizes="(max-width: 768px) 210px, 260px"
                           />
                         </div>
-                        {/* Kartu bawah-tengah (paling atas) */}
-                        <div className="absolute w-[91.1%] h-[90.9%] left-[1.9%] top-[4.6%] rounded-[32px] sm:rounded-[40px] border-4 border-white shadow-[0px_10px_30px_0px_rgba(0,0,0,0.2)] overflow-hidden bg-gray-100 transition-transform duration-[600ms] delay-[80ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform group-hover:translate-x-[5%] group-hover:translate-y-[20%] group-hover:rotate-[1deg]">
+                        {/* Kartu tengah (layer 3) */}
+                        <div className="photo-layer-center absolute w-[91.1%] h-[90.9%] left-[1.9%] top-[4.6%] rounded-[24px] sm:rounded-[36px] md:rounded-[40px] border-3 sm:border-4 border-white shadow-[0px_8px_25px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 transition-transform duration-[600ms] delay-[80ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform md:group-hover:translate-x-[5%] md:group-hover:translate-y-[20%] md:group-hover:rotate-[1deg]">
                           <Image
                             src={photos[2]}
                             alt={`${data.month} 3`}
                             fill
                             className="object-cover"
-                            sizes="260px"
+                            sizes="(max-width: 768px) 210px, 260px"
                           />
                         </div>
                       </div>
