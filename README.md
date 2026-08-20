@@ -161,5 +161,5 @@ Website ini dikembangkan dan dikelola secara aktif oleh **Divisi Informasi dan K
 Proyek ini dilisensikan di bawah lisensi **MIT License** — lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
 <div align="center">
-  <sub><b>Teti Satu! ⚡</b></sub>
+  <sub><b>Teti Satu!</b></sub>
 </div>
