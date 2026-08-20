@@ -19,27 +19,55 @@ export default function Profile() {
   const overlayRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
-    if (!pinTargetRef.current || !overlayRef.current) return
+    const mm = gsap.matchMedia()
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pinTargetRef.current,
-        start: 'bottom bottom',
-        end: '+=50%',
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-        anticipatePin: 1,
-        refreshPriority: 10,
-        invalidateOnRefresh: true,
-      },
+    // Desktop
+    mm.add('(min-width: 768px)', () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinTargetRef.current,
+          start: 'bottom bottom',
+          end: '+=50%',
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+          refreshPriority: 10,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      tl.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1 }
+      )
     })
 
-    tl.fromTo(
-      overlayRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 1 }
-    )
+    // Mobile: Pin when bottom reaches viewport bottom & scrub overlay
+    mm.add('(max-width: 767px)', () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinTargetRef.current,
+          start: 'bottom bottom',
+          end: '+=60%',
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+          refreshPriority: 10,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      tl.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1 }
+      )
+    })
+
+    return () => mm.revert()
   }, { scope: wrapperRef })
 
   return (
@@ -48,7 +76,7 @@ export default function Profile() {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white"></div>
       
       <div ref={pinTargetRef}>
-        <section className="relative z-10 w-full overflow-hidden bg-[#E1F3FA] rounded-[32px] sm:rounded-[40px] pt-16 sm:pt-20 md:pt-[112px] pb-16 sm:pb-20 md:pb-[112px]">
+        <section className="relative z-10 w-full overflow-hidden bg-[#E1F3FA] rounded-[32px] md:rounded-[40px] pt-14 md:pt-[112px] pb-14 md:pb-[112px]">
           {/* Glow Effects (Pure CSS/Tailwind) */}
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
             {/* Biru Glow (Kiri Atas Gambar) */}
@@ -59,10 +87,10 @@ export default function Profile() {
 
           <div className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center relative z-10">
             {/* Title */}
-            <H2 className="text-[#0a4c5a] font-semibold mb-4 sm:mb-6">Ruang Tumbuh Bersama</H2>
+            <H2 className="text-[#0a4c5a] font-semibold mb-4 md:mb-6">Ruang Tumbuh Bersama</H2>
             
             {/* Description */}
-            <B2 className="text-gray-700 max-w-3xl mb-8 sm:mb-10 leading-relaxed text-sm sm:text-base">
+            <B2 className="text-gray-700 max-w-3xl mb-6 md:mb-10 leading-relaxed text-sm md:text-base">
               KMTETI hadir sebagai wadah bagi mahasiswa untuk mengembangkan potensi, memperluas wawasan, dan membangun kolaborasi. Melalui berbagai program, layanan internal, serta informasi yang terpusat, kami mendukung setiap anggota untuk berproses, berkarya, dan memberikan kontribusi nyata bagi lingkungan kampus.
             </B2>
             
@@ -71,7 +99,7 @@ export default function Profile() {
               variant="secondary"
               size="default"
               onClick={() => router.push('/tentang/profil')}
-              className="mb-10 sm:mb-12 md:mb-16 shadow-md hover:shadow-lg transition-shadow"
+              className="mb-8 md:mb-16 shadow-md hover:shadow-lg transition-shadow"
             >
               <span>Profil KMTETI</span>
               <ArrowUpRight className="ml-2 w-5 h-5" />
