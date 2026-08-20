@@ -216,7 +216,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
         })
       })
 
-      // Mobile: Scroll-Triggered Auto Open Photo Stack saat masuk layar HP
+      // Mobile: Scroll-Triggered Auto Open Photo Stack saat masuk layar HP dengan delay halus
       mm.add('(max-width: 767px)', () => {
         const items = gsap.utils.toArray<HTMLElement>('.month-timeline-item')
         items.forEach((item) => {
@@ -225,7 +225,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
           ScrollTrigger.create({
             trigger: item,
-            start: 'top 75%',
+            start: 'top 65%',
             end: 'bottom 20%',
             toggleClass: { targets: photoStack, className: 'is-open' },
           })
@@ -269,17 +269,25 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
   return (
     <main className="w-full relative min-h-screen bg-white">
-      {/* Inline styles for mobile horizontal card spread when in view */}
+      {/* Inline styles for mobile horizontal card spread when in view with smooth stagger delay */}
       <style jsx global>{`
         @media (max-width: 767px) {
+          .photo-stack-container .photo-layer-left,
+          .photo-stack-container .photo-layer-center,
+          .photo-stack-container .photo-layer-right {
+            transition: transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
           .photo-stack-container.is-open .photo-layer-left {
             transform: translate(-34%, -2%) rotate(-9deg) scale(0.96) !important;
+            transition-delay: 200ms !important;
           }
           .photo-stack-container.is-open .photo-layer-center {
             transform: translate(0%, -6%) rotate(0deg) scale(1.02) !important;
+            transition-delay: 300ms !important;
           }
           .photo-stack-container.is-open .photo-layer-right {
             transform: translate(34%, -2%) rotate(9deg) scale(0.96) !important;
+            transition-delay: 400ms !important;
           }
         }
       `}</style>
