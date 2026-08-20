@@ -9,16 +9,6 @@
   </p>
 
   <p align="center">
-    <a href="https://github.com/kmteti/website-bergelora/actions"><img src="https://img.shields.io/badge/build-passing-brightgreen?style=flat-square" alt="Build Status" /></a>
-    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js 15" /></a>
-    <a href="https://payloadcms.com"><img src="https://img.shields.io/badge/Payload_CMS-3.0-black?style=flat-square&logo=payloadcms" alt="Payload CMS 3.0" /></a>
-    <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase" alt="Supabase" /></a>
-    <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss" alt="Tailwind CSS v4" /></a>
-    <a href="https://greensock.com/gsap/"><img src="https://img.shields.io/badge/GSAP-ScrollTrigger-88CE02?style=flat-square&logo=greensock" alt="GSAP" /></a>
-    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License" /></a>
-  </p>
-
-  <p align="center">
     <a href="https://instagram.com/kmteti.ugm"><img src="https://img.shields.io/badge/Instagram-@kmteti.ugm-E4405F?style=flat-square&logo=instagram" alt="Instagram" /></a>
     <a href="https://tiktok.com/@kmteti_ugm"><img src="https://img.shields.io/badge/TikTok-@kmteti_ugm-000000?style=flat-square&logo=tiktok" alt="TikTok" /></a>
     <a href="https://www.youtube.com/@KMTETIFtUgm"><img src="https://img.shields.io/badge/YouTube-KMTETI_FT_UGM-FF0000?style=flat-square&logo=youtube" alt="YouTube" /></a>
