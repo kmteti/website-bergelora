@@ -58,6 +58,29 @@ export default function Event() {
           '-=0.6', // 200ms delay
         )
       }
+
+      // Event Cards Stagger Entrance Animation (left to right with 120ms stagger)
+      if (trackRef.current) {
+        gsap.fromTo(
+          '.event-card-item',
+          {
+            y: 50,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.75,
+            ease: 'power3.out',
+            stagger: 0.12, // Stagger delay 120ms per card dari kiri ke kanan
+            scrollTrigger: {
+              trigger: trackRef.current,
+              start: 'top 85%',
+              once: true,
+            },
+          },
+        )
+      }
     },
     { scope: sectionRef },
   )
@@ -208,7 +231,7 @@ export default function Event() {
                   // Kiri di belakang, kanan di depan — jadi z-index naik ikut urutan, bukan ikut kartu aktif.
                   style={{ zIndex: i + 1 }}
                   className={cn(
-                    '@container relative w-[var(--card)] shrink-0 snap-center',
+                    'event-card-item will-change-transform @container relative w-[var(--card)] shrink-0 snap-center',
                     // Tumpang tindih 57px dari 773px, sesuai jarak 716px di Figma
                     i !== LAST && '-mr-[calc(var(--card)*0.0737)]',
                   )}
