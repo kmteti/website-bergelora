@@ -144,23 +144,15 @@ Dokumentasi arsitektur dan sistem Website KMTETI FT UGM telah disusun secara men
 
 ---
 
-## 👥 Kontributor & Tim Pengembang
+## 👥 Kontributor
 
-Terima kasih kepada seluruh kontributor yang telah membangun dan mengembangkan Website KMTETI FT UGM:
+Website ini dikembangkan dan dikelola secara aktif oleh **Divisi Informasi dan Komunikasi (Infokom) KMTETI FT UGM** bersama seluruh kontributor:
 
 <p align="center">
   <a href="https://github.com/kmteti/website-bergelora/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=kmteti/website-bergelora" alt="Contributors" />
   </a>
 </p>
-
-### 💻 Developer Team:
-- **Muhammad Khoirunas** ([@nas-ta](https://github.com/nas-ta) / [@khoirunas](https://github.com/khoirunas))
-- **Aulia Nur Fajri Tri Anggoro** ([@ancung](https://github.com/ancung))
-- **Muhammad Farrel Al Ghazy** ([@Yeypayeyy](https://github.com/Yeypayeyy) / [@farrel-ag](https://github.com/farrel-ag))
-- **Alfian Adicandra** ([@alfianadicandra](https://github.com/alfianadicandra))
-- **Dien Muhammad** ([@Scientivan](https://github.com/Scientivan))
-- Serta seluruh fungsionaris **Divisi Informasi dan Komunikasi (Infokom) KMTETI FT UGM**.
 
 ---
 
