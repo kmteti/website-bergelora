@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
-import { NewsCard } from '@/modules/news/components/NewsCard'
 import { NewsCardSkeleton } from '@/modules/news/components/NewsSkeleton'
 import NewsHeader from './components/NewsHeader'
+import NewsGridClient from './components/NewsGridClient'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { format } from 'date-fns'
@@ -50,20 +50,7 @@ async function NewsGrid() {
     return null
   }
 
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {newsData.map((news, index) => (
-        <NewsCard 
-          key={index} 
-          category={news.category}
-          title={news.title}
-          date={news.date}
-          image={news.image}
-          href={`/tentang/berita/${news.slug}`}
-        />
-      ))}
-    </div>
-  )
+  return <NewsGridClient newsData={newsData} />
 }
 
 export default function News() {
