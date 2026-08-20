@@ -108,8 +108,8 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
           { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
         ).fromTo(
           navGroupRef.current,
-          { y: '115%', opacity: 0 },
-          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' },
           '-=0.6', // 200ms delay
         )
       }
@@ -179,7 +179,7 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
         <div className="absolute top-[50%] -translate-y-1/2 -right-[10%] md:right-[5%] w-[150px] md:w-[200px] aspect-square rounded-full bg-[#64CAEF] blur-[80px] md:blur-[100px] pointer-events-none z-0" />
 
         <div className="relative w-full flex flex-col flex-grow">
-          {/* Header Title & Navigation Row with Masked Curtain Entrance */}
+          {/* Header Title & Navigation Row */}
           <div ref={headerRef} className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 mb-32 md:mb-28 relative z-10">
             {/* Title with vertical rolling ticker animation & entrance mask */}
             <div className="overflow-hidden py-2 -my-2 px-1 -mx-1">
@@ -197,51 +197,49 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
               </div>
             </div>
 
-            {/* Navigation Group with entrance mask (padding to prevent shadow clipping) */}
-            <div className="overflow-hidden py-3 -my-3 px-2 -mx-2">
-              <div ref={navGroupRef} className="flex items-center gap-4 will-change-transform py-1">
-                {/* Left Arrow Button */}
+            {/* Navigation Group (no overflow-hidden wrapper to keep shadow 100% intact) */}
+            <div ref={navGroupRef} className="flex items-center gap-4 will-change-transform">
+              {/* Left Arrow Button */}
+              <Button
+                variant="black"
+                size="icon"
+                onClick={() => carouselRef.current?.scrollLeft()}
+                className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
+                aria-label="Scroll left"
+              >
+                <ArrowLeft className="h-5 w-5 text-white" />
+              </Button>
+
+              {/* Toggle Capsule */}
+              <div className="inline-flex items-center bg-white/40 backdrop-blur-sm rounded-2xl p-1 shadow-sm border border-white/60 gap-1">
                 <Button
-                  variant="black"
-                  size="icon"
-                  onClick={() => carouselRef.current?.scrollLeft()}
-                  className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
-                  aria-label="Scroll left"
+                  variant={activeTab === 'divisi' ? 'secondary' : 'black'}
+                  size="default"
+                  onClick={() => handleTabChange('divisi')}
+                  className="rounded-xl"
                 >
-                  <ArrowLeft className="h-5 w-5 text-white" />
+                  Divisi
                 </Button>
-
-                {/* Toggle Capsule */}
-                <div className="inline-flex items-center bg-white/40 backdrop-blur-sm rounded-2xl p-1 shadow-sm border border-white/60 gap-1">
-                  <Button
-                    variant={activeTab === 'divisi' ? 'secondary' : 'black'}
-                    size="default"
-                    onClick={() => handleTabChange('divisi')}
-                    className="rounded-xl"
-                  >
-                    Divisi
-                  </Button>
-                  <Button
-                    variant={activeTab === 'bso' ? 'secondary' : 'black'}
-                    size="default"
-                    onClick={() => handleTabChange('bso')}
-                    className="rounded-xl"
-                  >
-                    BSO
-                  </Button>
-                </div>
-
-                {/* Right Arrow Button */}
                 <Button
-                  variant="black"
-                  size="icon"
-                  onClick={() => carouselRef.current?.scrollRight()}
-                  className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
-                  aria-label="Scroll right"
+                  variant={activeTab === 'bso' ? 'secondary' : 'black'}
+                  size="default"
+                  onClick={() => handleTabChange('bso')}
+                  className="rounded-xl"
                 >
-                  <ArrowRight className="h-5 w-5 text-white" />
+                  BSO
                 </Button>
               </div>
+
+              {/* Right Arrow Button */}
+              <Button
+                variant="black"
+                size="icon"
+                onClick={() => carouselRef.current?.scrollRight()}
+                className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
+                aria-label="Scroll right"
+              >
+                <ArrowRight className="h-5 w-5 text-white" />
+              </Button>
             </div>
           </div>
 

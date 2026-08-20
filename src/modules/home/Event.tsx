@@ -53,8 +53,8 @@ export default function Event() {
           { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
         ).fromTo(
           navRef.current,
-          { y: '115%', opacity: 0 },
-          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' },
           '-=0.6', // 200ms delay
         )
       }
@@ -163,29 +163,27 @@ export default function Event() {
             </div>
 
             {/* Di mobile nggak muat sebelah judul, jadi kontrolnya pakai dot di bawah track */}
-            <div className="hidden shrink-0 items-center gap-3 md:flex overflow-hidden py-3 -my-3 px-2 -mx-2">
-              <div ref={navRef} className="flex items-center gap-3 will-change-transform py-1">
-                <Button
-                  variant="black"
-                  size="icon"
-                  aria-label="Event sebelumnya"
-                  disabled={active === 0}
-                  onClick={() => scrollToCard(active - 1)}
-                  className="shadow-lg drop-shadow-sm"
-                >
-                  <ArrowLeft className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="black"
-                  size="icon"
-                  aria-label="Event berikutnya"
-                  disabled={active === LAST}
-                  onClick={() => scrollToCard(active + 1)}
-                  className="shadow-lg drop-shadow-sm"
-                >
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-              </div>
+            <div ref={navRef} className="hidden shrink-0 items-center gap-3 md:flex will-change-transform">
+              <Button
+                variant="black"
+                size="icon"
+                aria-label="Event sebelumnya"
+                disabled={active === 0}
+                onClick={() => scrollToCard(active - 1)}
+                className="shadow-lg drop-shadow-sm"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="black"
+                size="icon"
+                aria-label="Event berikutnya"
+                disabled={active === LAST}
+                onClick={() => scrollToCard(active + 1)}
+                className="shadow-lg drop-shadow-sm"
+              >
+                <ArrowRight className="h-5 w-5" />
+              </Button>
             </div>
           </div>
 
