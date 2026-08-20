@@ -8,19 +8,15 @@ Dokumen ini adalah panduan komprehensif mengenai **Design System, Identitas Visu
 
 Website Bergelora mengusung tema warna segar, modern, dan futuristik yang memadukan identitas resmi Teknik Elektro & Teknologi Informasi UGM dengan semangat "Bergelora":
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        PALET WARNA UTAMA                               │
-├───────────────────┬───────────────────┬────────────────────────────────┤
-│ Primary Blue      │ #0a4c5a / #1E5D7B │ Warna identitas utama KMTETI   │
-│ Secondary Green   │ #abd03b / #9cbd33 │ Aksen cerah "Semangat Bergelora│
-│ Sky Light Blue    │ #EAF9FF ➔ #E1F3FA │ Latar belakang gradient lembut │
-│ Green Glow Blob   │ #C7E07C (blur)    │ Aksen pencahayaan organik kiri │
-│ Cyan Glow Blob    │ #64CAEF (blur)    │ Aksen pencahayaan organik kanan│
-│ Neutral Base      │ #0f172a / #333333 │ Teks pekat dan tombol gelap    │
-│ Card Glass Base   │ rgba(255,255,255,0.80) │ Kaca akrilik frosted glass│
-└───────────────────┴───────────────────┴────────────────────────────────┘
-```
+| Nama Warna | Hex Code / Value | Deskripsi & Penggunaan |
+| :--- | :--- | :--- |
+| **Primary Blue** | `#0a4c5a` / `#1E5D7B` | Warna identitas utama KMTETI FT UGM |
+| **Secondary Green** | `#abd03b` / `#9cbd33` | Aksen cerah penegas "Semangat Bergelora" & tombol CTA |
+| **Sky Light Blue** | `#EAF9FF` ➔ `#E1F3FA` | Latar belakang gradient lembut seluruh halaman |
+| **Green Glow Blob** | `#C7E07C` (blur) | Aksen ornamen pencahayaan organik sisi kiri |
+| **Cyan Glow Blob** | `#64CAEF` (blur) | Aksen ornamen pencahayaan organik sisi kanan |
+| **Neutral Base** | `#0f172a` / `#333333` | Teks pekat dan tombol netral gelap |
+| **Card Glass Base** | `rgba(255, 255, 255, 0.80)` | Dasar kartu akrilik frosted glass |
 
 ### 🧪 Contoh Utility Class Tailwind:
 - Teks Judul: `text-primary-500` / `text-[#0a4c5a]`
@@ -81,13 +77,11 @@ Untuk menghadirkan estetika *sleek & tactile*, website ini menggunakan aturan ke
 
 Animasi di Website Bergelora dirancang dengan filosofi **"Subtle, Snappy, and High-End"** (seperti interaksi produk Apple dan Linear).
 
-```
-Prinsip Utama Animasi:
-1. GPU-Only: Hanya transform (y, scale) dan opacity.
-2. Zero Jank: Tidak memanipulasi height/margin/top yang memicu layout reflow.
-3. Snappy: Durasi 0.5s - 0.8s, ease: 'power2.out' / 'power3.out'.
-4. Battery Saver: Selalu gunakan `once: true` pada ScrollTrigger.
-```
+### ⚡ Prinsip Utama Animasi:
+- **GPU-Only**: Hanya transform (`translateY`, `scale`) dan `opacity`.
+- **Zero Jank**: Hindari memanipulasi `height`, `margin`, atau `top` yang memicu *layout reflow*.
+- **Snappy Timing**: Durasi `0.5s` – `0.8s` dengan kurva `ease: 'power2.out'` atau `'power3.out'`.
+- **Battery & CPU Saver**: Selalu pasang `once: true` pada konfigurasi ScrollTrigger.
 
 ### 🌟 Pola 1: Masked Curtain Reveal (Pada Judul & Deskripsi)
 Teks terbit meluncur naik dari balik "tirai tak terlihat" (`overflow-hidden` mask) saat masuk ke pandangan layar:
