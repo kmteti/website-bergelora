@@ -1,9 +1,9 @@
-import { H2, B2 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 import { NewsCard } from '@/modules/news/components/NewsCard'
 import { NewsCardSkeleton } from '@/modules/news/components/NewsSkeleton'
+import NewsHeader from './components/NewsHeader'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { format } from 'date-fns'
@@ -70,15 +70,8 @@ export default function News() {
   return (
     <section className="relative w-full bg-gradient-to-b from-[#f6f6f6] from-[94%] to-[#c2dfff] pt-[95px] pb-[160px]">
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-        {/* Header Section (Always static, loaded instantly) */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-14">
-          <H2 className="text-[#0a4c5a] font-semibold md:w-1/3 text-left">
-            KMTETI News
-          </H2>
-          <B2 className="text-gray-600 md:w-1/2 text-left leading-relaxed">
-            Pusat kabar dan informasi terkini seputar kegiatan, inovasi, serta dinamika kehidupan mahasiswa di lingkungan KMTETI FT UGM.
-          </B2>
-        </div>
+        {/* Header Section with Masked Curtain Reveal */}
+        <NewsHeader />
 
         {/* Cards Grid with inner Suspense */}
         <Suspense fallback={<NewsCardsSkeleton />}>

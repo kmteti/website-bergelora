@@ -7,6 +7,13 @@ import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import FolderCarousel, { FolderCarouselRef, FolderData } from './components/FolderCarousel'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 type Tab = 'divisi' | 'bso'
 
@@ -74,11 +81,41 @@ const bsoData: FolderData[] = [
 ]
 
 export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
+  const sectionRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const titleWrapperRef = useRef<HTMLDivElement>(null)
+  const navGroupRef = useRef<HTMLDivElement>(null)
   const carouselRef = useRef<FolderCarouselRef>(null)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<Tab>('divisi')
   const [animPhase, setAnimPhase] = useState<'idle' | 'exit' | 'enter'>('idle')
   const isTransitioningRef = useRef(false)
+
+  useGSAP(
+    () => {
+      if (headerRef.current && titleWrapperRef.current && navGroupRef.current) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+
+        tl.fromTo(
+          titleWrapperRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+        ).fromTo(
+          navGroupRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+          '-=0.6', // 200ms delay
+        )
+      }
+    },
+    { scope: sectionRef },
+  )
 
   const divisiData = useMemo(
     () =>
@@ -129,6 +166,7 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
   return (
     <div className="relative z-20 w-full -mt-16">
       <section
+        ref={sectionRef}
         data-navbar-tone="light"
         className={`w-full flex flex-col overflow-hidden rounded-t-[40px] border-t-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_0_50px_rgba(0,0,0,0.05)] pt-[110px] relative transition-colors duration-300 ${
           activeTab === 'divisi'
@@ -141,65 +179,69 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
         <div className="absolute top-[50%] -translate-y-1/2 -right-[10%] md:right-[5%] w-[150px] md:w-[200px] aspect-square rounded-full bg-[#64CAEF] blur-[80px] md:blur-[100px] pointer-events-none z-0" />
 
         <div className="relative w-full flex flex-col flex-grow">
-          {/* Header Title & Navigation Row */}
-          <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 mb-32 md:mb-28 relative z-10">
-            {/* Title with vertical rolling ticker animation */}
+          {/* Header Title & Navigation Row with Masked Curtain Entrance */}
+          <div ref={headerRef} className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 mb-32 md:mb-28 relative z-10">
+            {/* Title with vertical rolling ticker animation & entrance mask */}
             <div className="overflow-hidden py-1">
-              <H2
-                className={cn(
-                  "text-primary-500 transition-transform transform-gpu will-change-transform",
-                  animPhase === 'exit' && "-translate-y-full duration-250 ease-in",
-                  animPhase === 'enter' && "translate-y-full duration-0",
-                  animPhase === 'idle' && "translate-y-0 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                )}
-              >
-                {activeTab === 'divisi' ? 'Divisi' : 'Badan Semi Otonom'}
-              </H2>
+              <div ref={titleWrapperRef} className="will-change-transform">
+                <H2
+                  className={cn(
+                    "text-primary-500 transition-transform transform-gpu will-change-transform",
+                    animPhase === 'exit' && "-translate-y-full duration-250 ease-in",
+                    animPhase === 'enter' && "translate-y-full duration-0",
+                    animPhase === 'idle' && "translate-y-0 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  )}
+                >
+                  {activeTab === 'divisi' ? 'Divisi' : 'Badan Semi Otonom'}
+                </H2>
+              </div>
             </div>
 
-            {/* Navigation Group */}
-            <div className="flex items-center gap-4">
-              {/* Left Arrow Button */}
-              <Button
-                variant="black"
-                size="icon"
-                onClick={() => carouselRef.current?.scrollLeft()}
-                className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
-                aria-label="Scroll left"
-              >
-                <ArrowLeft className="h-5 w-5 text-white" />
-              </Button>
-
-              {/* Toggle Capsule */}
-              <div className="inline-flex items-center bg-white/40 backdrop-blur-sm rounded-2xl p-1 shadow-sm border border-white/60 gap-1">
+            {/* Navigation Group with entrance mask */}
+            <div className="overflow-hidden py-1">
+              <div ref={navGroupRef} className="flex items-center gap-4 will-change-transform">
+                {/* Left Arrow Button */}
                 <Button
-                  variant={activeTab === 'divisi' ? 'secondary' : 'black'}
-                  size="default"
-                  onClick={() => handleTabChange('divisi')}
-                  className="rounded-xl"
+                  variant="black"
+                  size="icon"
+                  onClick={() => carouselRef.current?.scrollLeft()}
+                  className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
+                  aria-label="Scroll left"
                 >
-                  Divisi
+                  <ArrowLeft className="h-5 w-5 text-white" />
                 </Button>
+
+                {/* Toggle Capsule */}
+                <div className="inline-flex items-center bg-white/40 backdrop-blur-sm rounded-2xl p-1 shadow-sm border border-white/60 gap-1">
+                  <Button
+                    variant={activeTab === 'divisi' ? 'secondary' : 'black'}
+                    size="default"
+                    onClick={() => handleTabChange('divisi')}
+                    className="rounded-xl"
+                  >
+                    Divisi
+                  </Button>
+                  <Button
+                    variant={activeTab === 'bso' ? 'secondary' : 'black'}
+                    size="default"
+                    onClick={() => handleTabChange('bso')}
+                    className="rounded-xl"
+                  >
+                    BSO
+                  </Button>
+                </div>
+
+                {/* Right Arrow Button */}
                 <Button
-                  variant={activeTab === 'bso' ? 'secondary' : 'black'}
-                  size="default"
-                  onClick={() => handleTabChange('bso')}
-                  className="rounded-xl"
+                  variant="black"
+                  size="icon"
+                  onClick={() => carouselRef.current?.scrollRight()}
+                  className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
+                  aria-label="Scroll right"
                 >
-                  BSO
+                  <ArrowRight className="h-5 w-5 text-white" />
                 </Button>
               </div>
-
-              {/* Right Arrow Button */}
-              <Button
-                variant="black"
-                size="icon"
-                onClick={() => carouselRef.current?.scrollRight()}
-                className="shadow-lg drop-shadow-sm bg-black/60 hover:bg-black/85"
-                aria-label="Scroll right"
-              >
-                <ArrowRight className="h-5 w-5 text-white" />
-              </Button>
             </div>
           </div>
 

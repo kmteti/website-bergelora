@@ -17,8 +17,35 @@ export default function Profile() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const pinTargetRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
 
   useGSAP(() => {
+    // Header Masked Curtain Reveal (Title -> Desc with 200ms stagger)
+    if (headerRef.current && titleRef.current && descRef.current) {
+      const headerTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 85%',
+          once: true,
+        },
+      })
+
+      headerTl
+        .fromTo(
+          titleRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+        )
+        .fromTo(
+          descRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+          '-=0.6', // 200ms delay
+        )
+    }
+
     const mm = gsap.matchMedia()
 
     // Desktop
@@ -81,14 +108,20 @@ export default function Profile() {
             <div className="absolute -bottom-[20%] -right-[20%] w-[450px] md:w-[800px] aspect-square rounded-full bg-[#C7E07C] blur-[100px] md:blur-[180px] opacity-50" />
           </div>
 
-          <div className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center relative z-10">
+          <div ref={headerRef} className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center relative z-10">
             {/* Title */}
-            <H2 className="text-[#0a4c5a] font-semibold mb-4 md:mb-6">Ruang Tumbuh Bersama</H2>
+            <div className="overflow-hidden mb-4 md:mb-6">
+              <H2 ref={titleRef} className="text-[#0a4c5a] font-semibold will-change-transform">
+                Ruang Tumbuh Bersama
+              </H2>
+            </div>
             
             {/* Description */}
-            <B2 className="text-gray-700 max-w-3xl mb-6 md:mb-10 leading-relaxed text-sm md:text-base">
-              KMTETI hadir sebagai wadah bagi mahasiswa untuk mengembangkan potensi, memperluas wawasan, dan membangun kolaborasi. Melalui berbagai program, layanan internal, serta informasi yang terpusat, kami mendukung setiap anggota untuk berproses, berkarya, dan memberikan kontribusi nyata bagi lingkungan kampus.
-            </B2>
+            <div className="overflow-hidden max-w-3xl mb-6 md:mb-10">
+              <B2 ref={descRef} className="text-gray-700 leading-relaxed text-sm md:text-base will-change-transform">
+                KMTETI hadir sebagai wadah bagi mahasiswa untuk mengembangkan potensi, memperluas wawasan, dan membangun kolaborasi. Melalui berbagai program, layanan internal, serta informasi yang terpusat, kami mendukung setiap anggota untuk berproses, berkarya, dan memberikan kontribusi nyata bagi lingkungan kampus.
+              </B2>
+            </div>
             
             {/* Button */}
             <Button

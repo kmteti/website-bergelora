@@ -8,6 +8,13 @@ import { H2 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { eventData } from '@/modules/event/data/data'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 import EventBrowserCard from './components/EventBrowserCard'
 
@@ -21,9 +28,39 @@ const EVENT_GRADIENTS: Record<string, { from: string; to: string }> = {
 }
 
 export default function Event() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const navRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(Math.floor(eventData.length / 2))
   const router = useRouter()
+
+  useGSAP(
+    () => {
+      if (headerRef.current && titleRef.current && navRef.current) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+
+        tl.fromTo(
+          titleRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+        ).fromTo(
+          navRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+          '-=0.6', // 200ms delay
+        )
+      }
+    },
+    { scope: sectionRef },
+  )
 
   const scrollToCard = (i: number, behavior: ScrollBehavior = 'smooth') => {
     const track = trackRef.current
@@ -85,6 +122,7 @@ export default function Event() {
   return (
     <div className="relative z-20 -mt-1 w-full">
       <section
+        ref={sectionRef}
         data-navbar-tone="light"
         id="event"
         className="relative w-full overflow-hidden rounded-b-[40px] border-l-2 border-r-2 border-white bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA] pt-[110px] pb-40 md:pb-32"
@@ -94,31 +132,37 @@ export default function Event() {
         <div className="pointer-events-none absolute left-[67.9%] top-[48.2%] w-[34vw] max-w-[492px] -translate-x-1/2 -translate-y-1/2 aspect-square rounded-full bg-[#c7e07c] opacity-80 blur-[100px]" />
 
         <div className="relative flex w-full flex-col">
-          <div className="mx-auto mb-14 flex w-full max-w-6xl items-center justify-between gap-6 px-4 md:mb-20 md:px-8">
-            <H2 className="text-left text-[#0a4c5a]">Event Ternama Nasional</H2>
+          <div ref={headerRef} className="mx-auto mb-14 flex w-full max-w-6xl items-center justify-between gap-6 px-4 md:mb-20 md:px-8">
+            <div className="overflow-hidden py-1">
+              <H2 ref={titleRef} className="text-left text-[#0a4c5a] will-change-transform">
+                Event Ternama Nasional
+              </H2>
+            </div>
 
             {/* Di mobile nggak muat sebelah judul, jadi kontrolnya pakai dot di bawah track */}
-            <div className="hidden shrink-0 items-center gap-3 md:flex">
-              <Button
-                variant="black"
-                size="icon"
-                aria-label="Event sebelumnya"
-                disabled={active === 0}
-                onClick={() => scrollToCard(active - 1)}
-                className="shadow-lg drop-shadow-sm"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="black"
-                size="icon"
-                aria-label="Event berikutnya"
-                disabled={active === LAST}
-                onClick={() => scrollToCard(active + 1)}
-                className="shadow-lg drop-shadow-sm"
-              >
-                <ArrowRight className="h-5 w-5" />
-              </Button>
+            <div className="hidden shrink-0 items-center gap-3 md:flex overflow-hidden py-1">
+              <div ref={navRef} className="flex items-center gap-3 will-change-transform">
+                <Button
+                  variant="black"
+                  size="icon"
+                  aria-label="Event sebelumnya"
+                  disabled={active === 0}
+                  onClick={() => scrollToCard(active - 1)}
+                  className="shadow-lg drop-shadow-sm"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+                <Button
+                  variant="black"
+                  size="icon"
+                  aria-label="Event berikutnya"
+                  disabled={active === LAST}
+                  onClick={() => scrollToCard(active + 1)}
+                  className="shadow-lg drop-shadow-sm"
+                >
+                  <ArrowRight className="h-5 w-5" />
+                </Button>
+              </div>
             </div>
           </div>
 

@@ -16,6 +16,9 @@ if (typeof window !== 'undefined') {
 
 export default function Life() {
   const sectionRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
   const photo1Ref = useRef<HTMLDivElement>(null)
   const photo2Ref = useRef<HTMLDivElement>(null)
   const photo3Ref = useRef<HTMLDivElement>(null)
@@ -23,6 +26,30 @@ export default function Life() {
   useGSAP(
     () => {
       if (!sectionRef.current) return
+
+      // Header Masked Curtain Reveal (Title -> Desc with 200ms stagger)
+      if (headerRef.current && titleRef.current && descRef.current) {
+        const headerTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+
+        headerTl
+          .fromTo(
+            titleRef.current,
+            { y: '115%', opacity: 0 },
+            { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+          )
+          .fromTo(
+            descRef.current,
+            { y: '115%', opacity: 0 },
+            { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+            '-=0.6', // starts 200ms after title starts
+          )
+      }
 
       const mm = gsap.matchMedia()
 
@@ -96,14 +123,18 @@ export default function Life() {
         <div className="absolute inset-x-0 bottom-0 h-[280px] bg-gradient-to-t from-[#D6EEF8]/60 to-transparent pointer-events-none z-0" />
 
         <div className="relative z-10 w-full flex flex-col items-center">
-          {/* Header Section matching KMTETI News typography & layout */}
-          <div className="container mx-auto px-6 sm:px-8 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-start gap-8 mb-4 md:mb-6">
-            <H2 className="text-[#0a4c5a] font-semibold md:w-1/3 text-left">
-              Life at KMTETI
-            </H2>
-            <B2 className="text-gray-600 md:w-1/2 text-left leading-relaxed">
-              KMTETI adalah ruang untuk tumbuh, bereksplorasi, dan menciptakan sesuatu bersama. Temukan beragam perspektif, ide-ide baru, dan pengalaman yang mendorongmu untuk terus belajar dan berkembang.
-            </B2>
+          {/* Header Section matching KMTETI News typography & layout with masked reveal */}
+          <div ref={headerRef} className="container mx-auto px-6 sm:px-8 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-start gap-8 mb-4 md:mb-6">
+            <div className="overflow-hidden md:w-1/3">
+              <H2 ref={titleRef} className="text-[#0a4c5a] font-semibold text-left will-change-transform">
+                Life at KMTETI
+              </H2>
+            </div>
+            <div className="overflow-hidden md:w-1/2">
+              <B2 ref={descRef} className="text-gray-600 text-left leading-relaxed will-change-transform">
+                KMTETI adalah ruang untuk tumbuh, bereksplorasi, dan menciptakan sesuatu bersama. Temukan beragam perspektif, ide-ide baru, dan pengalaman yang mendorongmu untuk terus belajar dan berkembang.
+              </B2>
+            </div>
           </div>
         </div>
 
