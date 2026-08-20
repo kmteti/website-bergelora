@@ -44,26 +44,22 @@ export default function Profile() {
       )
     })
 
-    // Mobile: Pin when bottom reaches viewport bottom & scrub overlay
+    // Mobile: Tanpa pinning/scroll-jacking agar tidak ada ruang putih.
+    // Animasi fade-in halus saat foto itu sendiri masuk ke layar (top 65%)
     mm.add('(max-width: 767px)', () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinTargetRef.current,
-          start: 'bottom bottom',
-          end: '+=60%',
-          pin: true,
-          pinSpacing: true,
-          scrub: 1,
-          anticipatePin: 1,
-          refreshPriority: 10,
-          invalidateOnRefresh: true,
-        },
-      })
-
-      tl.fromTo(
+      gsap.fromTo(
         overlayRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 1 }
+        {
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: overlayRef.current,
+            start: 'top 65%',
+            toggleActions: 'play reverse play reverse',
+          },
+        }
       )
     })
 
