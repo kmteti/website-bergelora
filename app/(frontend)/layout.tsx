@@ -4,7 +4,6 @@ import Footer from '@/components/layout/Footer'
 import './styles.css'
 import { Navbar } from '@/components/layout/navbar/Navbar'
 import LenisProvider from '@/providers/LenisProvider'
-import AOSProvider from '@/providers/AOSProvider'
 
 import type { Metadata, Viewport } from 'next'
 import { cn } from '@/lib/utils'
@@ -60,13 +59,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="id" className={cn(montserrat.variable, sourceSerif4.variable, 'font-sans')}>
       <body className="font-sans antialiased text-neutral-1000 flex flex-col min-h-screen overflow-x-hidden">
         <LenisProvider>
-          <AOSProvider>
-            <main className="flex-1 flex flex-col">
-              <Navbar />
-              {children}
-              <Footer />
-            </main>
-          </AOSProvider>
+          <main className="flex-1 flex flex-col">
+            <Navbar />
+            {children}
+            <Footer />
+          </main>
         </LenisProvider>
       </body>
     </html>

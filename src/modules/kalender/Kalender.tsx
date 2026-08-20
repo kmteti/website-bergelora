@@ -195,6 +195,33 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
     return () => ro.disconnect()
   }, [agendaData])
 
+  // Fade-up masuk viewport. Dulu ini pakai AOS, tapi opsi `disable: 'mobile'` bikin AOS
+  // removeAttribute('data-aos') di DOM yang masih dipegang React → hydration mismatch, dan
+  // elemennya nyangkut opacity:0 permanen. GSAP nggak nyentuh atribut, jadi aman.
+  // gsap.set jalan di useLayoutEffect (sebelum paint), jadi nggak ada kedip.
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      // Dimatikan di mobile, sama seperti setelan AOS sebelumnya.
+      mm.add('(min-width: 768px)', () => {
+        const els = gsap.utils.toArray<HTMLElement>('.event-card, .photo-stack')
+        gsap.set(els, { opacity: 0, y: 24 })
+        els.forEach((el) => {
+          gsap.to(el, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power2.out',
+            delay: el.classList.contains('photo-stack') ? 0.15 : 0,
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          })
+        })
+      })
+      return () => mm.revert()
+    },
+    { scope: containerRef },
+  )
+
   useGSAP(
     () => {
       // Progressive line draw on scroll — panjangnya diambil ulang tiap path berubah.
@@ -292,10 +319,8 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                       isEven ? 'md:flex-row' : 'md:flex-row-reverse'
                     }`}
                   >
-                    {/* Event List Card (AOS fade-up animation from bottom) */}
+                    {/* Event List Card */}
                     <div
-                      data-aos="fade-up"
-                      data-aos-duration="700"
                       className="event-card w-full md:w-[48%] bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_14px_35px_rgba(0,0,0,0.05)] border border-white transition-all duration-300 hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)]"
                     >
                       <H3 className="text-[#0D627C] font-heading font-semibold text-2xl sm:text-3xl mb-4">
@@ -311,11 +336,8 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                       </ul>
                     </div>
 
-                    {/* Stacked Hover Photo Component (AOS fade-up animation from bottom with delay) */}
+                    {/* Stacked Hover Photo Component */}
                     <div
-                      data-aos="fade-up"
-                      data-aos-duration="700"
-                      data-aos-delay="150"
                       className="photo-stack w-full md:w-[48%] flex items-center justify-center"
                     >
                       {/* Figma node 1003:3071 — default: 3 kartu menyebar; hover: menyatu jadi satu tumpukan.
