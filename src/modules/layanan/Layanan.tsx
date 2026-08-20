@@ -1,12 +1,15 @@
 'use client'
 
 import * as LucideIcons from 'lucide-react'
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
 import { SearchBar } from '@/components/elements/SearchBar'
 import { SectionHeader } from '@/components/elements/SectionHeader'
 import DefaultLayout from '@/components/layout/DefaultLayout'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   Select,
   SelectContent,
@@ -16,6 +19,10 @@ import {
 } from '@/components/ui/select'
 
 import { ServiceCard, type ServiceCardProps } from './components/ServiceCard'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 interface ServiceSection {
   title: string
@@ -98,92 +105,73 @@ const staticServiceSections: ServiceSection[] = [
       },
     ],
   },
-  {
-    title: 'Sekretaris dan Bendahara',
-    items: [
-      {
-        title: 'Manual Book Kesekretariatan',
-        description: 'Panduan administrasi dan kesekretariatan organisasi.',
-        href: 'https://bit.ly/ManualBookKSK2024',
-        icon: LucideIcons.BookText,
-      },
-      {
-        title: 'Manual Book Kebendaharaan',
-        description: 'Panduan pengelolaan keuangan dan kebendaharaan organisasi.',
-        href: 'https://bit.ly/ManualBookKBN2024',
-        icon: LucideIcons.Wallet,
-      },
-      {
-        title: 'Kumpulan Template',
-        description: 'Berbagai template dokumen dan surat siap pakai.',
-        href: 'https://drive.google.com/drive/folders/0B2Rf2cDPuLplcEZKZzgydVdBc00?resourcekey=0-OBdwkd2BD64289B7TAhslg',
-        icon: LucideIcons.LayoutTemplate,
-      },
-      {
-        title: 'Form Verifikasi Persuratan',
-        description: 'Formulir verifikasi persuratan organisasi.',
-        href: 'https://docs.google.com/forms/d/e/1FAIpQLSfkfg5-YzcvAYnzYjozs25cPReXmBP7gE08aaUJcRqCdLJhZQ/viewform',
-        icon: LucideIcons.FileCheck,
-      },
-    ],
-  },
 ]
 
-function getIconComponent(iconName?: string): LucideIcons.LucideIcon | undefined {
-  if (!iconName) return undefined
-  return (LucideIcons[iconName as keyof typeof LucideIcons] as LucideIcons.LucideIcon) || LucideIcons.Link
-}
-
-interface LayananProps {
-  initialLayanan?: any[]
-}
-
-export default function Layanan({ initialLayanan }: LayananProps) {
+export default function Layanan({ initialLayanan }: { initialLayanan?: any[] }) {
+  const mainRef = useRef<HTMLElement>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('Semua Layanan')
 
-  // Transform Payload CMS docs into ServiceSection format if available
-  const serviceSections: ServiceSection[] = useMemo(() => {
+  const serviceSections = useMemo<ServiceSection[]>(() => {
     if (!initialLayanan || initialLayanan.length === 0) {
       return staticServiceSections
     }
 
-    // Group docs by kategori
     const groups: { [key: string]: ServiceCardProps[] } = {}
 
-    for (const doc of initialLayanan) {
-      const cat = doc.kategori || 'Lainnya'
+    initialLayanan.forEach((item: any) => {
+      const cat = item.kategori || 'Lainnya'
       if (!groups[cat]) {
         groups[cat] = []
       }
 
-      groups[cat].push({
-        title: doc.title,
-        description: doc.description,
-        href: doc.href,
-        icon: getIconComponent(doc.icon),
-      })
-    }
+      let IconComp: any = LucideIcons.Globe
+      if (item.icon && (LucideIcons as any)[item.icon]) {
+        IconComp = (LucideIcons as any)[item.icon]
+      } else {
+        const titleLower = (item.namaLayanan || item.title || '').toLowerCase()
+        if (titleLower.includes('akademik') || titleLower.includes('buku')) {
+          IconComp = LucideIcons.GraduationCap
+        } else if (titleLower.includes('surat') || titleLower.includes('persuratan')) {
+          IconComp = LucideIcons.Mail
+        } else if (titleLower.includes('prestasi') || titleLower.includes('lomba')) {
+          IconComp = LucideIcons.Award
+        } else if (titleLower.includes('kegiatan') || titleLower.includes('event')) {
+          IconComp = LucideIcons.CalendarDays
+        } else if (titleLower.includes('sop') || titleLower.includes('dokumen')) {
+          IconComp = LucideIcons.FileText
+        } else if (titleLower.includes('aspirasi') || titleLower.includes('form')) {
+          IconComp = LucideIcons.MessageSquare
+        } else if (titleLower.includes('drive') || titleLower.includes('arsip')) {
+          IconComp = LucideIcons.FolderOpen
+        }
+      }
 
-    return Object.keys(groups).map((catTitle) => ({
-      title: catTitle,
-      items: groups[catTitle],
+      groups[cat].push({
+        title: item.namaLayanan || item.title || '',
+        description: item.deskripsi || item.description || '',
+        href: item.link || item.href || '#',
+        icon: IconComp,
+      })
+    })
+
+    return Object.keys(groups).map((catName) => ({
+      title: catName,
+      items: groups[catName],
     }))
   }, [initialLayanan])
 
   const categories = useMemo(() => {
-    return ['Semua Layanan', ...serviceSections.map((sec) => sec.title)]
+    return ['Semua Layanan', ...serviceSections.map((s) => s.title)]
   }, [serviceSections])
 
   const filteredSections = useMemo(() => {
     return serviceSections
       .map((section) => {
-        // Jika kategori tidak "Semua Layanan" dan tidak cocok dengan judul section, sembunyikan semua itemnya.
         if (categoryFilter !== 'Semua Layanan' && section.title !== categoryFilter) {
           return { ...section, items: [] }
         }
 
-        // Lakukan pencarian teks di title atau description layanan
         const lowerQuery = searchQuery.toLowerCase().trim()
         const filteredItems = section.items.filter(
           (item) =>
@@ -193,12 +181,39 @@ export default function Layanan({ initialLayanan }: LayananProps) {
 
         return { ...section, items: filteredItems }
       })
-      // Hanya biarkan section yang punya item
       .filter((section) => section.items.length > 0)
   }, [serviceSections, searchQuery, categoryFilter])
 
+  useGSAP(
+    () => {
+      const sections = document.querySelectorAll('.service-section-container')
+      sections.forEach((sec) => {
+        const cards = sec.querySelectorAll('.service-card-item')
+        if (cards.length > 0) {
+          gsap.fromTo(
+            cards,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.55,
+              ease: 'power2.out',
+              stagger: 0.06,
+              scrollTrigger: {
+                trigger: sec,
+                start: 'top 88%',
+                once: true,
+              },
+            },
+          )
+        }
+      })
+    },
+    { scope: mainRef, dependencies: [filteredSections] },
+  )
+
   return (
-    <main className="relative w-full bg-neutral-100">
+    <main ref={mainRef} className="relative w-full bg-neutral-100">
       {/* 1. Hero header full width */}
       <PageHeader
         title="Layanan KMTETI"
@@ -249,11 +264,13 @@ export default function Layanan({ initialLayanan }: LayananProps) {
           <div className="mt-16 flex flex-col gap-16 md:mt-20 md:gap-20 pb-20">
             {filteredSections.length > 0 ? (
               filteredSections.map((section) => (
-                <section key={section.title} className="flex flex-col gap-8 md:gap-10">
+                <section key={section.title} className="service-section-container flex flex-col gap-8 md:gap-10">
                   <SectionHeader title={section.title} />
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {section.items.map((item) => (
-                      <ServiceCard key={item.title} {...item} />
+                      <div key={item.title} className="service-card-item will-change-transform h-full">
+                        <ServiceCard {...item} />
+                      </div>
                     ))}
                   </div>
                 </section>

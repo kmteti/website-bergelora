@@ -14,6 +14,9 @@ import { PANDUAN_TOPICS } from '@/modules/kontak/data/panduan'
 import { NARAHUBUNG, type Narahubung } from '@/modules/kontak/data/narahubung'
 import { ArrowLeft, ArrowRight, CheckCircle2, MessageCircle, BookOpen } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   Select,
   SelectContent,
@@ -22,12 +25,17 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
+
 interface KontakProps {
   initialFaq?: any[]
   initialNarahubung?: any[]
 }
 
 export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
+  const panduanRef = useRef<HTMLElement>(null)
   const narahubungList: Narahubung[] = useMemo(() => {
     if (initialNarahubung && initialNarahubung.length > 0) {
       return initialNarahubung.map((doc: any, idx: number) => ({
@@ -39,6 +47,30 @@ export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
     }
     return NARAHUBUNG
   }, [initialNarahubung])
+
+  useGSAP(
+    () => {
+      if (!panduanRef.current) return
+
+      gsap.fromTo(
+        '.panduan-card-item',
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.55,
+          ease: 'power2.out',
+          stagger: 0.06,
+          scrollTrigger: {
+            trigger: panduanRef.current,
+            start: 'top 88%',
+            once: true,
+          },
+        },
+      )
+    },
+    { scope: panduanRef },
+  )
   // Step/Tahap state (3 steps total)
   const [step, setStep] = useState(1)
   // Tiga tahap tampilan:
@@ -178,7 +210,7 @@ export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
       <PageOverlap className="bg-white min-h-[500px]">
         <DefaultLayout className="pt-14 md:pt-16 pb-12">
           {/* Section: Panduan */}
-          <section id="panduan" className="mb-12 scroll-mt-28">
+          <section id="panduan" ref={panduanRef} className="mb-12 scroll-mt-28">
             <div className="flex items-center gap-6 mb-10">
               <H3 className="text-neutral-900 font-heading shrink-0">Panduan</H3>
               <div className="h-[2px] w-full bg-neutral-200" />
@@ -187,13 +219,14 @@ export const Kontak = ({ initialFaq, initialNarahubung }: KontakProps) => {
             {/* Grid of ServiceCards (same component as /layanan) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {PANDUAN_TOPICS.map((topic) => (
-                <ServiceCard
-                  key={topic.slug}
-                  title={topic.title}
-                  description={topic.description}
-                  icon={topic.icon}
-                  href={`/kontak/panduan/${topic.slug}`}
-                />
+                <div key={topic.slug} className="panduan-card-item will-change-transform h-full">
+                  <ServiceCard
+                    title={topic.title}
+                    description={topic.description}
+                    icon={topic.icon}
+                    href={`/kontak/panduan/${topic.slug}`}
+                  />
+                </div>
               ))}
             </div>
           </section>

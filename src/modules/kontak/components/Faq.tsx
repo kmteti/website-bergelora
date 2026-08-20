@@ -1,7 +1,15 @@
 'use client'
 
+import React, { useRef } from 'react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { H3, B4 } from '@/components/elements/Typography'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 interface FaqItem {
   question: string
@@ -33,9 +41,34 @@ const DEFAULT_FAQ_ITEMS: FaqItem[] = [
 
 export const Faq = ({ items }: { items?: FaqItem[] }) => {
   const faqList = items && items.length > 0 ? items : DEFAULT_FAQ_ITEMS
+  const faqRef = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      if (!faqRef.current) return
+
+      gsap.fromTo(
+        '.faq-item',
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+          stagger: 0.06,
+          scrollTrigger: {
+            trigger: faqRef.current,
+            start: 'top 88%',
+            once: true,
+          },
+        },
+      )
+    },
+    { scope: faqRef },
+  )
 
   return (
-    <section className="mt-20 md:mt-28">
+    <section ref={faqRef} className="mt-20 md:mt-28">
       <div className="flex items-center gap-6 mb-10">
         <H3 className="text-neutral-900 font-heading shrink-0">FAQ</H3>
         <div className="h-[2px] w-full bg-neutral-200" />
@@ -43,18 +76,19 @@ export const Faq = ({ items }: { items?: FaqItem[] }) => {
 
       <Accordion className="flex flex-col gap-4">
         {faqList.map((item, idx) => (
-          <AccordionItem
-            key={idx}
-            value={`faq-${idx}`}
-            className="rounded-[24px] border border-neutral-200 bg-white px-6 shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-shadow not-last:border-b hover:shadow-[0_8px_24px_rgba(0,0,0,0.07)]"
-          >
-            <AccordionTrigger className="gap-6 py-5 font-sans text-base font-semibold text-neutral-900 hover:no-underline [&_[data-slot=accordion-trigger-icon]]:mt-0.5 [&_[data-slot=accordion-trigger-icon]]:size-5 [&_[data-slot=accordion-trigger-icon]]:text-primary-400">
-              {item.question}
-            </AccordionTrigger>
-            <AccordionContent className="pb-5">
-              <B4 className="font-sans text-neutral-600">{item.answer}</B4>
-            </AccordionContent>
-          </AccordionItem>
+          <div key={idx} className="faq-item will-change-transform">
+            <AccordionItem
+              value={`faq-${idx}`}
+              className="rounded-[24px] border border-neutral-200 bg-white px-6 shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-shadow not-last:border-b hover:shadow-[0_8px_24px_rgba(0,0,0,0.07)]"
+            >
+              <AccordionTrigger className="gap-6 py-5 font-sans text-base font-semibold text-neutral-900 hover:no-underline [&_[data-slot=accordion-trigger-icon]]:mt-0.5 [&_[data-slot=accordion-trigger-icon]]:size-5 [&_[data-slot=accordion-trigger-icon]]:text-primary-400">
+                {item.question}
+              </AccordionTrigger>
+              <AccordionContent className="pb-5">
+                <B4 className="font-sans text-neutral-600">{item.answer}</B4>
+              </AccordionContent>
+            </AccordionItem>
+          </div>
         ))}
       </Accordion>
     </section>
