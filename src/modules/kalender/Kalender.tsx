@@ -266,25 +266,22 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
   return (
     <main className="w-full relative min-h-screen bg-white">
-      {/* Inline styles for mobile horizontal card spread when in view with smooth stagger delay */}
+      {/* Inline styles for mobile horizontal card spread when in view (opens simultaneously) */}
       <style jsx global>{`
         @media (max-width: 767px) {
           .photo-stack-container .photo-layer-left,
           .photo-stack-container .photo-layer-center,
           .photo-stack-container .photo-layer-right {
-            transition: transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
           }
           .photo-stack-container.is-open .photo-layer-left {
             transform: translate(-34%, -2%) rotate(-9deg) scale(0.96) !important;
-            transition-delay: 250ms !important;
           }
           .photo-stack-container.is-open .photo-layer-center {
             transform: translate(0%, -6%) rotate(0deg) scale(1.02) !important;
-            transition-delay: 380ms !important;
           }
           .photo-stack-container.is-open .photo-layer-right {
             transform: translate(34%, -2%) rotate(9deg) scale(0.96) !important;
-            transition-delay: 500ms !important;
           }
         }
       `}</style>
