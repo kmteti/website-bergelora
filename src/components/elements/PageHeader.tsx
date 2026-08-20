@@ -44,8 +44,8 @@ export function PageHeader({
 
       {/* Wrapper Konten Teks */}
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="relative z-10 flex h-full flex-col justify-end pb-[145px] sm:pb-[175px] md:pb-[205px] lg:pb-[220px] w-full px-6 sm:px-12 md:px-20 lg:px-28 pointer-events-none">
-          <div className="flex items-center justify-between w-full pointer-events-auto gap-4 max-w-7xl mx-auto">
+        <div className="relative z-10 flex h-full flex-col justify-end pb-[145px] sm:pb-[175px] md:pb-[205px] lg:pb-[220px] w-full pointer-events-none">
+          <div className="mx-auto w-full max-w-6xl px-4 md:px-8 flex items-center justify-between pointer-events-auto gap-4">
             <div className="flex items-center gap-3.5 sm:gap-5 md:gap-6 min-w-0 flex-1">
               {/* Render Icon */}
               {iconSrc && (
