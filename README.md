@@ -1,88 +1,183 @@
-# Website Bergelora
+<div align="center">
+  <a href="https://kmteti.ft.ugm.ac.id">
+    <img src="./public/logo/kmteti/vertical-white.svg#gh-dark-mode-only" alt="KMTETI FT UGM Logo" width="84" height="110" />
+    <img src="./public/logo/kmteti/vertical-black.svg#gh-light-mode-only" alt="KMTETI FT UGM Logo" width="84" height="110" />
+  </a>
+  <h1 align="center">Website Bergelora</h1>
+  <p align="center">
+    <i>Official Web Portal of Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM 🚀</i>
+  </p>
 
-Repository front-end untuk website KMTETI, dibangun dengan Next.js, React, TypeScript, dan Tailwind CSS.
+  <p align="center">
+    <a href="https://github.com/kmteti/website-bergelora/actions"><img src="https://img.shields.io/badge/build-passing-brightgreen?style=flat-square" alt="Build Status" /></a>
+    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js 15" /></a>
+    <a href="https://payloadcms.com"><img src="https://img.shields.io/badge/Payload_CMS-3.0-black?style=flat-square&logo=payloadcms" alt="Payload CMS 3.0" /></a>
+    <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase" alt="Supabase" /></a>
+    <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss" alt="Tailwind CSS v4" /></a>
+    <a href="https://greensock.com/gsap/"><img src="https://img.shields.io/badge/GSAP-ScrollTrigger-88CE02?style=flat-square&logo=greensock" alt="GSAP" /></a>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License" /></a>
+  </p>
 
-## Deskripsi
+  <p align="center">
+    <a href="https://instagram.com/kmteti.ugm"><img src="https://img.shields.io/badge/Instagram-@kmteti.ugm-E4405F?style=flat-square&logo=instagram" alt="Instagram" /></a>
+    <a href="https://tiktok.com/@kmteti_ugm"><img src="https://img.shields.io/badge/TikTok-@kmteti_ugm-000000?style=flat-square&logo=tiktok" alt="TikTok" /></a>
+    <a href="https://www.youtube.com/@KMTETIFtUgm"><img src="https://img.shields.io/badge/YouTube-KMTETI_FT_UGM-FF0000?style=flat-square&logo=youtube" alt="YouTube" /></a>
+    <a href="https://page.line.me/ugm.kmteti"><img src="https://img.shields.io/badge/Line-@ugm.kmteti-00C300?style=flat-square&logo=line" alt="Line" /></a>
+    <a href="https://linkedin.com/company/kmteti-ft-ugm"><img src="https://img.shields.io/badge/LinkedIn-KMTETI_FT_UGM-0A66C2?style=flat-square&logo=linkedin" alt="LinkedIn" /></a>
+  </p>
+</div>
 
-Website Bergelora berisi halaman, layout, komponen UI, dan modul konten untuk kebutuhan situs KMTETI.
+<p align="center">
+  <img src="./public/images/readme/header.png" alt="Website Bergelora Showcase Header" width="100%" />
+</p>
 
-## Fitur Utama
+---
 
-- Struktur routing menggunakan Next.js App Router.
-- Komponen UI terorganisir di `src/components`.
-- Styling menggunakan Tailwind CSS.
-- Pengujian dengan Vitest dan Playwright.
+## 📌 Pendahuluan
 
-## Tech Stack
+**Website Bergelora** adalah platform web terpadu resmi **KMTETI FT UGM** yang dirancang untuk menjadi pusat informasi organisasi, publikasi berita, profil kabinet, direktori program kerja divisi & BSO, informasi event nasional, serta pusat layanan akademik dan persuratan bagi seluruh civitas akademika DTETI FT UGM.
 
-- Next.js 15
-- React 19
-- TypeScript
-- Tailwind CSS
-- pnpm
+Dibangun dengan standar rekayasa perangkat lunak modern: **Next.js 15 App Router**, **Payload CMS 3.0**, **PostgreSQL & Storage via Supabase**, **Tailwind CSS v4**, dan animasi interaktif **GSAP ScrollTrigger**.
 
-## Struktur Proyek
+---
 
-```text
-app/              Route dan halaman Next.js
-src/components/   Komponen UI dan layout
-public/           Aset publik seperti gambar dan favicon
-package.json      Skrip dan dependensi proyek
+## 📸 Pages & Features Showcase
+
+<details open>
+<summary><b>Klik untuk melihat galeri fitur & antarmuka halaman</b></summary>
+<br />
+
+<p align="center">
+  <img width="49%" src="./public/images/readme/profil.png" alt="Halaman Profil & Struktur Kabinet" />
+  &nbsp;
+  <img width="49%" src="./public/images/readme/news.png" alt="Halaman Berita & Artikel KMTETI" />
+</p>
+
+<p align="center">
+  <img width="49%" src="./public/images/readme/divisi.png" alt="Halaman Detail Program Kerja Divisi" />
+  &nbsp;
+  <img width="49%" src="./public/images/readme/bso.png" alt="Halaman Badan Semi Otonom (BSO)" />
+</p>
+
+<p align="center">
+  <img width="49%" src="./public/images/readme/kalender.png" alt="Halaman Kalender Interaktif" />
+  &nbsp;
+  <img width="49%" src="./public/images/readme/layanan.png" alt="Halaman Direktori Layanan Publik" />
+</p>
+
+<p align="center">
+  <img width="49%" src="./public/images/readme/hubungi.png" alt="Halaman Formulir Kontak Eksternal" />
+  &nbsp;
+  <img width="49%" src="./public/images/readme/faq.png" alt="Halaman FAQ & Bantuan" />
+</p>
+
+</details>
+
+---
+
+## 🛠️ Tech Stack & Arsitektur
+
+| Komponen | Teknologi | Keterangan |
+| :--- | :--- | :--- |
+| **Framework Utama** | [Next.js 15](https://nextjs.org) (React 19) | App Router, Server Components, Image Optimization |
+| **Bahasa** | [TypeScript](https://www.typescriptlang.org) | Strict type-safety end-to-end |
+| **Content Management** | [Payload CMS 3.0](https://payloadcms.com) | Embedded Admin Panel, Lexical RichText Editor, Local API |
+| **Database** | [PostgreSQL (Supabase)](https://supabase.com) | Connection pooling via `@payloadcms/db-postgres` |
+| **Media Storage** | [Supabase Storage (S3 API)](https://supabase.com) | S3 protocol via `@payloadcms/storage-s3` |
+| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com) + [Radix UI](https://www.radix-ui.com) | Modern Design Tokens & Glassmorphism |
+| **Animasi Interaktif** | [GSAP ScrollTrigger](https://greensock.com/gsap) | GPU-accelerated Masked Curtain & Stagger waterfall |
+| **Sinkronisasi Kontak** | Google Apps Script API | Sinkronisasi background otomatis form ke Google Sheets |
+
+---
+
+## 🚀 Panduan Memulai (Getting Started)
+
+### 1. Prasyarat Sistem
+Pastikan perangkat Anda telah terpasang:
+- **Node.js**: Versi `^18.20.2` atau `>=20.9.0`
+- **Package Manager**: `npm` atau `pnpm` (`^9` / `^10`)
+- **Git**
+
+### 2. Kloning Repositori
+```bash
+git clone https://github.com/kmteti/website-bergelora.git
+cd website-bergelora
 ```
 
-## Persyaratan
+### 3. Konfigurasi Variabel Lingkungan (`.env`)
+Salin file template `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+Isi nilai-nilai variabel lingkungan seperti `DATABASE_URI`, `PAYLOAD_SECRET`, dan kredensial Supabase S3 sesuai panduan di [docs/05-database-and-storage.md](docs/05-database-and-storage.md).
 
-- Node.js `^18.20.2` atau `>=20.9.0`
-- pnpm `^9` atau `^10`
+### 4. Instalasi Dependensi
+```bash
+npm install
+# atau menggunakan pnpm
+pnpm install
+```
 
-## Instalasi
+### 5. Menjalankan Server Pengembangan
+```bash
+npm run dev
+# atau
+pnpm dev
+```
+Buka [http://localhost:3000](http://localhost:3000) di browser untuk melihat website, dan [http://localhost:3000/admin](http://localhost:3000/admin) untuk masuk ke panel admin Payload CMS.
 
-1. Pasang dependensi.
+---
 
-   ```bash
-   pnpm install
-   ```
+## 📋 Daftar Perintah Tersedia (Available Scripts)
 
-2. Jalankan server pengembangan.
+| Perintah | Fungsi |
+| :--- | :--- |
+| `npm run dev` | Menjalankan server pengembangan Next.js |
+| `npm run build` | Melakukan build produksi dan validasi rute statis/dinamis |
+| `npm run start` | Menjalankan server produksi hasil build |
+| `npm run lint` | Menjalankan ESLint untuk memeriksa kualitas kode |
+| `npm run generate:types` | Meregenerasi file tipe TypeScript dari schema Payload (`src/payload-types.ts`) |
+| `npm run generate:importmap` | Meregenerasi import map untuk custom admin components |
+| `npm run devsafe` | Menghapus cache `.next` lalu menjalankan server pengembangan |
 
-   ```bash
-   pnpm dev
-   ```
+---
 
-3. Buka aplikasi di browser.
+## 📚 Dokumentasi Teknis Lengkap
 
-   ```text
-   http://localhost:3000
-   ```
+Dokumentasi arsitektur dan sistem Website Bergelora telah disusun secara menyeluruh di dalam folder `docs/`:
 
-## Perintah Penting
+1. 🏛️ **[01. Architecture & Component Catalog](docs/01-architecture-overview.md)** — Pola pemisahan modul, hierarki layout, 16 rute URL, dan katalog komponen UI.
+2. 📦 **[02. Payload CMS 3.0 Guide](docs/02-payload-cms-guide.md)** — Arsitektur CMS, Local API, bedah 10 Collections, dan strategi migrasi.
+3. 🎨 **[03. Design System & Animation Guide](docs/03-design-guide.md)** — Palet warna, tipografi, token glassmorphism, dan panduan animasi GSAP ScrollTrigger.
+4. 📝 **[04. Form & External Integrations](docs/04-form-integrations.md)** — Multi-step contact form, sinkronisasi Google Sheets Webhook, dan WhatsApp Deep-link.
+5. 🗄️ **[05. Database & Storage Architecture](docs/05-database-and-storage.md)** — Konfigurasi PostgreSQL Supabase, pooling, dan Supabase Storage S3.
 
-| Perintah | Keterangan |
-| --- | --- |
-| `pnpm dev` | Menjalankan server pengembangan |
-| `pnpm build` | Membuat build produksi |
-| `pnpm start` | Menjalankan build produksi |
-| `pnpm lint` | Menjalankan linter Next.js |
-| `pnpm test` | Menjalankan unit/integration test dan e2e test |
-| `pnpm run test:int` | Menjalankan test unit/integrasi dengan Vitest |
-| `pnpm run test:e2e` | Menjalankan test e2e dengan Playwright |
-| `pnpm run devsafe` | Menghapus cache `.next` lalu menjalankan server pengembangan |
+---
 
-## Pengembangan
+## 👥 Kontributor & Tim Pengembang
 
-- Gunakan `pnpm dev` untuk menjalankan proyek secara lokal.
-- Jika cache Next.js bermasalah, gunakan `pnpm run devsafe`.
-- Perubahan di folder `app`, `src`, dan `public` akan terbaca saat server pengembangan berjalan.
-- Pastikan `sharp` tetap terpasang karena digunakan untuk optimasi gambar.
+Terima kasih kepada seluruh kontributor yang telah membangun dan mengembangkan Website Bergelora:
 
-## Deployment
+<p align="center">
+  <a href="https://github.com/kmteti/website-bergelora/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=kmteti/website-bergelora" alt="Contributors" />
+  </a>
+</p>
 
-Proyek ini dapat dideploy ke platform yang mendukung Next.js seperti Vercel, Netlify, atau Fly.io. Ikuti konfigurasi deployment sesuai platform pilihan.
+### 💻 Developer Team:
+- **Muhammad Khoirunas** ([@nas-ta](https://github.com/nas-ta) / [@khoirunas](https://github.com/khoirunas))
+- **Aulia Nur Fajri Tri Anggoro** ([@ancung](https://github.com/ancung))
+- **Muhammad Farrel Al Ghazy** ([@Yeypayeyy](https://github.com/Yeypayeyy) / [@farrel-ag](https://github.com/farrel-ag))
+- **Alfian Adicandra** ([@alfianadicandra](https://github.com/alfianadicandra))
+- **Dien Muhammad** ([@Scientivan](https://github.com/Scientivan))
+- Serta seluruh fungsionaris **Divisi Informasi dan Komunikasi (Infokom) KMTETI FT UGM**.
 
-## Kontribusi
+---
 
-Silakan buka issue atau pull request. Ikuti standar kode proyek dengan ESLint dan Prettier sebelum mengirim perubahan.
+## 📄 Lisensi
 
-## Lisensi
+Proyek ini dilisensikan di bawah lisensi **MIT License** — lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
-MIT
+<div align="center">
+  <sub>Dibangun dengan ❤️ dan Semangat Bergelora oleh <b>Divisi Infokom KMTETI FT UGM</b></sub>
+</div>
