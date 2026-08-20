@@ -182,8 +182,8 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
           {/* Header Title & Navigation Row with Masked Curtain Entrance */}
           <div ref={headerRef} className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 mb-32 md:mb-28 relative z-10">
             {/* Title with vertical rolling ticker animation & entrance mask */}
-            <div className="overflow-hidden py-1">
-              <div ref={titleWrapperRef} className="will-change-transform">
+            <div className="overflow-hidden py-2 -my-2 px-1 -mx-1">
+              <div ref={titleWrapperRef} className="will-change-transform pb-1">
                 <H2
                   className={cn(
                     "text-primary-500 transition-transform transform-gpu will-change-transform",
@@ -197,9 +197,9 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
               </div>
             </div>
 
-            {/* Navigation Group with entrance mask */}
-            <div className="overflow-hidden py-1">
-              <div ref={navGroupRef} className="flex items-center gap-4 will-change-transform">
+            {/* Navigation Group with entrance mask (padding to prevent shadow clipping) */}
+            <div className="overflow-hidden py-3 -my-3 px-2 -mx-2">
+              <div ref={navGroupRef} className="flex items-center gap-4 will-change-transform py-1">
                 {/* Left Arrow Button */}
                 <Button
                   variant="black"

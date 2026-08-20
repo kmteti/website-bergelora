@@ -125,13 +125,13 @@ export default function Life() {
         <div className="relative z-10 w-full flex flex-col items-center">
           {/* Header Section matching KMTETI News typography & layout with masked reveal */}
           <div ref={headerRef} className="container mx-auto px-6 sm:px-8 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-start gap-8 mb-4 md:mb-6">
-            <div className="overflow-hidden md:w-1/3">
-              <H2 ref={titleRef} className="text-[#0a4c5a] font-semibold text-left will-change-transform">
+            <div className="overflow-hidden py-2 -my-2 px-1 -mx-1 md:w-1/3">
+              <H2 ref={titleRef} className="text-[#0a4c5a] font-semibold text-left will-change-transform pb-1">
                 Life at KMTETI
               </H2>
             </div>
-            <div className="overflow-hidden md:w-1/2">
-              <B2 ref={descRef} className="text-gray-600 text-left leading-relaxed will-change-transform">
+            <div className="overflow-hidden py-2 -my-2 px-1 -mx-1 md:w-1/2">
+              <B2 ref={descRef} className="text-gray-600 text-left leading-relaxed will-change-transform pb-1">
                 KMTETI adalah ruang untuk tumbuh, bereksplorasi, dan menciptakan sesuatu bersama. Temukan beragam perspektif, ide-ide baru, dan pengalaman yang mendorongmu untuk terus belajar dan berkembang.
               </B2>
             </div>

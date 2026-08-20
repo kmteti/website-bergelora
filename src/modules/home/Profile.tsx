@@ -110,15 +110,15 @@ export default function Profile() {
 
           <div ref={headerRef} className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center relative z-10">
             {/* Title */}
-            <div className="overflow-hidden mb-4 md:mb-6">
-              <H2 ref={titleRef} className="text-[#0a4c5a] font-semibold will-change-transform">
+            <div className="overflow-hidden py-2 -my-2 px-2 -mx-2 mb-4 md:mb-6">
+              <H2 ref={titleRef} className="text-[#0a4c5a] font-semibold will-change-transform pb-1">
                 Ruang Tumbuh Bersama
               </H2>
             </div>
             
             {/* Description */}
-            <div className="overflow-hidden max-w-3xl mb-6 md:mb-10">
-              <B2 ref={descRef} className="text-gray-700 leading-relaxed text-sm md:text-base will-change-transform">
+            <div className="overflow-hidden py-2 -my-2 px-2 -mx-2 max-w-3xl mb-6 md:mb-10">
+              <B2 ref={descRef} className="text-gray-700 leading-relaxed text-sm md:text-base will-change-transform pb-1">
                 KMTETI hadir sebagai wadah bagi mahasiswa untuk mengembangkan potensi, memperluas wawasan, dan membangun kolaborasi. Melalui berbagai program, layanan internal, serta informasi yang terpusat, kami mendukung setiap anggota untuk berproses, berkarya, dan memberikan kontribusi nyata bagi lingkungan kampus.
               </B2>
             </div>

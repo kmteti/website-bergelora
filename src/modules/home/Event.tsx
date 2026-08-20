@@ -133,15 +133,15 @@ export default function Event() {
 
         <div className="relative flex w-full flex-col">
           <div ref={headerRef} className="mx-auto mb-14 flex w-full max-w-6xl items-center justify-between gap-6 px-4 md:mb-20 md:px-8">
-            <div className="overflow-hidden py-1">
-              <H2 ref={titleRef} className="text-left text-[#0a4c5a] will-change-transform">
+            <div className="overflow-hidden py-2 -my-2 px-1 -mx-1">
+              <H2 ref={titleRef} className="text-left text-[#0a4c5a] will-change-transform pb-1">
                 Event Ternama Nasional
               </H2>
             </div>
 
             {/* Di mobile nggak muat sebelah judul, jadi kontrolnya pakai dot di bawah track */}
-            <div className="hidden shrink-0 items-center gap-3 md:flex overflow-hidden py-1">
-              <div ref={navRef} className="flex items-center gap-3 will-change-transform">
+            <div className="hidden shrink-0 items-center gap-3 md:flex overflow-hidden py-3 -my-3 px-2 -mx-2">
+              <div ref={navRef} className="flex items-center gap-3 will-change-transform py-1">
                 <Button
                   variant="black"
                   size="icon"
