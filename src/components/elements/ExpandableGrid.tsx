@@ -37,18 +37,18 @@ export function ExpandableGrid({
       gsap.fromTo(
         '.grid-card-item',
         {
-          y: 36,
+          y: 30,
           opacity: 0,
         },
         {
           y: 0,
           opacity: 1,
-          duration: 0.7,
-          ease: 'power3.out',
-          stagger: 0.08, // 80ms stagger delay dari kiri ke kanan
+          duration: 0.55,
+          ease: 'power2.out',
+          stagger: 0.06, // Snappy 60ms stagger delay per card
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 85%',
+            start: 'top 88%',
             once: true,
           },
         },
@@ -74,7 +74,7 @@ export function ExpandableGrid({
             <div
               key={index}
               className={cn(
-                'grid-card-item will-change-transform transition-all duration-500 ease-in-out',
+                'grid-card-item will-change-transform',
                 isVisibleOnMobile
                   ? 'block'
                   : 'hidden sm:block', // Hidden on mobile, always visible on tablet/desktop (sm:)
