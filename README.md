@@ -3,7 +3,7 @@
     <img src="./public/logo/kmteti/vertical-white.svg#gh-dark-mode-only" alt="KMTETI FT UGM Logo" width="84" height="110" />
     <img src="./public/logo/kmteti/vertical-black.svg#gh-light-mode-only" alt="KMTETI FT UGM Logo" width="84" height="110" />
   </a>
-  <h1 align="center">Website Bergelora</h1>
+  <h1 align="center">Website KMTETI FT UGM</h1>
   <p align="center">
     <i>Official Web Portal of Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM 🚀</i>
   </p>
@@ -28,16 +28,16 @@
 </div>
 
 <p align="center">
-  <img src="./public/images/readme/header.png" alt="Website Bergelora Showcase Header" width="100%" />
+  <img src="./public/images/readme/header.png" alt="Website KMTETI FT UGM Showcase Header" width="100%" />
 </p>
 
 ---
 
 ## 📌 Pendahuluan
 
-**Website Bergelora** adalah platform web terpadu resmi **KMTETI FT UGM** yang dirancang untuk menjadi pusat informasi organisasi, publikasi berita, profil kabinet, direktori program kerja divisi & BSO, informasi event nasional, serta pusat layanan akademik dan persuratan bagi seluruh civitas akademika DTETI FT UGM.
+**Website KMTETI FT UGM** adalah platform web terpadu resmi yang dirancang untuk menjadi pusat informasi organisasi, publikasi berita kegiatan, profil kepengurusan kabinet, direktori program kerja divisi & BSO, informasi event nasional, serta pusat layanan akademik dan persuratan bagi seluruh civitas akademika Departemen Teknik Elektro dan Teknologi Informasi FT UGM.
 
-Dibangun dengan standar rekayasa perangkat lunak modern: **Next.js 15 App Router**, **Payload CMS 3.0**, **PostgreSQL & Storage via Supabase**, **Tailwind CSS v4**, dan animasi interaktif **GSAP ScrollTrigger**.
+Website ini dibangun dengan standar rekayasa perangkat lunak modern: **Next.js 15 App Router**, **Payload CMS 3.0**, **PostgreSQL & Storage via Supabase**, **Tailwind CSS v4**, dan animasi interaktif **GSAP ScrollTrigger**.
 
 ---
 
@@ -144,7 +144,7 @@ Buka [http://localhost:3000](http://localhost:3000) di browser untuk melihat web
 
 ## 📚 Dokumentasi Teknis Lengkap
 
-Dokumentasi arsitektur dan sistem Website Bergelora telah disusun secara menyeluruh di dalam folder `docs/`:
+Dokumentasi arsitektur dan sistem Website KMTETI FT UGM telah disusun secara menyeluruh di dalam folder `docs/`:
 
 1. 🏛️ **[01. Architecture & Component Catalog](docs/01-architecture-overview.md)** — Pola pemisahan modul, hierarki layout, 16 rute URL, dan katalog komponen UI.
 2. 📦 **[02. Payload CMS 3.0 Guide](docs/02-payload-cms-guide.md)** — Arsitektur CMS, Local API, bedah 10 Collections, dan strategi migrasi.
@@ -156,7 +156,7 @@ Dokumentasi arsitektur dan sistem Website Bergelora telah disusun secara menyelu
 
 ## 👥 Kontributor & Tim Pengembang
 
-Terima kasih kepada seluruh kontributor yang telah membangun dan mengembangkan Website Bergelora:
+Terima kasih kepada seluruh kontributor yang telah membangun dan mengembangkan Website KMTETI FT UGM:
 
 <p align="center">
   <a href="https://github.com/kmteti/website-bergelora/graphs/contributors">
@@ -179,5 +179,5 @@ Terima kasih kepada seluruh kontributor yang telah membangun dan mengembangkan W
 Proyek ini dilisensikan di bawah lisensi **MIT License** — lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
 <div align="center">
-  <sub>Dibangun dengan ❤️ dan Semangat Bergelora oleh <b>Divisi Infokom KMTETI FT UGM</b></sub>
+  <sub>Dibangun dengan ❤️ oleh <b>Divisi Infokom KMTETI FT UGM</b></sub>
 </div>
