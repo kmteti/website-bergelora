@@ -9,6 +9,7 @@ import { H3 } from '@/components/elements/Typography'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Hourglass } from 'lucide-react'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -19,12 +20,19 @@ interface MonthlyAgenda {
   items: string[]
 }
 
-const IMGS = [
-  '/images/home/life/envelope-image/1.webp',
-  '/images/home/life/envelope-image/2.webp',
-  '/images/home/life/envelope-image/3.webp',
-]
-const pics = (i: number) => [IMGS[i % 3], IMGS[(i + 1) % 3], IMGS[(i + 2) % 3]]
+// Foto per bulan: /public/images/kalender/agenda/<slug-bulan>/1.webp, 2.webp, 3.webp
+// Ganti file di folder itu untuk ganti foto — tidak perlu ubah kode.
+const pics = (month: string) => {
+  const slug = month
+    .toLowerCase()
+    .replace(/[^a-z]+/g, '-')
+    .replace(/^-|-$/g, '')
+  return [1, 2, 3].map((n) => `/images/kalender/agenda/${slug}/${n}.webp`)
+}
+
+// Bulan yang fotonya belum ada → stack-nya ditutup overlay "Coming Soon".
+// Hapus bulannya dari sini setelah fotonya diisi.
+const COMING_SOON = new Set(['September', 'Oktober', 'November', 'Desember'])
 
 const staticAgendaData: MonthlyAgenda[] = [
   {
@@ -345,7 +353,8 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
 
               {agendaData.map((data, idx) => {
                 const isEven = idx % 2 === 0 // Even index: Card on left, photo on right. Odd index: photo on left, Card on right.
-                const photos = pics(idx)
+                const photos = pics(data.month)
+                const soon = COMING_SOON.has(data.month)
 
                 return (
                   <div
@@ -392,6 +401,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                             className="object-cover"
                             sizes="(max-width: 768px) 210px, 260px"
                           />
+                          {soon && <div className="absolute inset-0 bg-[#0D627C]/60" />}
                         </div>
                         {/* Kartu kiri (layer 2) */}
                         <div className="photo-layer-left absolute w-[91.1%] h-[90.9%] left-[-5.3%] top-[2.9%] rounded-[24px] sm:rounded-[36px] md:rounded-[40px] border-3 sm:border-4 border-white shadow-[0px_8px_25px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 -rotate-[5deg] transition-transform duration-[600ms] delay-[40ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform md:group-hover:-translate-x-[45%] md:group-hover:-translate-y-[46%] md:group-hover:-rotate-[4deg]">
@@ -402,6 +412,7 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                             className="object-cover"
                             sizes="(max-width: 768px) 210px, 260px"
                           />
+                          {soon && <div className="absolute inset-0 bg-[#0D627C]/60" />}
                         </div>
                         {/* Kartu tengah (layer 3) */}
                         <div className="photo-layer-center absolute w-[91.1%] h-[90.9%] left-[1.9%] top-[4.6%] rounded-[24px] sm:rounded-[36px] md:rounded-[40px] border-3 sm:border-4 border-white shadow-[0px_8px_25px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 transition-transform duration-[600ms] delay-[80ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform md:group-hover:translate-x-[5%] md:group-hover:translate-y-[20%] md:group-hover:rotate-[1deg]">
@@ -412,6 +423,17 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                             className="object-cover"
                             sizes="(max-width: 768px) 210px, 260px"
                           />
+                          {soon && (
+                            <div className="absolute inset-0 bg-[#0D627C]/60 flex flex-col items-center justify-center gap-1.5 text-white px-3 text-center">
+                              <Hourglass className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
+                              <span className="font-heading text-lg sm:text-xl md:text-2xl leading-tight">
+                                {data.month}
+                              </span>
+                              <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.2em] uppercase">
+                                Coming Soon
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
