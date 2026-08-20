@@ -4,10 +4,6 @@
   </a>
   <h1 align="center">Website KMTETI FT UGM</h1>
   <p align="center">
-    <i>Official Web Portal of Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM 🚀</i>
-  </p>
-
-  <p align="center">
     <a href="https://instagram.com/kmteti.ugm"><img src="https://img.shields.io/badge/Instagram-@kmteti.ugm-E4405F?style=flat-square&logo=instagram" alt="Instagram" /></a>
     <a href="https://tiktok.com/@kmteti_ugm"><img src="https://img.shields.io/badge/TikTok-@kmteti_ugm-000000?style=flat-square&logo=tiktok" alt="TikTok" /></a>
     <a href="https://www.youtube.com/@KMTETIFtUgm"><img src="https://img.shields.io/badge/YouTube-KMTETI_FT_UGM-FF0000?style=flat-square&logo=youtube" alt="YouTube" /></a>
