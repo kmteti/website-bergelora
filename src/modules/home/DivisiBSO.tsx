@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react'
 import { B3, H2, H4 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import FolderCarousel, { FolderCarouselRef, FolderData } from './components/FolderCarousel'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
@@ -76,6 +77,8 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
   const carouselRef = useRef<FolderCarouselRef>(null)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<Tab>('divisi')
+  const [animPhase, setAnimPhase] = useState<'idle' | 'exit' | 'enter'>('idle')
+  const isTransitioningRef = useRef(false)
 
   const divisiData = useMemo(
     () =>
@@ -95,10 +98,30 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
       : 'Hover di salah satu folder untuk melihat detail mengenai BSO.'
 
   const handleTabChange = useCallback(
-    (tab: Tab) => {
-      if (tab === activeTab) return
+    (nextTab: Tab) => {
+      if (nextTab === activeTab || isTransitioningRef.current) return
+      isTransitioningRef.current = true
       setActiveIndex(null)
-      setActiveTab(tab)
+
+      // Step 1: Slide down current folders physically (no opacity fade)
+      setAnimPhase('exit')
+
+      setTimeout(() => {
+        // Step 2: Switch data & reset scroll position
+        setActiveTab(nextTab)
+        carouselRef.current?.resetScroll()
+
+        // Prepare entering state positioned down below
+        setAnimPhase('enter')
+
+        // Step 3: Trigger physical slide up into place
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            setAnimPhase('idle')
+            isTransitioningRef.current = false
+          }, 30)
+        })
+      }, 320)
     },
     [activeTab],
   )
@@ -120,8 +143,8 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
         <div className="relative w-full flex flex-col flex-grow">
           {/* Header Title & Navigation Row */}
           <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 mb-32 md:mb-28 relative z-10">
-            {/* Title (animated) */}
-            <H2 className="text-primary-500 transition-opacity duration-300">
+            {/* Title */}
+            <H2 className="text-primary-500">
               {activeTab === 'divisi' ? 'Divisi' : 'Badan Semi Otonom'}
             </H2>
 
@@ -171,8 +194,15 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
             </div>
           </div>
 
-          {/* Reusable Carousel Component - kept mounted for stable layout height */}
-          <div className="relative z-10">
+          {/* Reusable Carousel Component with pure physical slide-down / slide-up transition */}
+          <div 
+            className={cn(
+              "relative z-10 transition-transform transform-gpu will-change-transform",
+              animPhase === 'exit' && "translate-y-[450px] duration-300 ease-[cubic-bezier(0.32,0,0.67,0)] pointer-events-none",
+              animPhase === 'enter' && "translate-y-[450px] duration-0",
+              animPhase === 'idle' && "translate-y-0 duration-600 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            )}
+          >
             <FolderCarousel
               ref={carouselRef}
               data={currentData}
