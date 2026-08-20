@@ -136,11 +136,11 @@ Buka [http://localhost:3000](http://localhost:3000) di browser untuk melihat web
 
 Dokumentasi arsitektur dan sistem Website KMTETI FT UGM telah disusun secara menyeluruh di dalam folder `docs/`:
 
-1. 🏛️ **[01. Architecture & Component Catalog](docs/01-architecture-overview.md)** — Pola pemisahan modul, hierarki layout, 16 rute URL, dan katalog komponen UI.
-2. 📦 **[02. Payload CMS 3.0 Guide](docs/02-payload-cms-guide.md)** — Arsitektur CMS, Local API, bedah 10 Collections, dan strategi migrasi.
-3. 🎨 **[03. Design System & Animation Guide](docs/03-design-guide.md)** — Palet warna, tipografi, token glassmorphism, dan panduan animasi GSAP ScrollTrigger.
-4. 📝 **[04. Form & External Integrations](docs/04-form-integrations.md)** — Multi-step contact form, sinkronisasi Google Sheets Webhook, dan WhatsApp Deep-link.
-5. 🗄️ **[05. Database & Storage Architecture](docs/05-database-and-storage.md)** — Konfigurasi PostgreSQL Supabase, pooling, dan Supabase Storage S3.
+1. 🏛️ **[01. Architecture & Component Catalog](docs/01-architecture-overview.md)**: Pola pemisahan modul, hierarki layout, 16 rute URL, dan katalog komponen UI.
+2. 📦 **[02. Payload CMS 3.0 Guide](docs/02-payload-cms-guide.md)**: Arsitektur CMS, Local API, bedah 10 Collections, dan strategi migrasi.
+3. 🎨 **[03. Design System & Animation Guide](docs/03-design-guide.md)**: Palet warna, tipografi, token glassmorphism, dan panduan animasi GSAP ScrollTrigger.
+4. 📝 **[04. Form & External Integrations](docs/04-form-integrations.md)**: Multi-step contact form, sinkronisasi Google Sheets Webhook, dan WhatsApp Deep-link.
+5. 🗄️ **[05. Database & Storage Architecture](docs/05-database-and-storage.md)**: Konfigurasi PostgreSQL Supabase, pooling, dan Supabase Storage S3.
 
 ---
 
@@ -158,7 +158,7 @@ Website ini dikembangkan dan dikelola secara aktif oleh **Divisi Informasi dan K
 
 ## 📄 Lisensi
 
-Proyek ini dilisensikan di bawah lisensi **MIT License** — lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
+Proyek ini dilisensikan di bawah lisensi **MIT License** (lihat file [LICENSE](LICENSE) untuk detail lebih lanjut).
 
 <div align="center">
   <sub><b>Teti Satu!</b></sub>
