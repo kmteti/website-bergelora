@@ -90,7 +90,7 @@ export default function Life() {
         ref={sectionRef}
         data-navbar-tone="light"
         id="life"
-        className="w-full flex flex-col justify-between min-h-[min(620px,100svh)] md:min-h-[min(720px,100svh)] bg-[#F7FAFC] pt-[104px] md:pt-[118px] pb-0 relative overflow-hidden rounded-b-[40px] border-b-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]"
+        className="w-full flex flex-col justify-between min-h-[min(620px,100svh)] md:min-h-[min(720px,100svh)] bg-[#F7FAFC] pt-[72px] md:pt-[118px] pb-0 relative overflow-hidden rounded-b-[40px] border-b-[2px] border-l-[2px] border-r-[2px] border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]"
       >
         {/* Soft blue gradient background at bottom */}
         <div className="absolute inset-x-0 bottom-0 h-[280px] bg-gradient-to-t from-[#D6EEF8]/60 to-transparent pointer-events-none z-0" />
@@ -108,7 +108,9 @@ export default function Life() {
         </div>
 
         {/* Envelope Graphic Area - Shorter envelope height, bottom-anchored */}
-        <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-6 relative mt-auto mb-0 select-none">
+        {/* Di mobile amplop dibatasi lebar layar, bukan calc svh. Padding dibuang lalu dilebihkan
+            ~14% — flap kiri-kanan artwork-nya memang bleed keluar frame, jadi aman dipotong. */}
+        <div className="w-[114%] -ml-[7%] sm:w-full sm:ml-auto sm:mr-auto max-w-[1240px] px-0 sm:px-6 relative mt-auto mb-0 select-none">
           <div className="relative w-full mx-auto flex items-end justify-center aspect-[16/7.5] max-w-[min(1160px,max(320px,calc((100svh_-_372px)*2.1333)))] md:max-w-[min(1160px,max(320px,calc((100svh_-_351px)*2.1333)))] lg:max-w-[min(1160px,max(320px,calc((100svh_-_292px)*2.1333)))]">
             
             {/* Layer 1: Envelope Back */}

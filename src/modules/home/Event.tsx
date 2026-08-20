@@ -87,7 +87,7 @@ export default function Event() {
       <section
         data-navbar-tone="light"
         id="event"
-        className="relative w-full overflow-hidden rounded-b-[40px] border-l-2 border-r-2 border-white bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA] pt-[110px] pb-24 md:pb-32"
+        className="relative w-full overflow-hidden rounded-b-[40px] border-l-2 border-r-2 border-white bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA] pt-[110px] pb-40 md:pb-32"
       >
         {/* Blob gradient — posisi mengikuti Ellipse 6 & 7 di Figma */}
         <div className="pointer-events-none absolute left-[27.4%] top-[75.2%] w-[33vw] max-w-[472px] -translate-x-1/2 -translate-y-1/2 aspect-square rounded-full bg-[#64CAEF] opacity-70 blur-[100px]" />
