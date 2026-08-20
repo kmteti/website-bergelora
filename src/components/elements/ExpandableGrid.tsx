@@ -1,8 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 interface ExpandableGridProps {
   children: React.ReactNode
@@ -19,8 +26,36 @@ export function ExpandableGrid({
   gridClassName = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8',
   moreLabel = 'Lihat lebih banyak',
 }: ExpandableGridProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
   const items = React.Children.toArray(children)
   const [visibleCount, setVisibleCount] = useState(initialLimit)
+
+  useGSAP(
+    () => {
+      if (!containerRef.current) return
+
+      gsap.fromTo(
+        '.grid-card-item',
+        {
+          y: 36,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: 'power3.out',
+          stagger: 0.08, // 80ms stagger delay dari kiri ke kanan
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        },
+      )
+    },
+    { scope: containerRef },
+  )
 
   if (!items || items.length === 0) return null
 
@@ -31,7 +66,7 @@ export function ExpandableGrid({
   }
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div ref={containerRef} className="w-full flex flex-col items-center">
       <div className={cn('w-full', gridClassName)}>
         {items.map((item, index) => {
           const isVisibleOnMobile = index < visibleCount
@@ -39,10 +74,10 @@ export function ExpandableGrid({
             <div
               key={index}
               className={cn(
-                'transition-all duration-500 ease-in-out',
+                'grid-card-item will-change-transform transition-all duration-500 ease-in-out',
                 isVisibleOnMobile
-                  ? 'block animate-in fade-in zoom-in-95'
-                  : 'hidden sm:block' // Hidden on mobile, always visible on tablet/desktop (sm:)
+                  ? 'block'
+                  : 'hidden sm:block', // Hidden on mobile, always visible on tablet/desktop (sm:)
               )}
             >
               {item}
