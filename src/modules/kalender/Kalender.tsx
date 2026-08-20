@@ -216,17 +216,14 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
         })
       })
 
-      // Mobile: Scroll-Triggered Auto Open Photo Stack saat masuk layar HP dengan delay halus
+      // Mobile: Scroll-Triggered Auto Open Photo Stack saat foto itu sendiri masuk layar HP
       mm.add('(max-width: 767px)', () => {
-        const items = gsap.utils.toArray<HTMLElement>('.month-timeline-item')
-        items.forEach((item) => {
-          const photoStack = item.querySelector<HTMLElement>('.photo-stack-container')
-          if (!photoStack) return
-
+        const photoStacks = gsap.utils.toArray<HTMLElement>('.photo-stack-container')
+        photoStacks.forEach((photoStack) => {
           ScrollTrigger.create({
-            trigger: item,
-            start: 'top 65%',
-            end: 'bottom 20%',
+            trigger: photoStack,
+            start: 'top 60%',
+            end: 'bottom 15%',
             toggleClass: { targets: photoStack, className: 'is-open' },
           })
         })
@@ -275,19 +272,19 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
           .photo-stack-container .photo-layer-left,
           .photo-stack-container .photo-layer-center,
           .photo-stack-container .photo-layer-right {
-            transition: transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
           }
           .photo-stack-container.is-open .photo-layer-left {
             transform: translate(-34%, -2%) rotate(-9deg) scale(0.96) !important;
-            transition-delay: 200ms !important;
+            transition-delay: 250ms !important;
           }
           .photo-stack-container.is-open .photo-layer-center {
             transform: translate(0%, -6%) rotate(0deg) scale(1.02) !important;
-            transition-delay: 300ms !important;
+            transition-delay: 380ms !important;
           }
           .photo-stack-container.is-open .photo-layer-right {
             transform: translate(34%, -2%) rotate(9deg) scale(0.96) !important;
-            transition-delay: 400ms !important;
+            transition-delay: 500ms !important;
           }
         }
       `}</style>
