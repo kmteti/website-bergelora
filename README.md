@@ -1,7 +1,6 @@
 <div align="center">
   <a href="https://kmteti.ft.ugm.ac.id">
-    <img src="./public/logo/kmteti/vertical-white.svg#gh-dark-mode-only" alt="KMTETI FT UGM Logo" width="84" height="110" />
-    <img src="./public/logo/kmteti/vertical-black.svg#gh-light-mode-only" alt="KMTETI FT UGM Logo" width="84" height="110" />
+    <img src="./public/favicon/apple-touch-icon.png" alt="KMTETI FT UGM Logo" width="96" height="96" />
   </a>
   <h1 align="center">Website KMTETI FT UGM</h1>
   <p align="center">
