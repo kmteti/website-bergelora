@@ -8,10 +8,10 @@
   </p>
 
   <p align="center">
-    <a href="https://instagram.com/kmteti.ugm"><img src="https://img.shields.io/badge/Instagram-@kmteti.ugm-E4405F?style=flat-square&logo=instagram" alt="Instagram" /></a>
-    <a href="https://tiktok.com/@kmteti_ugm"><img src="https://img.shields.io/badge/TikTok-@kmteti_ugm-000000?style=flat-square&logo=tiktok" alt="TikTok" /></a>
-    <a href="https://www.youtube.com/@KMTETIFtUgm"><img src="https://img.shields.io/badge/YouTube-KMTETI_FT_UGM-FF0000?style=flat-square&logo=youtube" alt="YouTube" /></a>
-    <a href="https://linkedin.com/company/kmteti-ft-ugm"><img src="https://img.shields.io/badge/LinkedIn-KMTETI_FT_UGM-0A66C2?style=flat-square&logo=linkedin" alt="LinkedIn" /></a>
+    <a href="https://www.instagram.com/kmteti.ugm"><img src="https://img.shields.io/badge/Instagram-@kmteti.ugm-E4405F?style=flat-square&logo=instagram" alt="Instagram" /></a>
+    <a href="https://www.tiktok.com/@kmteti_ugm"><img src="https://img.shields.io/badge/TikTok-@kmteti_ugm-000000?style=flat-square&logo=tiktok" alt="TikTok" /></a>
+    <a href="https://www.youtube.com/@KMTETIFtUgm"><img src="https://img.shields.io/badge/YouTube-@KMTETIFtUgm-FF0000?style=flat-square&logo=youtube" alt="YouTube" /></a>
+    <a href="https://www.linkedin.com/company/kmteti-ft-ugm/"><img src="https://img.shields.io/badge/LinkedIn-KMTETI_FT_UGM-0A66C2?style=flat-square&logo=linkedin" alt="LinkedIn" /></a>
   </p>
 </div>
 
