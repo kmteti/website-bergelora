@@ -143,10 +143,19 @@ export default function DivisiBSO({ initialDivisiData }: DivisiBSOProps) {
         <div className="relative w-full flex flex-col flex-grow">
           {/* Header Title & Navigation Row */}
           <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 mb-32 md:mb-28 relative z-10">
-            {/* Title */}
-            <H2 className="text-primary-500">
-              {activeTab === 'divisi' ? 'Divisi' : 'Badan Semi Otonom'}
-            </H2>
+            {/* Title with vertical rolling ticker animation */}
+            <div className="overflow-hidden py-1">
+              <H2
+                className={cn(
+                  "text-primary-500 transition-transform transform-gpu will-change-transform",
+                  animPhase === 'exit' && "-translate-y-full duration-250 ease-in",
+                  animPhase === 'enter' && "translate-y-full duration-0",
+                  animPhase === 'idle' && "translate-y-0 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                )}
+              >
+                {activeTab === 'divisi' ? 'Divisi' : 'Badan Semi Otonom'}
+              </H2>
+            </div>
 
             {/* Navigation Group */}
             <div className="flex items-center gap-4">
