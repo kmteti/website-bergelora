@@ -44,14 +44,13 @@ const staticAgendaData: MonthlyAgenda[] = [
       'Porseniteti',
       'Pelatihan Genap',
       'EP CLASS',
+      'Bukber KMTETI',
     ],
   },
   {
     month: 'April',
     items: [
-      'Porseniteti',
       'Bank Materi',
-      'Pelatihan Genap',
       'EP CLASS',
       'Foto Kabinet & Rilis Pengurus',
       'Makrab',
@@ -63,19 +62,19 @@ const staticAgendaData: MonthlyAgenda[] = [
     items: [
       'Pelatihan Genap',
       'KMTETI Beramal',
-      'EP CLASS',
-      'Jaket KMTETI (Open PO Batch 1)',
+      'Sosialisasi Kerja Praktik',
+      'Jaket KMTETI ',
       'Elektropos',
       'Video Profil',
+      'NESCO'
     ],
   },
   {
     month: 'Juni',
     items: [
       'Bank Materi',
-      'Sosialisasi Kerja Praktik',
       'Bootcamp',
-      'ETT',
+      'Evaluasi Tengah Tahun',
       'Technocorner',
     ],
   },
@@ -83,7 +82,6 @@ const staticAgendaData: MonthlyAgenda[] = [
     month: 'Juli',
     items: [
       'Forum Warga TETI',
-      'Tracer Study Alumni DTETI',
       'Bootcamp',
       'KMTETI Mengabdi',
       'Latihan Rutin',
@@ -94,9 +92,9 @@ const staticAgendaData: MonthlyAgenda[] = [
     month: 'Agustus',
     items: [
       'Pelatihan Ganjil',
-      'TLS',
+      'Teti Lab Skill',
       'Elektropos',
-      'Voltanews (waktu tergantung wisuda)',
+      'Voltanews ',
     ],
   },
   {
@@ -105,7 +103,7 @@ const staticAgendaData: MonthlyAgenda[] = [
       'Pelatihan Ganjil',
       'TETI Programming Week',
       'Public Speaking Training',
-      'Jaket KMTETI dan EP Merch (Open PO Batch 2)',
+      'Jaket KMTETI dan EP Merch ',
       'EP Day',
       'MeIDEA',
     ],
@@ -133,7 +131,7 @@ const staticAgendaData: MonthlyAgenda[] = [
   {
     month: 'Desember',
     items: [
-      'Jaket KMTETI (Pembagian jaket)',
+      'Jaket KMTETI ',
       'EP Merch',
       'After Movie',
     ],
@@ -149,7 +147,7 @@ const staticAgendaData: MonthlyAgenda[] = [
       'Kunjungan',
       'Capstone Resource Sharing Program',
       'Media Adkesma',
-      'El Nino (tanggal menyesuaikan TLS)',
+      'El Nino ',
       'Bank Sponsor',
     ],
   },
@@ -398,10 +396,10 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                             src={photos[0]}
                             alt={`${data.month} 1`}
                             fill
-                            className="object-cover"
+                            className={`object-cover ${soon ? 'blur-[8px] scale-110' : ''}`}
                             sizes="(max-width: 768px) 210px, 260px"
                           />
-                          {soon && <div className="absolute inset-0 bg-[#0D627C]/60" />}
+                          {soon && <div className="absolute inset-0 bg-black/35" />}
                         </div>
                         {/* Kartu kiri (layer 2) */}
                         <div className="photo-layer-left absolute w-[91.1%] h-[90.9%] left-[-5.3%] top-[2.9%] rounded-[24px] sm:rounded-[36px] md:rounded-[40px] border-3 sm:border-4 border-white shadow-[0px_8px_25px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 -rotate-[5deg] transition-transform duration-[600ms] delay-[40ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform md:group-hover:-translate-x-[45%] md:group-hover:-translate-y-[46%] md:group-hover:-rotate-[4deg]">
@@ -409,10 +407,10 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                             src={photos[1]}
                             alt={`${data.month} 2`}
                             fill
-                            className="object-cover"
+                            className={`object-cover ${soon ? 'blur-[8px] scale-110' : ''}`}
                             sizes="(max-width: 768px) 210px, 260px"
                           />
-                          {soon && <div className="absolute inset-0 bg-[#0D627C]/60" />}
+                          {soon && <div className="absolute inset-0 bg-black/35" />}
                         </div>
                         {/* Kartu tengah (layer 3) */}
                         <div className="photo-layer-center absolute w-[91.1%] h-[90.9%] left-[1.9%] top-[4.6%] rounded-[24px] sm:rounded-[36px] md:rounded-[40px] border-3 sm:border-4 border-white shadow-[0px_8px_25px_0px_rgba(0,0,0,0.18)] overflow-hidden bg-gray-100 transition-transform duration-[600ms] delay-[80ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform md:group-hover:translate-x-[5%] md:group-hover:translate-y-[20%] md:group-hover:rotate-[1deg]">
@@ -420,11 +418,11 @@ export default function Kalender({ initialEvents }: { initialEvents?: any[] }) {
                             src={photos[2]}
                             alt={`${data.month} 3`}
                             fill
-                            className="object-cover"
+                            className={`object-cover ${soon ? 'blur-[8px] scale-110' : ''}`}
                             sizes="(max-width: 768px) 210px, 260px"
                           />
                           {soon && (
-                            <div className="absolute inset-0 bg-[#0D627C]/60 flex flex-col items-center justify-center gap-1.5 text-white px-3 text-center">
+                            <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center gap-1.5 text-white px-3 text-center">
                               <Hourglass className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
                               <span className="font-heading text-lg sm:text-xl md:text-2xl leading-tight">
                                 {data.month}
