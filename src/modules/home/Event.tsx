@@ -8,23 +8,82 @@ import { H2 } from '@/components/elements/Typography'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { eventData } from '@/modules/event/data/data'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 import EventBrowserCard from './components/EventBrowserCard'
 
 const LAST = eventData.length - 1
 
-// Penanda event di kartu. Sengaja lokal di section ini — `logo` di data event masih
-// dipakai apa adanya buat header halaman detail.
-const EVENT_EMOJI: Record<string, string> = {
-  findit: '💻',
-  technocorner: '🤖',
-  nesco: '⚡',
+// Versi pastel dari warna khas tiap event — logonya gelap, jadi pita terang tetap kontras.
+const EVENT_GRADIENTS: Record<string, { from: string; to: string }> = {
+  technocorner: { from: '#F3B0B0', to: '#B3BCE6' }, // Merah + Biru
+  findit: { from: '#BCC9DA', to: '#AFDCF5' },       // Biru Tua + Biru Sedang (tua ke sedang)
+  nesco: { from: '#AEDCC1', to: '#F5E7AC' },        // Hijau + Kuning
 }
 
 export default function Event() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const navRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(Math.floor(eventData.length / 2))
   const router = useRouter()
+
+  useGSAP(
+    () => {
+      if (headerRef.current && titleRef.current && navRef.current) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+
+        tl.fromTo(
+          titleRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+        ).fromTo(
+          navRef.current,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' },
+          '-=0.6', // 200ms delay
+        )
+      }
+
+      // Event Cards Stagger Entrance Animation (left to right with 120ms stagger)
+      if (trackRef.current) {
+        gsap.fromTo(
+          '.event-card-item',
+          {
+            y: 50,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.75,
+            ease: 'power3.out',
+            stagger: 0.12, // Stagger delay 120ms per card dari kiri ke kanan
+            scrollTrigger: {
+              trigger: trackRef.current,
+              start: 'top 85%',
+              once: true,
+            },
+          },
+        )
+      }
+    },
+    { scope: sectionRef },
+  )
 
   const scrollToCard = (i: number, behavior: ScrollBehavior = 'smooth') => {
     const track = trackRef.current
@@ -86,20 +145,25 @@ export default function Event() {
   return (
     <div className="relative z-20 -mt-1 w-full">
       <section
+        ref={sectionRef}
         data-navbar-tone="light"
         id="event"
-        className="relative w-full overflow-hidden rounded-b-[40px] border-l-2 border-r-2 border-white bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA] pt-[110px] pb-24 md:pb-32"
+        className="relative w-full overflow-hidden rounded-b-[40px] border-l-2 border-r-2 border-white bg-gradient-to-b from-[#EAF9FF] to-[#E1F3FA] pt-[110px] pb-40 md:pb-32"
       >
         {/* Blob gradient — posisi mengikuti Ellipse 6 & 7 di Figma */}
         <div className="pointer-events-none absolute left-[27.4%] top-[75.2%] w-[33vw] max-w-[472px] -translate-x-1/2 -translate-y-1/2 aspect-square rounded-full bg-[#64CAEF] opacity-70 blur-[100px]" />
         <div className="pointer-events-none absolute left-[67.9%] top-[48.2%] w-[34vw] max-w-[492px] -translate-x-1/2 -translate-y-1/2 aspect-square rounded-full bg-[#c7e07c] opacity-80 blur-[100px]" />
 
         <div className="relative flex w-full flex-col">
-          <div className="mx-auto mb-14 flex w-full max-w-6xl items-center justify-between gap-6 px-4 md:mb-20 md:px-8">
-            <H2 className="text-left text-[#0a4c5a]">Event Ternama Nasional</H2>
+          <div ref={headerRef} className="mx-auto mb-14 flex w-full max-w-6xl items-center justify-between gap-6 px-4 md:mb-20 md:px-8">
+            <div className="overflow-hidden py-2 -my-2 px-1 -mx-1">
+              <H2 ref={titleRef} className="text-left text-[#0a4c5a] will-change-transform pb-1">
+                Event Ternama Nasional
+              </H2>
+            </div>
 
             {/* Di mobile nggak muat sebelah judul, jadi kontrolnya pakai dot di bawah track */}
-            <div className="hidden shrink-0 items-center gap-3 md:flex">
+            <div ref={navRef} className="hidden shrink-0 items-center gap-3 md:flex will-change-transform">
               <Button
                 variant="black"
                 size="icon"
@@ -154,7 +218,7 @@ export default function Event() {
             }
             // pb = turunnya kartu samping + jangkauan shadow kartu (offset 20 + blur 30),
             // kalau kurang shadow-nya kepotong sama tepi bawah track.
-            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pb-[calc(var(--card)*0.1022+56px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-4 pt-4 pb-[calc(var(--card)*0.1022+56px)] md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {eventData.map((event, i) => {
               const isActive = i === active
@@ -165,18 +229,13 @@ export default function Event() {
                   // Kiri di belakang, kanan di depan — jadi z-index naik ikut urutan, bukan ikut kartu aktif.
                   style={{ zIndex: i + 1 }}
                   className={cn(
-                    '@container relative w-[var(--card)] shrink-0 snap-center',
+                    'event-card-item will-change-transform @container relative w-[var(--card)] shrink-0 snap-center',
                     // Tumpang tindih 57px dari 773px, sesuai jarak 716px di Figma
                     i !== LAST && '-mr-[calc(var(--card)*0.0737)]',
                   )}
                 >
                   <button
                     type="button"
-                    aria-label={
-                      isActive
-                        ? `Pelajari lebih lanjut tentang ${event.nama}`
-                        : `Tampilkan ${event.nama}`
-                    }
                     aria-current={isActive || undefined}
                     onClick={() => {
                       if (justDragged.current) {
@@ -191,8 +250,9 @@ export default function Event() {
                     <EventBrowserCard
                       name={event.nama}
                       description={event.deskripsi_tujuan}
-                      emoji={EVENT_EMOJI[event.slug]}
+                      logo={event.logo}
                       website={event.website}
+                      gradient={EVENT_GRADIENTS[event.slug]}
                       className={cn(
                         // `translate`, bukan `transform` — Tailwind v4 pakai properti translate buat translate-y-*
                         'transition-[translate,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
@@ -206,7 +266,9 @@ export default function Event() {
           </div>
 
           {/* Kartu samping cuma nongol sedikit di layar kecil, jadi dot-nya yang jadi kontrol */}
-          <div className="mt-8 flex items-center justify-center gap-2 md:hidden">
+          {/* -mt-12: naik ke ruang kosong sisa padding track, biar duduk di tengah antara kartu
+              dan batas bawah section (yang ketiban overlap section Life). */}
+          <div className="-mt-12 flex items-center justify-center gap-2 md:hidden">
             {eventData.map((event, i) => (
               <button
                 key={event.slug}

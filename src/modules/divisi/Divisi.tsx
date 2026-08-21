@@ -1,27 +1,39 @@
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
-import { divisi } from '@/modules/divisi/data/data'
+import { divisi as staticDivisi } from '@/modules/divisi/data/data'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import { PageHeader } from '@/components/elements/PageHeader'
 import { PageOverlap } from '@/components/elements/PageOverlap'
 import DefaultLayout from '@/components/layout/DefaultLayout'
 import { H3 } from '@/components/elements/Typography'
 import { TujuanSection } from '@/components/elements/TujuanSection'
 import { ProkerCard } from '@/modules/divisi/components/ProkerCard'
+import { ExpandableGrid } from '@/components/elements/ExpandableGrid'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
-export const Divisi = ({ slug }: { slug: string }) => {
+export const Divisi = async ({ slug }: { slug: string }) => {
+  const payload = await getPayload({ config })
+  const { docs: divisiList } = await payload.find({
+    collection: 'divisi',
+    limit: 100,
+  })
+
   // Find the division matching the slug
-  const currentIndex = divisi.findIndex((d) => d.slug === slug)
-  const data = divisi[currentIndex]
+  const currentIndex = divisiList.findIndex((d) => d.slug === slug)
+  const data = divisiList[currentIndex]
 
   if (!data) {
     return <div>Divisi tidak ditemukan</div>
   }
 
-  const prevDivisi = divisi[(currentIndex - 1 + divisi.length) % divisi.length]
-  const nextDivisi = divisi[(currentIndex + 1) % divisi.length]
+  // Get static data for fallback/gallery
+  const staticData = staticDivisi.find((d) => d.slug === slug)
+  const gallery = staticData?.gambar || []
+
+  const prevDivisi = divisiList[(currentIndex - 1 + divisiList.length) % divisiList.length]
+  const nextDivisi = divisiList[(currentIndex + 1) % divisiList.length]
 
   return (
     <main className="w-full relative min-h-screen bg-white">
@@ -29,8 +41,8 @@ export const Divisi = ({ slug }: { slug: string }) => {
       <PageHeader
         title={`Divisi ${data.nama}`}
         description={data.detail}
-        imageSrc={data.header.startsWith('/') ? data.header : `/${data.header}`}
-        iconSrc={data.logo.startsWith('/') ? data.logo : `/${data.logo}`}
+        imageSrc={typeof data.header === 'string' ? (data.header.startsWith('/') ? data.header : `/${data.header}`) : ''}
+        iconSrc={typeof data.logo === 'string' ? (data.logo.startsWith('/') ? data.logo : `/${data.logo}`) : ''}
         leftButton={
           prevDivisi ? (
             <Link href={`/divisi/${prevDivisi.slug}`}>
@@ -63,7 +75,7 @@ export const Divisi = ({ slug }: { slug: string }) => {
             <TujuanSection 
               tujuan={data.tujuan} 
               deskripsi={data.deskripsi_tujuan} 
-              gambar={data.gambar} 
+              gambar={gallery} 
               nama={data.nama} 
             />
           </DefaultLayout>
@@ -79,12 +91,23 @@ export const Divisi = ({ slug }: { slug: string }) => {
               Berikut ini adalah berbagai program kerja yang akan dilaksanakan oleh Divisi {data.nama}.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {data.proker.map((pk, idx) => (
-              <ProkerCard key={idx} proker={pk as any} />
+
+          <ExpandableGrid
+            initialLimit={6}
+            moreLabel="Lihat lebih banyak"
+          >
+            {data.proker?.map((pk, idx) => (
+              <ProkerCard
+                key={pk.id || idx}
+                proker={{
+                  nama: pk.namaProker,
+                  deskripsi: pk.deskripsi,
+                  icon: pk.icon,
+                  anggota: pk.anggota?.map((a: any) => a.nama) || [],
+                }}
+              />
             ))}
-          </div>
+          </ExpandableGrid>
         </DefaultLayout>
       </div>
     </main>

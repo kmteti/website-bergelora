@@ -130,6 +130,62 @@
   }
 }
 
+/* Global Website Custom Scrollbar - Sleek Gray Pill with Transparent Overlay Track */
+html {
+  scrollbar-gutter: auto;
+  overflow-y: overlay;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+}
+
+:root::-webkit-scrollbar,
+body::-webkit-scrollbar,
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+:root::-webkit-scrollbar-button,
+body::-webkit-scrollbar-button,
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none !important;
+}
+
+:root::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+:root::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+:root::-webkit-scrollbar-track-piece,
+body::-webkit-scrollbar-track-piece,
+::-webkit-scrollbar-track-piece {
+  background: transparent !important;
+}
+
+:root::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.5) !important;
+  border-radius: 9999px !important;
+  border: 2px solid transparent !important;
+  background-clip: content-box !important;
+}
+
+:root::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(71, 85, 105, 0.8) !important;
+}
+
 /* Custom scrollbar utility for KMTETI blue */
 .kmteti-scrollbar {
   scrollbar-width: thin;

@@ -20,6 +20,7 @@ import {
 import { NewsCard } from './components/NewsCard'
 import { SpotlightCard } from './components/SpotlightCard'
 import { SpotlightCarousel } from './components/SpotlightCarousel'
+import { getMediaUrl } from '@/lib/media'
 
 const News = ({ initialNews }: { initialNews: any[] }) => {
   // Format Payload data ke bentuk yang dipahami UI
@@ -29,7 +30,7 @@ const News = ({ initialNews }: { initialNews: any[] }) => {
       slug: news.slug,
       category: news.category,
       date: news.date ? format(new Date(news.date), 'dd MMMM yyyy', { locale: id }) : '-',
-      image: typeof news.image === 'object' && news.image?.url ? news.image.url : '/images/news/placeholder.webp',
+      image: getMediaUrl(news.image),
       content: '', // content tidak perlu dicari di pencarian grid kecuali kita convert rich text ke plain text
       rawContent: news.content,
     }))

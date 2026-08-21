@@ -1,15 +1,25 @@
+'use client'
+
+import React, { useRef } from 'react'
 import { B3, B4, B5, H1 } from '@/components/elements/Typography'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ArrowUpRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 const featureLinks = [
   { label: 'Tentang Kami', href: '/tentang/profil' },
@@ -44,8 +54,6 @@ const eventLinks = [
   { label: 'Technocorner', href: '/event/technocorner' },
 ]
 
-import React from 'react'
-
 const YoutubeIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={`scale-[1.15] ${className || ''}`} {...props}>
     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -77,22 +85,30 @@ const LinkedinIcon = (props: React.ComponentProps<'svg'>) => (
 )
 
 const socialLinks = [
-  { label: 'YouTube', href: 'https://youtube.com', icon: YoutubeIcon },
-  { label: 'TikTok', href: 'https://tiktok.com', icon: TiktokIcon },
-  { label: 'Instagram', href: 'https://instagram.com', icon: InstagramIcon },
-  { label: 'X', href: 'https://twitter.com', icon: XIcon },
-  { label: 'LinkedIn', href: 'https://linkedin.com', icon: LinkedinIcon },
+  { label: 'YouTube', href: 'https://www.youtube.com/@kmteti', icon: YoutubeIcon },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@kmteti', icon: TiktokIcon },
+  { label: 'Instagram', href: 'https://www.instagram.com/kmteti/', icon: InstagramIcon },
+  { label: 'X', href: 'https://x.com/KMTETI', icon: XIcon },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/kmteti-ft-ugm', icon: LinkedinIcon },
 ]
 
-function FooterColumn({ title, links, value }: { title: string; links: { label: string; href: string }[]; value: string }) {
+function FooterColumn({
+  title,
+  links,
+  value,
+}: {
+  title: string
+  links: { label: string; href: string }[]
+  value: string
+}) {
   return (
     <>
-      <AccordionItem value={value} className="border-none py-2 sm:hidden">
-        <AccordionTrigger className="hover:no-underline py-2 [&_[data-slot=accordion-trigger-icon]]:text-white/70 hover:opacity-100 focus-visible:ring-0 focus-visible:border-transparent outline-none">
-          <B3 className="font-bold leading-[18px] text-[#f1f1f1] text-left">{title}</B3>
+      <AccordionItem value={value} className="border-b border-white/20 sm:hidden">
+        <AccordionTrigger className="text-[14px] font-bold text-white hover:no-underline [&[data-state=open]>svg]:rotate-180">
+          {title}
         </AccordionTrigger>
-        <AccordionContent className="pb-2 [&_a]:no-underline">
-          <ul className="mt-2 space-y-3">
+        <AccordionContent className="pb-4 pt-1">
+          <ul className="space-y-2">
             {links.map((link) => (
               <li key={link.label}>
                 <Link
@@ -129,6 +145,44 @@ function FooterColumn({ title, links, value }: { title: string; links: { label: 
 }
 
 export default function Footer() {
+  const ctaRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
+  const btnRef = useRef<HTMLAnchorElement>(null)
+
+  useGSAP(
+    () => {
+      if (ctaRef.current && titleRef.current && descRef.current && btnRef.current) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ctaRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+
+        tl.fromTo(
+          titleRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+        )
+          .fromTo(
+            descRef.current,
+            { y: 24, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' },
+            '-=0.6',
+          )
+          .fromTo(
+            btnRef.current,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' },
+            '-=0.5',
+          )
+      }
+    },
+    { scope: ctaRef },
+  )
+
   return (
     <footer className="relative isolate min-h-[1120px] w-full overflow-hidden bg-neutral-900 text-white sm:min-h-[980px] lg:h-[1291px]">
       <Image
@@ -141,19 +195,23 @@ export default function Footer() {
       />
 
       <div className="absolute inset-0 z-10 bg-black/5" />
-      <div className="absolute inset-x-0 bottom-0 z-20 h-[calc(100%-360px)] backdrop-blur-[24px] [mask-image:linear-gradient(to_bottom,transparent,black_15%,black)] sm:h-[58%] lg:h-[472px]" />
+      <div className="absolute inset-x-0 bottom-0 z-20 h-[calc(100%-280px)] backdrop-blur-[24px] [mask-image:linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,0.35)_10%,rgba(0,0,0,0.8)_20%,black_28%)] sm:h-[64%] lg:h-[560px]" />
 
-      <div className="relative z-40 mx-auto flex min-h-[1120px] w-full max-w-[1440px] flex-col px-6 py-12 sm:min-h-[980px] sm:px-10 sm:py-14 lg:h-full lg:px-20 lg:py-0">
-        <div className="max-w-[626px] pt-4 sm:pt-16 lg:absolute lg:left-20 lg:top-[148px] lg:pt-0">
-          <H1 className="text-white">Connect with Us</H1>
-          <B3 className="mt-4 max-w-[34ch] font-medium text-white sm:max-w-[58ch]">
-            At KMTETI, a spirit of optimism and possibility energizes our mission of discovery and
-            learning.
+      <div className="container relative z-40 mx-auto flex min-h-[1120px] w-full max-w-6xl flex-col px-4 py-12 sm:min-h-[980px] md:px-8 sm:py-14 lg:h-full lg:py-0">
+        <div ref={ctaRef} className="max-w-[626px] mt-6 pt-6 sm:mt-0 sm:pt-16 lg:absolute lg:left-8 lg:top-[148px] lg:pt-0">
+          <div className="overflow-hidden py-2 -my-2 px-1 -mx-1">
+            <H1 ref={titleRef} className="text-white will-change-transform pb-1">
+              Connect with Us
+            </H1>
+          </div>
+          <B3 ref={descRef} className="mt-4 max-w-[34ch] font-medium text-white sm:max-w-[58ch] will-change-transform">
+            Mari bersama melangkah, berinovasi, dan hadirkan dampak positif bagi lingkungan sekitar.
           </B3>
 
           <Link
+            ref={btnRef}
             href="/kontak"
-            className={cn(buttonVariants({ variant: 'primary', size: 'default' }), 'mt-8 w-fit')}
+            className={cn(buttonVariants({ variant: 'primary', size: 'default' }), 'mt-8 w-fit will-change-transform')}
           >
             Hubungi Kami
             <ArrowUpRight />
@@ -213,7 +271,7 @@ export default function Footer() {
 
             <Accordion className="w-full">
               <nav
-                className="grid grid-cols-1 text-[#f1f1f1] sm:grid-cols-4 sm:gap-x-10 sm:gap-y-8 lg:gap-x-16"
+                className="grid grid-cols-1 text-[#f1f1f1] sm:grid-cols-4 sm:gap-x-8 sm:gap-y-8 lg:gap-x-10"
                 aria-label="Footer"
               >
                 <FooterColumn value="item-1" title="Fitur" links={featureLinks} />
@@ -225,13 +283,63 @@ export default function Footer() {
           </div>
 
           <div className="mt-9 border-t border-white/35 pt-6 sm:pt-7 lg:mt-8">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <B4 className="font-medium text-white ">KMTETI 2026 - All Rights Reserved</B4>
-              <B5 className="max-w-2xl font-semibold text-white/92 md:text-right">
-                Dikembangkan oleh <span className="underline">Muhammad Khoirunas</span>,{' '}
-                <span className="underline">Aulia Nur Fajri Tri Anggoro</span>,{' '}
-                <span className="underline">Alfian Adicandra</span>, dan Divisi Infokom
-              </B5>
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+              <B4 className="font-medium text-white shrink-0">KMTETI 2026 - All Rights Reserved</B4>
+
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+                <B5 className="max-w-[440px] font-medium text-white/90 leading-relaxed text-left sm:text-right">
+                  Dikembangkan oleh{' '}
+                  <a
+                    href="https://www.linkedin.com/in/khoirunas/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Muhammad Khoirunas
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://www.linkedin.com/in/aulianurfajri/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Aulia Nur Fajri Tri Anggoro
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://www.linkedin.com/in/alfianadicandra/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Alfian Adicandra
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://www.linkedin.com/in/farrel-ag/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-white transition-colors decoration-white/60 hover:decoration-white"
+                  >
+                    Muhammad Farrel A.G.
+                  </a>
+                  , dan Divisi Infokom.
+                </B5>
+
+                <Link
+                  href="https://forms.gle/p2yM4uWVCiDiQmM69"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    buttonVariants({ variant: 'black', size: 'default' }),
+                    'shrink-0 self-start gap-2',
+                  )}
+                >
+                  <span>Nilai Website</span>
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

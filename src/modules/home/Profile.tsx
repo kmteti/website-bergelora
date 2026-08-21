@@ -17,27 +17,80 @@ export default function Profile() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const pinTargetRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pinTargetRef.current,
-        start: 'bottom bottom',
-        end: '+=50%',
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-        anticipatePin: 1,
-        refreshPriority: 10, // Higher priority = calculated first, before Divisi's pin
-        invalidateOnRefresh: true,
-      },
+    // Header Masked Curtain Reveal (Title -> Desc with 200ms stagger)
+    if (headerRef.current && titleRef.current && descRef.current) {
+      const headerTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 85%',
+          once: true,
+        },
+      })
+
+      headerTl
+        .fromTo(
+          titleRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+        )
+        .fromTo(
+          descRef.current,
+          { y: '115%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' },
+          '-=0.6', // 200ms delay
+        )
+    }
+
+    const mm = gsap.matchMedia()
+
+    // Desktop
+    mm.add('(min-width: 768px)', () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinTargetRef.current,
+          start: 'bottom bottom',
+          end: '+=50%',
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+          refreshPriority: 10,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      tl.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1 }
+      )
     })
 
-    tl.fromTo(
-      overlayRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 1 }
-    )
+    // Mobile: Tanpa pinning/scroll-jacking agar tidak ada ruang putih.
+    // Animasi fade-in halus saat foto itu sendiri masuk ke layar (top 65%)
+    mm.add('(max-width: 767px)', () => {
+      gsap.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: overlayRef.current,
+            start: 'top 65%',
+            toggleActions: 'play reverse play reverse',
+          },
+        }
+      )
+    })
+
+    return () => mm.revert()
   }, { scope: wrapperRef })
 
   return (
@@ -46,7 +99,7 @@ export default function Profile() {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white"></div>
       
       <div ref={pinTargetRef}>
-        <section className="relative z-10 w-full overflow-hidden bg-[#E1F3FA] rounded-[40px] pt-[112px] pb-[112px]">
+        <section className="relative z-10 w-full overflow-hidden bg-[#E1F3FA] rounded-[32px] md:rounded-[40px] pt-14 md:pt-[112px] pb-14 md:pb-[112px]">
           {/* Glow Effects (Pure CSS/Tailwind) */}
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
             {/* Biru Glow (Kiri Atas Gambar) */}
@@ -55,21 +108,27 @@ export default function Profile() {
             <div className="absolute -bottom-[20%] -right-[20%] w-[450px] md:w-[800px] aspect-square rounded-full bg-[#C7E07C] blur-[100px] md:blur-[180px] opacity-50" />
           </div>
 
-          <div className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center relative z-10">
+          <div ref={headerRef} className="container mx-auto px-4 md:px-8 max-w-5xl flex flex-col items-center text-center relative z-10">
             {/* Title */}
-            <H2 className="text-[#0a4c5a] font-semibold mb-6">Ruang Tumbuh Bersama</H2>
+            <div className="overflow-hidden py-2 -my-2 px-2 -mx-2 mb-4 md:mb-6">
+              <H2 ref={titleRef} className="text-[#0a4c5a] font-semibold will-change-transform pb-1">
+                Ruang Tumbuh Bersama
+              </H2>
+            </div>
             
             {/* Description */}
-            <B2 className="text-gray-700 max-w-3xl mb-10 leading-relaxed">
-              KMTETI hadir sebagai wadah bagi mahasiswa untuk mengembangkan potensi, memperluas wawasan, dan membangun kolaborasi. Melalui berbagai program, layanan internal, serta informasi yang terpusat, kami mendukung setiap anggota untuk berproses, berkarya, dan memberikan kontribusi nyata bagi lingkungan kampus.
-            </B2>
+            <div className="overflow-hidden py-2 -my-2 px-2 -mx-2 max-w-3xl mb-6 md:mb-10">
+              <B2 ref={descRef} className="text-gray-700 leading-relaxed text-sm md:text-base will-change-transform pb-1">
+                KMTETI hadir sebagai wadah bagi mahasiswa untuk mengembangkan potensi, memperluas wawasan, dan membangun kolaborasi. Melalui berbagai program, layanan internal, serta informasi yang terpusat, kami mendukung setiap anggota untuk berproses, berkarya, dan memberikan kontribusi nyata bagi lingkungan kampus.
+              </B2>
+            </div>
             
             {/* Button */}
             <Button
               variant="secondary"
               size="default"
               onClick={() => router.push('/tentang/profil')}
-              className="mb-16 shadow-md hover:shadow-lg transition-shadow"
+              className="mb-8 md:mb-16 shadow-md hover:shadow-lg transition-shadow"
             >
               <span>Profil KMTETI</span>
               <ArrowUpRight className="ml-2 w-5 h-5" />
@@ -83,6 +142,8 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI Back" 
                   fill 
+                  quality={70}
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
                   className="object-cover object-[20%_center] brightness-90"
                 />
               </div>
@@ -93,6 +154,8 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 
                   fill 
+                  quality={70}
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
                   className="object-cover"
                 />
                 

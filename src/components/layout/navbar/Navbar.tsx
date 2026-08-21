@@ -22,7 +22,8 @@ type NavLink = {
 
 const tentangLinks: NavLink[] = [
   { label: 'Profil KMTETI', href: '/tentang/profil' },
-  { label: 'KMTETI News', href: '/tentang/berita' },
+  { label: 'Berita KMTETI', href: '/tentang/berita' },
+  { label: 'Agenda Bulanan', href: '/kalender' },
 ]
 
 const megaMenuData = {
@@ -39,15 +40,15 @@ const megaMenuData = {
   bso: [
     { label: 'Magatrika', href: '/bso/magatrika', icon: '/logo/bso/magatrika.svg' },
     { label: 'Night Login', href: '/bso/night-login', icon: '/logo/bso/night-login.svg' },
-    { label: 'Bionce', href: '/bso/bionce', icon: '/logo/bso/beacon.svg' },
+    { label: 'Bionce', href: '/bso/bionce', icon: '/logo/bso/bionce.svg' },
     { label: 'SKI', href: '/bso/ski', icon: '/logo/bso/ski-al-hannaan.svg' },
     { label: 'SKK', href: '/bso/skk', icon: '/logo/bso/skk-dteti.svg' },
     { label: 'MPM', href: '/bso/mpm', icon: '/logo/bso/mpm.svg' },
   ],
   event: [
-    { label: 'FindIT', href: '/event/findit' },
-    { label: 'Nesco', href: '/event/nesco' },
-    { label: 'Technocorner', href: '/event/technocorner' },
+    { label: 'FindIT', href: '/event/findit', icon: '/logo/event/findit.svg' },
+    { label: 'Nesco', href: '/event/nesco', icon: '/logo/event/nesco.svg' },
+    { label: 'Technocorner', href: '/event/technocorner', icon: '/logo/event/technocorner.webp' },
   ],
 }
 
@@ -160,7 +161,7 @@ export function Navbar() {
   const desktopNavTextClass = cn(
     'text-sm font-medium leading-6 tracking-normal transition-colors duration-500 ease-in-out focus-visible:outline-3 focus-visible:outline-offset-4',
     isDarkTone
-      ? 'text-white hover:text-primary-200 focus-visible:outline-white/50'
+      ? 'text-white hover:text-white/80 focus-visible:outline-white/50'
       : 'text-black/70 hover:text-black/90 focus-visible:outline-primary-100',
   )
 
@@ -168,10 +169,10 @@ export function Navbar() {
     <nav
       data-navbar-root
       className={cn(
-        'fixed inset-x-0 top-0 z-[99] isolate transition-all duration-500 ease-in-out',
+        'fixed inset-x-0 top-0 z-[99] isolate will-change-transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
         isDarkTone ? 'text-white' : 'text-neutral-950',
         isMobileMenuOpen && 'bg-white',
-        isHidden && !isMobileMenuOpen && '-translate-y-full opacity-0 pointer-events-none',
+        isHidden && !isMobileMenuOpen ? '-translate-y-full pointer-events-none' : 'translate-y-0',
       )}
     >
       {/* Dark Backdrop Layer */}
@@ -195,10 +196,15 @@ export function Navbar() {
       />
 
       <div className="mx-auto flex h-[76px] w-full max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:h-[92px] lg:px-8">
-        <Link href="/" className="relative flex shrink-0 items-center h-[34px] lg:h-[38px] w-[134px] lg:w-[150px]" aria-label="KMTETI FT UGM">
+        <Link
+          href="/"
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="relative flex shrink-0 items-center h-[34px] lg:h-[38px] w-[134px] lg:w-[150px]"
+          aria-label="KMTETI FT UGM"
+        >
           <Image
             src="/logo/kmteti/horizontal-white.svg"
-            alt="KMTETI FT UGM"
+            alt=""
             fill
             priority
             className={cn(
@@ -208,7 +214,7 @@ export function Navbar() {
           />
           <Image
             src="/logo/kmteti/horizontal-color.svg"
-            alt="KMTETI FT UGM"
+            alt=""
             fill
             priority
             className={cn(
@@ -227,7 +233,7 @@ export function Navbar() {
               className={cn(
                 'flex h-11 items-center cursor-pointer gap-2 rounded-2xl bg-transparent px-3 py-2 text-sm leading-6 transition-all duration-500 ease-in-out',
                 desktopNavTextClass,
-                isDesktopTentangOpen && (isDarkTone ? 'text-primary-200' : 'text-black/50'),
+                isDesktopTentangOpen && (isDarkTone ? 'text-white' : 'text-black/50'),
               )}
             >
               Tentang
@@ -253,7 +259,7 @@ export function Navbar() {
 
           <div
             className={cn(
-              'absolute right-0 top-full z-[100] mt-4 grid w-[600px] cursor-default grid-cols-4 gap-6 rounded-[24px] border border-black/5 bg-white/95 p-6 text-neutral-950 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-200 origin-top-right',
+              'absolute right-0 top-full z-[100] mt-4 grid w-[720px] cursor-default grid-cols-4 gap-8 rounded-[24px] border border-black/5 bg-white/95 p-7 text-neutral-950 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-200 origin-top-right',
               isDesktopTentangOpen
                 ? 'opacity-100 visible scale-100 translate-y-0'
                 : 'opacity-0 invisible scale-95 -translate-y-2 pointer-events-none',
@@ -261,90 +267,95 @@ export function Navbar() {
           >
               {/* Information */}
               <div className="flex flex-col">
-                <h3
-                  className="mb-4 text-xs font-regular
-r text-neutral-400"
-                >
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">
                   Informasi
                 </h3>
-                <div className="flex flex-col gap-4">
-                  <Link
-                    href="/tentang/profil"
-                    className="text-sm font-bold text-neutral-950 transition-colors hover:text-neutral-950"
-                  >
-                    Profil KMTETI
-                  </Link>
-                  <Link
-                    href="/tentang/berita"
-                    className="text-sm font-bold text-neutral-950 transition-colors hover:text-neutral-950"
-                  >
-                    Berita KMTETI
-                  </Link>
+                <div className="flex flex-col gap-3.5">
+                  {tentangLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="text-sm font-bold text-neutral-900 transition-colors hover:text-primary-500"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               </div>
               {/* Divisi */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">Divisi</h3>
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">Divisi</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.divisi.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                      className="group flex items-center gap-3 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
                       {'icon' in item && item.icon ? (
                         <Image
                           src={item.icon}
                           alt={item.label}
-                          width={18}
-                          height={18}
-                          className="size-[18px] object-contain"
+                          width={24}
+                          height={24}
+                          className="size-6 object-contain shrink-0"
                         />
                       ) : (
-                        <div className="size-[18px] shrink-0" />
+                        <div className="size-6 shrink-0" />
                       )}
-                      <span>{item.label}</span>
+                      <span className="font-medium">{item.label}</span>
                     </Link>
                   ))}
                 </div>
               </div>
               {/* BSO */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">BSO</h3>
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">BSO</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.bso.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="group flex items-center gap-2.5 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                      className="group flex items-center gap-3 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
                       {'icon' in item && item.icon ? (
                         <Image
                           src={item.icon}
                           alt={item.label}
-                          width={18}
-                          height={18}
-                          className="size-[18px] object-contain"
+                          width={24}
+                          height={24}
+                          className="size-6 object-contain shrink-0"
                         />
                       ) : (
-                        <div className="size-[18px] shrink-0" />
+                        <div className="size-6 shrink-0" />
                       )}
-                      <span>{item.label}</span>
+                      <span className="font-medium">{item.label}</span>
                     </Link>
                   ))}
                 </div>
               </div>
               {/* Event */}
               <div className="flex flex-col">
-                <h3 className="mb-4 text-xs font-regular text-neutral-400">Event</h3>
+                <h3 className="mb-4 text-xs font-normal text-neutral-400">Event</h3>
                 <div className="flex flex-col gap-3">
                   {megaMenuData.event.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="text-sm text-neutral-600 transition-colors hover:text-neutral-950"
+                      className="group flex items-center gap-3 text-sm text-neutral-600 transition-colors hover:text-neutral-950"
                     >
-                      {item.label}
+                      {'icon' in item && item.icon ? (
+                        <Image
+                          src={item.icon}
+                          alt={item.label}
+                          width={24}
+                          height={24}
+                          className="size-6 object-contain shrink-0"
+                        />
+                      ) : (
+                        <div className="size-6 shrink-0" />
+                      )}
+                      <span className="font-medium">{item.label}</span>
                     </Link>
                   ))}
                 </div>
@@ -356,7 +367,7 @@ r text-neutral-400"
           type="button"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           className={cn(
-            'inline-flex size-11 items-center justify-center rounded-lg border shadow-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-4 lg:hidden',
+            'inline-flex size-11 items-center justify-center rounded-lg border shadow-sm transition-opacity focus-visible:outline-3 focus-visible:outline-offset-4 lg:hidden',
             isDarkTone
               ? 'border-white/15 bg-black/15 text-white backdrop-blur-md hover:bg-black/25 focus-visible:outline-white/50'
               : 'border-neutral-200 bg-white/80 text-neutral-950 backdrop-blur-md hover:bg-white focus-visible:outline-primary-100',
@@ -451,14 +462,25 @@ r text-neutral-400"
                     {/* Event */}
                     <div className="flex flex-col gap-3">
                       <span className="text-xs font-normal text-neutral-400">Event</span>
-                      <div className="flex flex-col gap-3">
+                      <div className="flex flex-col gap-4">
                         {megaMenuData.event.map((item) => (
                           <Link
                             key={item.label}
                             href={item.href}
-                            className="text-sm font-medium text-neutral-700 hover:text-neutral-950"
+                            className="flex items-center gap-3 text-sm font-medium text-neutral-700 hover:text-neutral-950"
                           >
-                            {item.label}
+                            {'icon' in item && item.icon ? (
+                              <Image
+                                src={item.icon}
+                                alt={item.label}
+                                width={18}
+                                height={18}
+                                className="size-[18px] object-contain"
+                              />
+                            ) : (
+                              <div className="size-[18px] shrink-0" />
+                            )}
+                            <span>{item.label}</span>
                           </Link>
                         ))}
                       </div>

@@ -9,7 +9,7 @@ export default function DefaultLayout({ className, children, ...props }: Default
   return (
     <div
       className={cn(
-        "mx-auto w-full max-w-[1240px] px-6 pb-32 pt-14 sm:px-8 md:pt-20 md:pb-[196px] lg:px-10",
+        "mx-auto w-full max-w-6xl px-4 pb-32 pt-14 md:px-8 md:pt-20 md:pb-[196px]",
         className
       )}
       {...props}

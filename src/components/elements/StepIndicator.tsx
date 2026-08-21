@@ -28,25 +28,29 @@ export function StepIndicator({
     return Math.min(100, Math.max(0, ((currentStep - 1) / (totalSteps - 1)) * 100))
   }, [currentStep, totalSteps])
 
+  const nodeSize = 18 // px size of diamond node
+  const halfNode = nodeSize / 2 // 9px
+
   return (
     <div className={cn('w-full flex flex-col items-center select-none', className)}>
-      <div className="w-full max-w-xl mx-auto flex flex-col">
+      <div className="w-full max-w-xl mx-auto flex flex-col px-4 sm:px-8">
         {/* 1. Labels Row */}
-        <div className="flex justify-between w-full px-8 mb-1">
+        <div className="relative w-full flex justify-between items-center mb-2 px-[9px]">
           {Array.from({ length: totalSteps }).map((_, idx) => {
             const stepNumber = idx + 1
             const isCurrent = currentStep === stepNumber
             const isCompleted = currentStep > stepNumber
+
             return (
               <div key={idx} className="w-0 flex justify-center items-center overflow-visible">
                 <B5
                   weight="regular"
                   className={cn(
-                    'text-center whitespace-nowrap transition-colors duration-200',
+                    'text-center whitespace-nowrap text-xs sm:text-sm transition-colors duration-300',
                     isCurrent
-                      ? 'text-primary-300 font-normal'
+                      ? 'text-primary-300 font-semibold'
                       : isCompleted
-                      ? 'text-primary-400 font-normal'
+                      ? 'text-primary-400 font-medium'
                       : 'text-neutral-400 font-normal'
                   )}
                 >
@@ -58,19 +62,26 @@ export function StepIndicator({
         </div>
 
         {/* 2. Nodes & Connecting Lines Row */}
-        <div className="relative w-full flex items-center justify-between px-8 h-8">
-          {/* Background Track Line */}
-          <div className="absolute top-1/2 left-8 right-8 h-[6px] bg-neutral-200 rounded-full -translate-y-1/2 z-0" />
-
-          {/* Active Progress Line */}
+        <div className="relative w-full flex items-center justify-between h-8">
+          {/* Background Track Line (stretches between first and last node centers) */}
           <div
-            className="absolute top-1/2 left-8 h-[6px] bg-primary-300 rounded-full transition-all duration-300 -translate-y-1/2 z-0"
+            className="absolute top-1/2 h-[6px] bg-neutral-200 rounded-full -translate-y-1/2 z-0"
             style={{
-              width: `calc(${percentage}% - ${(64 * percentage) / 100}px)`,
-              minWidth: currentStep > 1 ? '16px' : '0px',
+              left: `${halfNode}px`,
+              right: `${halfNode}px`,
             }}
           />
 
+          {/* Active Progress Line (mathematically aligns with node center on all screen sizes) */}
+          <div
+            className="absolute top-1/2 h-[6px] bg-primary-300 rounded-full transition-all duration-300 -translate-y-1/2 z-0"
+            style={{
+              left: `${halfNode}px`,
+              width: `calc((100% - ${nodeSize}px) * ${percentage / 100})`,
+            }}
+          />
+
+          {/* Diamond Nodes */}
           {Array.from({ length: totalSteps }).map((_, idx) => {
             const stepNumber = idx + 1
             const isCompleted = currentStep > stepNumber
@@ -83,9 +94,9 @@ export function StepIndicator({
                 onClick={() => onChangeStep?.(stepNumber)}
                 disabled={!onChangeStep || stepNumber > currentStep}
                 className={cn(
-                  'w-[18px] h-[18px] rotate-45 rounded-[3px] transition-all duration-300 z-10 flex items-center justify-center focus:outline-none',
+                  'w-[18px] h-[18px] rotate-45 rounded-[3px] transition-all duration-300 z-10 flex items-center justify-center focus:outline-none shrink-0',
                   isCurrent
-                    ? 'bg-primary-100 scale-110 shadow-[0_4px_10px_rgba(177,229,247,0.4)]'
+                    ? 'bg-primary-100 scale-125 shadow-[0_0_12px_rgba(100,202,239,0.5)] ring-2 ring-primary-300'
                     : isCompleted
                     ? 'bg-primary-400'
                     : 'bg-neutral-200 cursor-default'

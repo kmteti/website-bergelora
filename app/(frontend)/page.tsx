@@ -6,7 +6,36 @@ import Event from '@/modules/home/Event'
 import Life from '@/modules/home/Life'
 import React from 'react'
 
-export default function HomePage() {
+import { Metadata } from 'next'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import { FolderData } from '@/modules/home/components/FolderCarousel'
+
+export const metadata: Metadata = {
+  title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+  description: 'Selamat datang di situs resmi KMTETI FT UGM. Jelajahi profil, divisi, badan semi otonom, berita terkini, dan kehidupan mahasiswa di lingkungan KMTETI.',
+  openGraph: {
+    title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    description: 'Selamat datang di situs resmi KMTETI FT UGM. Jelajahi profil, divisi, badan semi otonom, berita terkini, dan kehidupan mahasiswa di lingkungan KMTETI.',
+    url: '/',
+  },
+}
+
+export default async function HomePage() {
+  const payload = await getPayload({ config })
+  const { docs: divisiList } = await payload.find({
+    collection: 'divisi',
+    limit: 100,
+  })
+
+  const mappedDivisi: FolderData[] = divisiList.map((d) => ({
+    name: d.nama,
+    slug: d.slug || undefined,
+    photo: typeof d.header === 'string' ? d.header : '',
+    logo: typeof d.logo === 'string' ? d.logo : '',
+    description: d.tujuan || d.detail,
+  }))
+
   return (
     <>
       {/* Wrap Hero + Profile so Hero's sticky only works within this container.
@@ -16,7 +45,7 @@ export default function HomePage() {
         <Profile />
       </div>
       <News />
-      <DivisiBSO />
+      <DivisiBSO initialDivisiData={mappedDivisi} />
       <Event />
       <Life />
     </>
