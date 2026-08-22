@@ -7,9 +7,11 @@ import LenisProvider from '@/providers/LenisProvider'
 
 import type { Metadata, Viewport } from 'next'
 import { cn } from '@/lib/utils'
+import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://website-bergelora.vercel.app'),
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: '/' },
   title: {
     default: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
     template: '%s | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
