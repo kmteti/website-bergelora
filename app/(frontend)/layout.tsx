@@ -7,14 +7,16 @@ import LenisProvider from '@/providers/LenisProvider'
 
 import type { Metadata, Viewport } from 'next'
 import { cn } from '@/lib/utils'
-import { SITE_URL } from '@/lib/site'
+import { SITE_URL, SITE_NAME, SITE_LEGAL_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  alternates: { canonical: '/' },
+  // No canonical here: child segments inherit it verbatim, which would point
+  // every page at the homepage. Each page declares its own.
   title: {
-    default: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
-    template: '%s | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    default: `${SITE_NAME} | ${SITE_LEGAL_NAME}`,
+    // Child segments supply only their own name; this appends the brand once.
+    template: `%s | ${SITE_NAME}`,
   },
   description:
     'Situs web resmi Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (KMTETI FT UGM). Temukan profil, berita terbaru, layanan, dan informasi akademik.',
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'id_ID',
     url: '/',
-    title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    title: `${SITE_NAME} | ${SITE_LEGAL_NAME}`,
     description: 'Situs web resmi Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada.',
     siteName: 'KMTETI FT UGM',
     images: [{
@@ -36,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    title: `${SITE_NAME} | ${SITE_LEGAL_NAME}`,
     description: 'Situs web resmi KMTETI FT UGM.',
     images: ['/images/home/hero/hero-bg.webp'],
   },
