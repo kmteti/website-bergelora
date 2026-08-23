@@ -139,15 +139,15 @@ export default function Hero() {
               {/* Wrapper khusus Konten Teks */}
               <div className="absolute top-0 left-0 w-full h-full">
                 {/* Konten Hero */}
-                <div className="relative z-10 flex h-full flex-col justify-end px-5 sm:px-8 md:px-16 lg:px-24 pb-24 sm:pb-14 md:pb-16 lg:pb-24 max-w-5xl pointer-events-none">
+                <div className="relative z-10 flex h-full flex-col justify-end px-5 sm:px-8 md:px-16 lg:px-24 pb-16 sm:pb-14 md:pb-16 lg:pb-24 max-w-5xl pointer-events-none">
                   <H1 className="text-[24px] leading-[30px] sm:text-[clamp(36px,4vw,56px)] sm:leading-[clamp(42px,4.5vw,64px)] text-white w-full drop-shadow-md">
                     {slide.title}
                   </H1>
-                  <B3 className="text-white/90 mt-2 sm:mt-4 text-[13px] leading-[18px] sm:text-base sm:leading-relaxed line-clamp-3 sm:line-clamp-none max-w-2xl drop-shadow-md">
+                  <B3 className="text-white/90 mt-2.5 sm:mt-4 text-[13px] leading-[19px] sm:text-base sm:leading-relaxed max-w-2xl drop-shadow-md">
                     {slide.description}
                   </B3>
 
-                  <div className="mt-4 sm:mt-8 pointer-events-auto">
+                  <div className="mt-6 sm:mt-8 pointer-events-auto">
                     <Link href={slide.href}>
                       <Button variant="secondary" size="default">
                         <span>{slide.button}</span>
@@ -165,7 +165,7 @@ export default function Hero() {
       {/* Wrapper untuk Navigasi */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20">
         {/* Navigasi Indikator di bagian bawah Kanan - Sejajar horizontal dengan Button */}
-        <div className="absolute bottom-24 sm:bottom-14 md:bottom-16 lg:bottom-24 right-5 sm:right-8 md:right-16 lg:right-24 flex gap-3 items-center pointer-events-auto">
+        <div className="absolute bottom-16 sm:bottom-14 md:bottom-16 lg:bottom-24 right-5 sm:right-8 md:right-16 lg:right-24 flex gap-3 items-center pointer-events-auto">
           <nav className="flex items-center gap-[2px] bg-white/20 backdrop-blur-md p-1 rounded-full">
             {sliderHero.map((slide, index) => {
               if (isThisSlide === index) {
