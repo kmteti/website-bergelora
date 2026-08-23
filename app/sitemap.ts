@@ -1,10 +1,14 @@
 import { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { SITE_URL } from '@/lib/site'
+import { bsoData } from '@/modules/bso/data/data'
+import { divisi } from '@/modules/divisi/data/data'
+import { eventData } from '@/modules/event/data/data'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://website-bergelora.vercel.app'
-  
+  const baseUrl = SITE_URL
+
   const payload = await getPayload({ config })
   
   const { docs: news } = await payload.find({
@@ -12,6 +16,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     where: { _status: { equals: 'published' } },
     limit: 1000,
   })
+
+  const staticUrls = [
+    ...bsoData.map((b) => `/bso/${b.slug}`),
+    ...divisi.map((d) => `/divisi/${d.slug}`),
+    ...eventData.map((e) => `/event/${e.slug}`),
+  ].map((path) => ({
+    url: `${baseUrl}${path}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
 
   const newsUrls = news.map((post) => ({
     url: `${baseUrl}/tentang/berita/${post.slug}`,
@@ -51,6 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.7,
     },
+    ...staticUrls,
     ...newsUrls,
   ]
 }

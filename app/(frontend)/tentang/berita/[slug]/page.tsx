@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import { SITE_NAME } from '@/lib/site'
 
 export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
 
@@ -31,13 +32,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     imageUrl = news.image.url as string
   }
 
-  const fullTitle = `${news.title} | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi`
+  // title.template appends the brand; og/twitter titles don't get the template, so brand them here.
+  const socialTitle = `${news.title} | ${SITE_NAME}`
 
   return {
-    title: fullTitle,
+    title: news.title,
     description: `Baca berita terbaru mengenai ${news.title}`,
+    alternates: { canonical: `/tentang/berita/${news.slug}` },
     openGraph: {
-      title: fullTitle,
+      title: socialTitle,
       description: `Baca berita terbaru mengenai ${news.title}`,
       url: `/tentang/berita/${news.slug}`,
       type: 'article',
@@ -52,7 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary_large_image',
-      title: fullTitle,
+      title: socialTitle,
       description: `Baca berita terbaru mengenai ${news.title}`,
       images: [imageUrl],
     },

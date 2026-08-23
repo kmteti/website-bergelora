@@ -3,12 +3,14 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Metadata } from 'next'
+import { SITE_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Layanan | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+  title: 'Layanan',
   description: 'Layanan publik dan fasilitas Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
+  alternates: { canonical: '/layanan' },
   openGraph: {
-    title: 'Layanan | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    title: `Layanan | ${SITE_NAME}`,
     description: 'Layanan publik dan fasilitas KMTETI FT UGM.',
     url: '/layanan',
   },

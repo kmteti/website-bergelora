@@ -15,8 +15,9 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
   if (!topic) return { title: 'Panduan tidak ditemukan' }
 
   return {
-    title: `${topic.title} — Panduan KMTETI`,
+    title: `${topic.title} — Panduan`,
     description: topic.description,
+    alternates: { canonical: `/kontak/panduan/${slug}` },
   }
 }
 

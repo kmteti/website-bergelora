@@ -10,12 +10,15 @@ import { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { FolderData } from '@/modules/home/components/FolderCarousel'
+import { SITE_NAME, SITE_LEGAL_NAME } from '@/lib/site'
 
+// Same route segment as the root layout, so title.template does NOT apply here.
 export const metadata: Metadata = {
-  title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+  title: `${SITE_NAME} | ${SITE_LEGAL_NAME}`,
   description: 'Selamat datang di situs resmi KMTETI FT UGM. Jelajahi profil, divisi, badan semi otonom, berita terkini, dan kehidupan mahasiswa di lingkungan KMTETI.',
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    title: `${SITE_NAME} | ${SITE_LEGAL_NAME}`,
     description: 'Selamat datang di situs resmi KMTETI FT UGM. Jelajahi profil, divisi, badan semi otonom, berita terkini, dan kehidupan mahasiswa di lingkungan KMTETI.',
     url: '/',
   },
