@@ -251,7 +251,7 @@ export default function Footer() {
               </div>
 
               <div className="mt-6 sm:mt-[30px]">
-                <B3 className="font-bold text-white">Sosial Media</B3>
+                <B3 className="font-bold text-white">Media Sosial</B3>
                 <div className="mt-[9px] flex flex-wrap items-center gap-[14px]">
                   {socialLinks.map(({ label, href, icon: Icon }) => (
                     <Link
