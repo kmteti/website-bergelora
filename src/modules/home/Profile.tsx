@@ -162,11 +162,11 @@ export default function Profile() {
                 {/* Overlay blur + stats — animated by GSAP */}
                 <div 
                   ref={overlayRef}
-                  className="absolute inset-0 z-20 flex items-center justify-center rounded-[18px] opacity-0 overflow-hidden"
+                  className="absolute inset-0 z-20 flex items-center justify-center rounded-[18px] opacity-0 overflow-hidden isolate"
                 >
                   {/* Backdrop glass layer */}
                   <div 
-                    className="absolute inset-0 bg-white/45 backdrop-blur-md"
+                    className="absolute inset-0 bg-white/45 backdrop-blur-md rounded-[18px]"
                     style={{ WebkitBackdropFilter: 'blur(12px)', backdropFilter: 'blur(12px)' }}
                   />
 
