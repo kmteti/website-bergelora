@@ -139,7 +139,7 @@ export default function Hero() {
               {/* Wrapper khusus Konten Teks */}
               <div className="absolute top-0 left-0 w-full h-full">
                 {/* Konten Hero */}
-                <div className="relative z-10 flex h-full flex-col justify-end px-5 sm:px-8 md:px-16 lg:px-24 pb-20 sm:pb-12 md:pb-16 lg:pb-24 max-w-5xl pointer-events-none">
+                <div className="relative z-10 flex h-full flex-col justify-end px-5 sm:px-8 md:px-16 lg:px-24 pb-12 sm:pb-12 md:pb-16 lg:pb-24 max-w-5xl pointer-events-none">
                   <H1 className="text-white w-full drop-shadow-md">{slide.title}</H1>
                   <B2 className="hidden sm:block text-white mt-4 drop-shadow-md">{slide.description}</B2>
 
@@ -160,19 +160,19 @@ export default function Hero() {
 
       {/* Wrapper untuk Navigasi */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20">
-        {/* Navigasi Indikator di bagian bawah Kanan */}
-        <div className="absolute bottom-12 sm:bottom-12 md:bottom-16 lg:bottom-24 right-5 sm:right-8 md:right-16 lg:right-24 flex gap-2.5 sm:gap-3 items-center pointer-events-auto">
-          <nav className="flex items-center gap-[2px] bg-black/40 sm:bg-white/20 backdrop-blur-md px-2 py-1 sm:p-1 rounded-full border border-white/15 sm:border-transparent shadow-lg">
+        {/* Navigasi Indikator di bagian bawah Kanan - Sejajar horizontal dengan Button */}
+        <div className="absolute bottom-12 sm:bottom-12 md:bottom-16 lg:bottom-24 right-5 sm:right-8 md:right-16 lg:right-24 flex gap-3 items-center pointer-events-auto">
+          <nav className="flex items-center gap-[2px] bg-white/20 backdrop-blur-md p-1 rounded-full">
             {sliderHero.map((slide, index) => {
               if (isThisSlide === index) {
                 return (
                   <button
                     key={index}
                     onClick={() => handleThisSlide(index)}
-                    className="h-5 sm:h-6 flex items-center justify-center px-0.5 cursor-pointer"
+                    className="h-6 flex items-center justify-center px-0.5 cursor-pointer"
                     aria-label={`Go to ${slide.alt}`}
                   >
-                    <span className="w-7 sm:w-12 h-3.5 sm:h-5 rounded-full bg-white shadow-sm transition-all duration-300" />
+                    <span className="w-12 h-5 rounded-full bg-white shadow-sm transition-transform duration-300" />
                   </button>
                 )
               } else {
@@ -180,10 +180,10 @@ export default function Hero() {
                   <button
                     key={index}
                     onClick={() => handleThisSlide(index)}
-                    className="w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center cursor-pointer"
+                    className="w-6 h-6 flex items-center justify-center cursor-pointer"
                     aria-label={`Go to ${slide.alt}`}
                   >
-                    <span className="w-3 sm:w-5 h-3 sm:h-5 rounded-full bg-white/50 hover:bg-white/75 transition-opacity duration-300" />
+                    <span className="w-5 h-5 rounded-full bg-white/50 hover:bg-white/75 transition-opacity duration-300" />
                   </button>
                 )
               }
