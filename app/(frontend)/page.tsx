@@ -12,6 +12,8 @@ import config from '@payload-config'
 import { FolderData } from '@/modules/home/components/FolderCarousel'
 import { SITE_NAME, SITE_LEGAL_NAME } from '@/lib/site'
 
+export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
+
 // Same route segment as the root layout, so title.template does NOT apply here.
 export const metadata: Metadata = {
   title: `${SITE_NAME} | ${SITE_LEGAL_NAME}`,

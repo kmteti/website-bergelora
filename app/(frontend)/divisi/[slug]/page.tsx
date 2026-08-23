@@ -5,6 +5,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { divisi as staticDivisi } from '@/modules/divisi/data/data'
 
+export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
+
 type PageProps = {
   params: Promise<{ slug: string }>
 }

@@ -4,6 +4,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Metadata } from 'next'
 
+export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
+
 export const metadata: Metadata = {
   title: 'Layanan',
   description: 'Layanan publik, peminjaman inventaris, dan fasilitas Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
