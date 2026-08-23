@@ -203,19 +203,21 @@ export function Navbar() {
           aria-label="KMTETI FT UGM"
         >
           <Image
-            src="/logo/kmteti/horizontal-white.svg"
+            src="/logo/kmteti/horizontal-white.png"
             alt=""
             fill
+            sizes="(max-width: 1024px) 134px, 150px"
             priority
             className={cn(
-              'object-contain object-left drop-shadow-[0_3px_4px_rgba(0,0,0,0.22)] transition-opacity duration-500 ease-in-out',
+              'object-contain object-left transition-opacity duration-500 ease-in-out',
               isDarkTone ? 'opacity-100' : 'opacity-0 pointer-events-none',
             )}
           />
           <Image
-            src="/logo/kmteti/horizontal-color.svg"
+            src="/logo/kmteti/horizontal-color.png"
             alt=""
             fill
+            sizes="(max-width: 1024px) 134px, 150px"
             priority
             className={cn(
               'object-contain object-left drop-shadow-[0_3px_4px_rgba(0,0,0,0.22)] transition-opacity duration-500 ease-in-out',

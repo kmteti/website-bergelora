@@ -1,12 +1,14 @@
 import React from 'react'
 import Profile from '@/modules/profile/Profile'
 import { Metadata } from 'next'
+import { SITE_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Profil | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+  title: 'Profil',
   description: 'Profil Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
+  alternates: { canonical: '/tentang/profil' },
   openGraph: {
-    title: 'Profil | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    title: `Profil | ${SITE_NAME}`,
     description: 'Profil Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
     url: '/tentang/profil',
   },

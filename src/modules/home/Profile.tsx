@@ -142,8 +142,8 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI Back" 
                   fill 
-                  quality={70}
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
+                  quality={95}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                   className="object-cover object-[20%_center] brightness-90"
                 />
               </div>
@@ -154,18 +154,24 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 
                   fill 
-                  quality={70}
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
+                  quality={95}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                   className="object-cover"
                 />
                 
                 {/* Overlay blur + stats — animated by GSAP */}
                 <div 
                   ref={overlayRef}
-                  className="absolute inset-0 z-20 flex items-center justify-center rounded-[18px] opacity-0"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.45)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+                  className="absolute inset-0 z-20 flex items-center justify-center rounded-[18px] opacity-0 overflow-hidden isolate"
                 >
-                  <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-gray-800/30 w-full max-w-4xl mx-auto text-gray-900">
+                  {/* Backdrop glass layer */}
+                  <div 
+                    className="absolute inset-0 bg-white/60 backdrop-blur-2xl rounded-[18px] border border-white/60"
+                    style={{ WebkitBackdropFilter: 'blur(24px)', backdropFilter: 'blur(24px)' }}
+                  />
+
+                  {/* Text Content Layer — Vector Crisp & Sharp */}
+                  <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 md:divide-x divide-gray-800/30 w-full max-w-4xl mx-auto text-gray-900">
                     {[
                       { value: '200', label: <>Anggota<br />Organisasi Aktif</> },
                       { value: '8', label: <>Divisi Beranggota<br />Aktif</> },
@@ -173,8 +179,12 @@ export default function Profile() {
                       { value: '3', label: <>Event Ternama<br />Nasional</> },
                     ].map((stat) => (
                       <div key={stat.value} className="flex flex-col items-center justify-center px-2 py-3 md:px-4 md:py-0">
-                        <span className="text-[32px] md:text-[56px] font-serif leading-none mb-1 md:mb-3">{stat.value}</span>
-                        <span className="text-[11px] md:text-sm font-bold text-center max-w-[140px] leading-snug">{stat.label}</span>
+                        <span className="text-[32px] md:text-[56px] font-serif leading-none mb-1 md:mb-3 antialiased">
+                          {stat.value}
+                        </span>
+                        <span className="text-[11px] md:text-sm font-bold text-center max-w-[140px] leading-snug antialiased">
+                          {stat.label}
+                        </span>
                       </div>
                     ))}
                   </div>

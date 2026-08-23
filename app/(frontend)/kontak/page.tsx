@@ -3,12 +3,14 @@ import { Kontak } from '@/modules/kontak/Kontak'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Metadata } from 'next'
+import { SITE_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Kontak | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+  title: 'Kontak',
   description: 'Hubungi Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
+  alternates: { canonical: '/kontak' },
   openGraph: {
-    title: 'Kontak | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    title: `Kontak | ${SITE_NAME}`,
     description: 'Hubungi KMTETI FT UGM.',
     url: '/kontak',
   },

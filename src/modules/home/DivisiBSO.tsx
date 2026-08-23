@@ -45,38 +45,51 @@ const divisiDescriptions: Record<string, string> = {
 const bsoData: FolderData[] = [
   {
     name: 'Bionce',
-    photo: '/images/home/about/about.webp',
+    slug: 'bionce',
+    photo: '/images/bso/bionce/header-bionce.webp',
     logo: '/logo/bso/bionce.svg',
     description:
       'Komunitas bagi mahasiswa yang tertarik dengan perkembangan, inovasi, dan riset di bidang teknik biomedis.',
   },
   {
     name: 'Magatrika',
-    photo: '/images/home/about/about.webp',
+    slug: 'magatrika',
+    photo: '/images/bso/magatrika/header-magatrika.webp',
     logo: '/logo/bso/magatrika.svg',
     description:
       'Badan kajian khusus yang berfokus pada riset energi terbarukan, kelistrikan, serta inovasi teknologi tepat guna yang berdampak luas.',
   },
   {
     name: 'Night Login',
-    photo: '/images/home/about/about.webp',
+    slug: 'night-login',
+    photo: '/images/bso/night-login/header-night-login.webp',
     logo: '/logo/bso/night-login.svg',
     description:
       'Komunitas intensif untuk mengasah skill tingkat lanjut di bidang software engineering, keamanan siber, dan competitive programming.',
   },
   {
     name: 'SKI Al-Hannaan',
-    photo: '/images/home/about/about.webp',
+    slug: 'ski',
+    photo: '/images/bso/ski/header-ski.webp',
     logo: '/logo/bso/ski-al-hannaan.svg',
     description:
       'Pusat pembinaan keimanan dan ukhuwah Islamiyah yang aktif menebarkan nilai-nilai dakwah dan kerohanian di lingkungan kampus.',
   },
   {
     name: 'SKK DTETI',
-    photo: '/images/home/about/about.webp',
+    slug: 'skk',
+    photo: '/images/bso/skk/header-skk.webp',
     logo: '/logo/bso/skk-dteti.svg',
     description:
       'Wadah kerohanian Kristen dan Katolik yang menyelenggarakan program persekutuan dan pelayanan iman yang hangat bagi seluruh mahasiswa.',
+  },
+  {
+    name: 'MPM',
+    slug: 'mpm',
+    photo: '/images/bso/mpm/header-mpm.webp',
+    logo: '/logo/bso/mpm.svg',
+    description:
+      'Badan legislatif dan yudikatif mahasiswa yang bertugas mengawasi jalannya roda organisasi serta menyerap aspirasi civitas akademika.',
   },
 ]
 
