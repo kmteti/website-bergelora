@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    default: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
-    template: '%s | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    default: 'KMTETI FT UGM | Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
+    template: '%s | KMTETI FT UGM',
   },
   description:
     'Situs web resmi Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi Fakultas Teknik Universitas Gadjah Mada (KMTETI FT UGM). Temukan profil, berita terbaru, layanan, dan informasi akademik.',
