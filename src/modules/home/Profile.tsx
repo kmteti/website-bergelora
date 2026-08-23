@@ -166,23 +166,23 @@ export default function Profile() {
                 >
                   {/* Backdrop glass layer */}
                   <div 
-                    className="absolute inset-0 bg-white/70 sm:bg-white/55 backdrop-blur-md"
+                    className="absolute inset-0 bg-white/45 backdrop-blur-md"
                     style={{ WebkitBackdropFilter: 'blur(12px)', backdropFilter: 'blur(12px)' }}
                   />
 
                   {/* Text Content Layer — Vector Crisp & Sharp */}
-                  <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 md:divide-x divide-gray-800/20 w-full max-w-4xl mx-auto text-neutral-900 px-2 sm:px-6">
+                  <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 md:divide-x divide-gray-800/30 w-full max-w-4xl mx-auto text-gray-900">
                     {[
                       { value: '200', label: <>Anggota<br />Organisasi Aktif</> },
                       { value: '8', label: <>Divisi Beranggota<br />Aktif</> },
                       { value: '6', label: <>Badan Semi<br />Otonom</> },
                       { value: '3', label: <>Event Ternama<br />Nasional</> },
                     ].map((stat) => (
-                      <div key={stat.value} className="flex flex-col items-center justify-center p-2 sm:p-3 text-center">
-                        <span className="text-[28px] sm:text-[44px] md:text-[56px] font-serif font-bold text-[#0a4c5a] leading-none mb-1 sm:mb-2 antialiased">
+                      <div key={stat.value} className="flex flex-col items-center justify-center px-2 py-3 md:px-4 md:py-0">
+                        <span className="text-[32px] md:text-[56px] font-serif leading-none mb-1 md:mb-3 antialiased">
                           {stat.value}
                         </span>
-                        <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-neutral-800 text-center max-w-[130px] leading-tight sm:leading-snug antialiased">
+                        <span className="text-[11px] md:text-sm font-bold text-center max-w-[140px] leading-snug antialiased">
                           {stat.label}
                         </span>
                       </div>
