@@ -233,7 +233,7 @@ export default function Footer() {
                 
                 {/* Mobile Logo (Horizontal) */}
                 <Image
-                  src="/logo/kmteti/horizontal-white.svg"
+                  src="/logo/kmteti/horizontal-white.png"
                   alt="KMTETI FT UGM"
                   width={150}
                   height={48}
