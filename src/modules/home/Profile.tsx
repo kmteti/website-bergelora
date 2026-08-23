@@ -166,8 +166,8 @@ export default function Profile() {
                 >
                   {/* Backdrop glass layer */}
                   <div 
-                    className="absolute inset-0 bg-white/45 backdrop-blur-md rounded-[18px]"
-                    style={{ WebkitBackdropFilter: 'blur(12px)', backdropFilter: 'blur(12px)' }}
+                    className="absolute inset-0 bg-white/80 sm:bg-white/75 backdrop-blur-xl rounded-[18px] border border-white/60"
+                    style={{ WebkitBackdropFilter: 'blur(16px)', backdropFilter: 'blur(16px)' }}
                   />
 
                   {/* Text Content Layer — Vector Crisp & Sharp */}
