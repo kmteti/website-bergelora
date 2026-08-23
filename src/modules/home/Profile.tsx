@@ -142,8 +142,8 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI Back" 
                   fill 
-                  quality={70}
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
+                  quality={95}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                   className="object-cover object-[20%_center] brightness-90"
                 />
               </div>
@@ -154,8 +154,8 @@ export default function Profile() {
                   src="/images/profile/foto-kabinet.webp" 
                   alt="Group Photo KMTETI" 
                   fill 
-                  quality={70}
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 750px"
+                  quality={95}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                   className="object-cover"
                 />
                 
