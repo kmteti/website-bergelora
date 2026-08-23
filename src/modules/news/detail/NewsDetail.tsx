@@ -60,7 +60,9 @@ export function NewsDetail({ news, latestNews }: { news: any, latestNews: any[] 
 
           {/* Title and Metadata */}
           <div className="mb-10 w-full">
-            <H2 className="text-[#2D2D2D] mb-4 text-wrap">{news.title}</H2>
+            <h1 className="font-heading text-balance text-[clamp(34px,3.9vw,57px)] leading-[clamp(40px,4.4vw,64px)] tracking-[-0.02em] font-semibold text-[#2D2D2D] mb-4 text-wrap">
+              {news.title}
+            </h1>
             <div className="flex items-center gap-2 text-sm font-medium text-[#A0A0A0]">
               <span>{formattedDate}</span>
               <span className="text-[#D9D9D9]">|</span>

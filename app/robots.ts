@@ -1,13 +1,14 @@
 import { MetadataRoute } from 'next'
-import { SITE_URL } from '@/lib/site'
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://kmteti.org'
+
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/api/', '/playground'],
+      disallow: ['/admin/', '/api/'],
     },
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`,
   }
 }

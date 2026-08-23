@@ -12,12 +12,19 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const topic = getPanduanTopic(slug)
 
-  if (!topic) return { title: 'Panduan tidak ditemukan' }
+  if (!topic) return { title: 'Panduan' }
 
   return {
-    title: `${topic.title} — Panduan`,
+    title: `Panduan ${topic.title}`,
     description: topic.description,
-    alternates: { canonical: `/kontak/panduan/${slug}` },
+    alternates: {
+      canonical: `/kontak/panduan/${slug}`,
+    },
+    openGraph: {
+      title: `Panduan ${topic.title}`,
+      description: topic.description,
+      url: `/kontak/panduan/${slug}`,
+    },
   }
 }
 

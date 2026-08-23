@@ -3,16 +3,17 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Metadata } from 'next'
-import { SITE_NAME } from '@/lib/site'
 
 export const revalidate = 60 // Revalidate cache every 60 seconds (ISR)
 
 export const metadata: Metadata = {
   title: 'Berita & Artikel',
   description: 'Kumpulan berita, artikel, dan informasi terbaru seputar Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
-  alternates: { canonical: '/tentang/berita' },
+  alternates: {
+    canonical: '/tentang/berita',
+  },
   openGraph: {
-    title: `Berita & Artikel | ${SITE_NAME}`,
+    title: 'Berita & Artikel',
     description: 'Kumpulan berita, artikel, dan informasi terbaru seputar KMTETI FT UGM.',
     url: '/tentang/berita',
   },
