@@ -1,14 +1,15 @@
 import React from 'react'
 import { Metadata } from 'next'
 import Kalender from '@/modules/kalender/Kalender'
-import { SITE_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Agenda Bulanan',
-  description: 'Kalender dan agenda kegiatan rutin KMTETI FT UGM.',
-  alternates: { canonical: '/kalender' },
+  description: 'Kalender akademik dan agenda kegiatan rutin Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi (KMTETI) FT UGM.',
+  alternates: {
+    canonical: '/kalender',
+  },
   openGraph: {
-    title: `Agenda Bulanan | ${SITE_NAME}`,
+    title: 'Agenda Bulanan',
     description: 'Kalender dan agenda kegiatan rutin KMTETI FT UGM.',
     url: '/kalender',
   },

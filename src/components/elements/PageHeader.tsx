@@ -61,9 +61,9 @@ export function PageHeader({
               
               {/* Title & Description */}
               <div className="flex flex-col min-w-0">
-                <H2 className="text-white drop-shadow-md font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] truncate leading-tight tracking-tight">
+                <h1 className="text-white drop-shadow-md font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] truncate leading-tight tracking-tight">
                   {title}
-                </H2>
+                </h1>
                 <p className="text-white/90 text-sm sm:text-base md:text-lg mt-1.5 drop-shadow-sm font-sans font-medium line-clamp-2 max-w-xl leading-relaxed">
                   {description}
                 </p>
