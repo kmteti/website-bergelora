@@ -45,10 +45,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
       { url: '/favicon/favicon.ico', sizes: 'any' },
       { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: '/favicon/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
   manifest: '/favicon/site.webmanifest',
   verification: {
