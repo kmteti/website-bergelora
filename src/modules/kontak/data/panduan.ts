@@ -13,7 +13,9 @@
 
 import { Building2, HandCoins, Handshake, Megaphone, type LucideIcon } from 'lucide-react'
 
-const BOOKLET_PARTNERSHIP_URL = process.env.NEXT_PUBLIC_PARTNERSHIP_BOOKLET_URL ?? ''
+const BOOKLET_PARTNERSHIP_URL =
+  process.env.NEXT_PUBLIC_PARTNERSHIP_BOOKLET_URL ||
+  'https://ejvqynochdmikjcdqvuu.supabase.co/storage/v1/object/public/kmteti-bucket/booklet-partnership-kmteti.pdf'
 
 export type PanduanTopic = {
   slug: string
