@@ -45,14 +45,21 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
       { url: '/favicon/favicon.ico', sizes: 'any' },
       { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: '/favicon/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
   manifest: '/favicon/site.webmanifest',
   verification: {
-    google: 'Ee8jnxeWaz1dJx0LbGOH9fpQ2lp5RPtKykX4erklyW8',
+    google: 'E9k5qgtsGAqHCBWKxv2H5zDZ1v_IVsCG6QnO1Cpi0xk',
   },
 }
 
