@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   manifest: '/favicon/site.webmanifest',
   verification: {
-    google: 'Ee8jnxeWaz1dJx0LbGOH9fpQ2lp5RPtKykX4erklyW8',
+    google: 'E9k5qgtsGAqHCBWKxv2H5zDZ1v_IVsCG6QnO1Cpi0xk',
   },
 }
 
