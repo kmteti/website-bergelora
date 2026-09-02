@@ -74,12 +74,23 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'KMTETI FT UGM',
+    legalName: 'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi FT UGM',
     alternateName: [
       'Keluarga Mahasiswa Teknik Elektro dan Teknologi Informasi',
       'KMTETI',
+      'KMTETI UGM',
     ],
     url: 'https://kmteti.org',
     logo: 'https://kmteti.org/logo/kmteti/horizontal-color.png',
+    image: 'https://kmteti.org/images/home/hero/slide1.webp',
+    description:
+      'Organisasi resmi mahasiswa Departemen Teknik Elektro dan Teknologi Informasi, Fakultas Teknik, Universitas Gadjah Mada (DTETI FT UGM).',
+    parentOrganization: {
+      '@type': 'EducationalOrganization',
+      name: 'Departemen Teknik Elektro dan Teknologi Informasi FT UGM',
+      alternateName: 'DTETI FT UGM',
+      url: 'https://jteti.ugm.ac.id',
+    },
     sameAs: [
       'https://www.instagram.com/kmteti/',
       'https://www.youtube.com/@kmteti',
@@ -91,9 +102,14 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       '@type': 'PostalAddress',
       streetAddress: 'Jl. Grafika No. 2, Kampus UGM',
       addressLocality: 'Yogyakarta',
-      addressRegion: 'DIY',
+      addressRegion: 'Daerah Istimewa Yogyakarta',
       postalCode: '55281',
       addressCountry: 'ID',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Humas / Public Relations',
+      url: 'https://kmteti.org/kontak',
     },
   }
 
