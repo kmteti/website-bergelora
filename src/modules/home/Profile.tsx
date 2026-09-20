@@ -173,8 +173,8 @@ export default function Profile() {
                   {/* Text Content Layer — Vector Crisp & Sharp */}
                   <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 md:divide-x divide-gray-800/30 w-full max-w-4xl mx-auto text-gray-900">
                     {[
-                      { value: '200', label: <>Anggota<br />Organisasi Aktif</> },
-                      { value: '8', label: <>Divisi Beranggota<br />Aktif</> },
+                      { value: '200+', label: <>Anggota<br />Organisasi Aktif</> },
+                      { value: '8', label: <>Divisi/Biro Beranggota<br />Aktif</> },
                       { value: '6', label: <>Badan Semi<br />Otonom</> },
                       { value: '3', label: <>Event Ternama<br />Nasional</> },
                     ].map((stat) => (
