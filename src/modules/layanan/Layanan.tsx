@@ -98,6 +98,12 @@ const staticServiceSections: ServiceSection[] = [
         icon: LucideIcons.Files,
       },
       {
+        title: 'Kalender Akademik',
+        description: 'Kalender akademik UGM T.A. 2026/2027.',
+        href: 'https://akademik.ugm.ac.id/kalender-akademik-t-a-2026-2027/',
+        icon: LucideIcons.CalendarDays,
+      },
+      {
         title: 'SOP',
         description: 'Standar operasional prosedur akademik DTETI.',
         href: 'https://sarjana.jteti.ugm.ac.id/akademik/sop/',
